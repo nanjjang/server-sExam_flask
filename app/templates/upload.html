@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form action="" method="post" enctype = "multipart/form-data">
+      <div>
+        <label >Add Image : </label>
+        <input type="file" name="fileImage" id="fileImage"/>
+      </div>
+      <div>
+        <input type="submit" id="send" name="send" value="send" />
+      </div>
+    </form>
+{% endblock %}
