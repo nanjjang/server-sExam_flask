@@ -5,7 +5,17 @@
 </head>
 <body>
     <header>
-      header
+        <nav>
+            <a href="/">홈</a> |
+            {% if session.get('user_id') %}
+                {{ session['user_id'] }}님 환영합니다 |
+                <a href="/upload">사진 업로드</a> |
+                <a href="/logout">로그아웃</a>
+            {% else %}
+                <a href="/login">로그인</a> |
+                <a href="/register">회원가입</a>
+            {% endif %}
+        </nav>
     </header>
 
 
