@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="home-stage">
+    <div class="noise-dot dot-purple"></div>
+    <div class="noise-dot dot-olive"></div>
+    <div class="noise-dot dot-red"></div>
+
+    <div class="stage-copy">
+        <p class="micro">Archive of Photography</p>
+        <h1>Welcome to PA</h1>
+        <p>
+            PA는 사진을 저장하고, 다시 꺼내보고, 나만의 갤러리로 정리하는
+            디지털 아카이브입니다.
+        </p>
+        <div class="stage-actions">
+            <a href="{{ url_for('upload.upload') }}">CLICK</a>
+            <span>upload your photos</span>
+        </div>
+    </div>
+
+    <div class="floating-archive" aria-label="사진 아카이브 미리보기">
+        {% for photo in photos %}
+        <figure class="float-card float-card-{{ loop.index }}">
+            <img src="{{ photo.url }}" alt="{{ photo.title }} 사진">
+            <figcaption>{{ photo.title }}</figcaption>
+        </figure>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="archive-intro">
+    <div class="section-title">
+        <p>→ Archive</p>
+        <h2>자신의 사진을 모아보세요.</h2>
+    </div>
+
+    <div class="archive-marquee" aria-label="최근 사진 목록">
+        {% if photos %}
+        {% for row in range(3) %}
+            <div class="marquee-row">
+                {% for photo in photos %}
+                <a class="marquee-card" href="{{ photo.url }}">
+                    <img src="{{ photo.url }}" alt="{{ photo.title }} 사진" loading="lazy" decoding="async">
+                    <span>{{ photo.title }}</span>
+                </a>
+                {% endfor %}
+                {% for photo in photos %}
+                <a class="marquee-card" href="{{ photo.url }}">
+                    <img src="{{ photo.url }}" alt="{{ photo.title }} 사진" loading="lazy" decoding="async">
+                    <span>{{ photo.title }}</span>
+                </a>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        {% else %}
+        <div class="empty-light">아직 업로드된 사진이 없습니다.</div>
+        {% endif %}
+    </div>
+</section>
+
+<section class="learn-section">
+    <p class="micro dark">PhotoArchive</p>
+    <h2>사진을 올리고, 분류하고, 다시 발견하기</h2>
+    <p>단순한 업로드 페이지가 아니라, 사진을 아카이브처럼 정리하는 경험을 목표로 합니다.</p>
+    <a class="large-pill" href="{{ url_for('root.gallery') }}">시작하기</a>
+</section>
+{% endblock %}

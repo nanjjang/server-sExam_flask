@@ -3,7 +3,7 @@ import json
 from datetime import datetime
 from config import USERS_PATH
 
-
+# 유저 정보를 json형식으로 저장
 def get_user(username):
     filepath = os.path.join(USERS_PATH, f"{username}.json")
     if not os.path.exists(filepath):

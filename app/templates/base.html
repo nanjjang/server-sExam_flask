@@ -1,31 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-    <title>웹사이트 이름</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>photoArchive</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
 </head>
-<body>
-    <header>
-        <nav>
-            <a href="/">홈</a> |
-            {% if session.get('user_id') %}
-                {{ session['user_id'] }}님 환영합니다 |
-                <a href="/upload">사진 업로드</a> |
-                <a href="/auth/logout">로그아웃</a>
-            {% else %}
-                <a href="/auth/login">로그인</a> |
-                <a href="/auth/register">회원가입</a>
-            {% endif %}
-        </nav>
+<body class="{{ body_class|default('') }}">
+    {% set endpoint = request.endpoint or '' %}
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="brand" href="{{ url_for('root.root') }}" aria-label="photoArchive 홈">PA</a>
+
+            <nav class="site-nav" aria-label="주요 메뉴">
+                <a class="{% if endpoint == 'root.root' %}is-active{% endif %}" href="{{ url_for('root.root') }}">home</a>
+                <a class="{% if endpoint == 'root.feature' %}is-active{% endif %}" href="{{ url_for('root.feature') }}">feature</a>
+                <a class="{% if endpoint == 'root.gallery' %}is-active{% endif %}" href="{{ url_for('root.gallery') }}">gallery</a>
+                <a href="{{ url_for('root.gallery') }}#top10">TOP10</a>
+            </nav>
+
+            <div class="header-actions">
+                {% if session.get('user_id') %}
+                    <a class="plain-link" href="{{ url_for('auth.logout') }}">Logout</a>
+                    <a class="outline-button" href="{{ url_for('upload.upload') }}">Upload</a>
+                {% else %}
+                    <a class="plain-link" href="{{ url_for('auth.login') }}">Login</a>
+                    <a class="outline-button" href="{{ url_for('auth.register') }}">Get Start</a>
+                {% endif %}
+            </div>
+        </div>
     </header>
 
-
-    <div class="content">
+    <main>
         {% block content %}
         {% endblock %}
-    </div>
+    </main>
 
-    <footer>
-      footer
+    <footer class="site-footer">
+        <div>
+            <strong>PA</strong>
+            <span>Archive your photos, projects, and memories.</span>
+        </div>
+        <div>
+            <a href="{{ url_for('root.gallery') }}">Gallery</a>
+            <a href="{{ url_for('root.feature') }}">Feature</a>
+            <a href="{{ url_for('upload.upload') }}">Upload</a>
+        </div>
     </footer>
 </body>
 </html>

@@ -1,13 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <form action="" method="post" enctype = "multipart/form-data">
-      <div>
-        <label >Add Image : </label>
-        <input type="file" name="fileImage" id="fileImage" multiple />
-      </div>
-      <div>
-        <input type="submit" id="send" name="send" value="send" />
-      </div>
+<section class="upload-stage">
+    <p class="micro">Upload</p>
+    <h1>새로운 사진을<br>아카이브에 추가하기</h1>
+    <p>여러 장의 이미지를 선택하면 PA 갤러리에 저장됩니다.</p>
+
+    <form class="upload-form" action="" method="post" enctype="multipart/form-data">
+        <label class="drop-zone" for="fileImage">
+            <span>+</span>
+            <strong>Choose photos</strong>
+            <small>JPG, PNG, GIF, WEBP</small>
+            <input type="file" name="fileImage" id="fileImage" multiple>
+        </label>
+        <button type="submit" id="send" name="send">Upload</button>
     </form>
+</section>
 {% endblock %}

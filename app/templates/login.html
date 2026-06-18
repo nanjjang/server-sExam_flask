@@ -1,23 +1,29 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>로그인</h2>
+<section class="auth-page">
+    <a class="auth-logo" href="{{ url_for('root.root') }}">PA</a>
+    <h1>Log in to PA</h1>
 
-{% if error %}
-<p style="color: red;">{{ error }}</p>
-{% endif %}
+    <form class="auth-form" method="POST" action="{{ url_for('auth.login') }}">
+        {% if error %}
+        <p class="form-error">{{ error }}</p>
+        {% endif %}
 
-<form method="POST" action="/auth/login">
-    <div>
-        <label>아이디</label><br>
-        <input type="text" name="username" required>
-    </div>
-    <div>
-        <label>비밀번호</label><br>
-        <input type="password" name="password" required>
-    </div>
-    <br>
-    <button type="submit">로그인</button>
-    <a href="/auth/register">회원가입</a>
-</form>
+        <label>
+            <span>ID</span>
+            <input type="text" name="username" required>
+        </label>
+        <label>
+            <span>Password</span>
+            <input type="password" name="password" required>
+        </label>
+
+        <button type="submit">Sign in</button>
+        <div class="divider"><span>or</span></div>
+        <a class="google-button" href="{{ url_for('auth.register') }}">Create an account</a>
+    </form>
+
+    <footer>@Copyright PA<br>Photo Archive</footer>
+</section>
 {% endblock %}

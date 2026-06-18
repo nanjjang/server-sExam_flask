@@ -2,7 +2,7 @@ from flask import Flask
 from config import secret_key
 from routes import register_routes
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='css', static_url_path='/css')
 app.secret_key = secret_key
 
 register_routes(app)

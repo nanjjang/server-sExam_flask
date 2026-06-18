@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="gallery-hero">
+    <p class="micro">Gallery Board</p>
+    <h1>PA Gallery</h1>
+    <form class="search-line" action="{{ url_for('root.gallery') }}" method="GET">
+        <input type="search" name="q" value="{{ query|default('') }}" placeholder="Search photo, date, place">
+        <button type="submit">Search</button>
+    </form>
+</section>
+
+<section class="gallery-board" id="top10">
+    <div class="board-head">
+        <div>
+            <p>→ Collection</p>
+            <h2>{{ 'Search Result' if query else 'All Archive' }}</h2>
+        </div>
+        <a href="{{ url_for('upload.upload') }}">Upload photo</a>
+    </div>
+
+    <div class="gallery-grid">
+        {% for photo in photos %}
+        <article class="gallery-card">
+            <a href="{{ photo.url }}" class="gallery-image">
+                <img src="{{ photo.url }}" alt="{{ photo.title }} 사진" loading="lazy" decoding="async">
+            </a>
+            <div class="gallery-meta">
+                <span>{{ photo.date }}</span>
+                <span>{{ photo.location }}</span>
+            </div>
+            <h3>{{ photo.title }}</h3>
+            <p>{{ photo.owner }} · 좋아요 {{ photo.likes }}</p>
+        </article>
+        {% else %}
+        <div class="empty-dark">
+            <strong>검색 결과가 없습니다.</strong>
+            <span>다른 검색어로 다시 찾아보세요.</span>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
