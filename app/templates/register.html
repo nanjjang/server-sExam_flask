@@ -2,28 +2,38 @@
 
 {% block content %}
 <section class="auth-page">
-    <a class="auth-logo" href="{{ url_for('root.root') }}">PA</a>
-    <h1>Create PA account</h1>
+    <div class="auth-loader" aria-hidden="true">
+        <strong>photoArchive</strong>
+        <h1>Let's make your shelf</h1>
+        <p>Preparing a clean archive space...</p>
+    </div>
 
-    <form class="auth-form" method="POST" action="{{ url_for('auth.register') }}">
-        {% if error %}
-        <p class="form-error">{{ error }}</p>
-        {% endif %}
+    <a class="auth-back" href="{{ url_for('root.root') }}">‹ Back</a>
 
-        <label>
-            <span>ID</span>
-            <input type="text" name="username" required>
-        </label>
-        <label>
-            <span>Password</span>
-            <input type="password" name="password" required>
-        </label>
+    <div class="auth-panel">
+        <strong class="auth-wordmark">photoArchive</strong>
+        <h1>Let's make your shelf</h1>
+        <p>Create an archive ID and start collecting visual memories.</p>
 
-        <button type="submit">Create account</button>
-        <div class="divider"><span>or</span></div>
-        <a class="google-button" href="{{ url_for('auth.login') }}">Back to login</a>
-    </form>
+        <form class="auth-form" method="POST" action="{{ url_for('auth.register') }}">
+            {% if error %}
+            <p class="form-error">{{ error }}</p>
+            {% endif %}
 
-    <footer>@Copyright PA<br>Photo Archive</footer>
+            <label>
+                <span>ID</span>
+                <input type="text" name="username" placeholder="new_archive_id" required>
+            </label>
+            <label>
+                <span>Password</span>
+                <input type="password" name="password" placeholder="password" required>
+            </label>
+
+            <button type="submit">Create account</button>
+            <a class="auth-sub-link" href="{{ url_for('auth.login') }}">Back to login</a>
+        </form>
+    </div>
+
+    <p class="auth-policy">Your first archive starts with one quiet image.</p>
 </section>
 {% endblock %}

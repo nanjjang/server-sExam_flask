@@ -3,10 +3,25 @@
 {% block content %}
 <section class="upload-stage">
     <p class="micro">Upload</p>
-    <h1>새로운 사진을<br>아카이브에 추가하기</h1>
-    <p>여러 장의 이미지를 선택하면 PA 갤러리에 저장됩니다.</p>
+    <h1>Add new photos<br>to your archive</h1>
+    <p>Select multiple images to save them to the PA gallery.</p>
 
     <form class="upload-form" action="" method="post" enctype="multipart/form-data">
+        <label class="upload-field">
+            <span>Archive title</span>
+            <input type="text" name="photoTitle" placeholder="e.g. Seoul blue hour">
+        </label>
+
+        <fieldset class="tag-picker">
+            <legend>Photo tag</legend>
+            {% for slug, label in photo_tags.items() %}
+            <label>
+                <input type="radio" name="photoTag" value="{{ slug }}" {% if loop.first %}checked{% endif %}>
+                <span>{{ label }}</span>
+            </label>
+            {% endfor %}
+        </fieldset>
+
         <label class="drop-zone" for="fileImage">
             <span>+</span>
             <strong>Choose photos</strong>

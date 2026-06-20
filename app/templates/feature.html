@@ -1,44 +1,133 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<section class="feature-stage">
-    <div>
-        <p class="micro">Archive System</p>
-        <h1>Shaping<br>the Future of<br><span>[Photo]</span></h1>
+<section class="feature-hero" id="features">
+    <div class="feature-hero-copy">
+        <h1>Built for your taste</h1>
+        <p>photoArchive gives you the tools to collect and discover visual inspiration every day.</p>
     </div>
-    <div class="barcode-block">
-        <span></span>
-        <p>[ Upload · Gallery · Search · TOP10 ]</p>
+
+    <div class="feature-hero-wall" aria-label="Archive inspiration wall">
+        {% for product in products[:28] %}
+        <a class="feature-wall-card" href="{{ url_for('root.product', slug=product.slug) }}">
+            <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="{% if loop.index <= 16 %}eager{% else %}lazy{% endif %}" decoding="async">
+        </a>
+        {% endfor %}
     </div>
 </section>
 
-<section class="feature-panel">
-    <form class="search-line" action="{{ url_for('root.gallery') }}" method="GET">
-        <input type="search" name="q" placeholder="Search what u want to see">
-        <button type="submit">Search</button>
-    </form>
+<section class="feature-mobile-showcase">
+    <div class="feature-phone-board" aria-label="Mobile archive preview">
+        <div class="feature-profile-strip">
+            <strong>Nova Blaine</strong>
+            <span>Visual Archive</span>
+            <small>270K saves · 15 boards · 1M views</small>
+        </div>
+        <div class="feature-phone-grid">
+            {% for product in products[:10] %}
+            <img src="{{ product.image_url }}" alt="{{ product.title }} mobile preview" loading="lazy" decoding="async">
+            {% endfor %}
+        </div>
+    </div>
 
-    <div class="feature-cards">
+    <div class="feature-copy-block">
+        <span>Mobile App</span>
+        <h2>Inspiration on the go</h2>
+        <p>Save from anywhere with just a tap. Our mobile app makes it effortless to collect ideas, organize them, and keep your inspiration close at hand.</p>
+        <div class="feature-store-row">
+            <a href="{{ url_for('root.gallery') }}">iOS</a>
+            <a href="{{ url_for('root.gallery') }}">Android</a>
+        </div>
+    </div>
+</section>
+
+<section class="feature-search-story">
+    <div class="feature-copy-block">
+        <span>Powerful discovery</span>
+        <h2>Search by Image & Color</h2>
+        <p>Upload an image or filter by color to discover visually similar content. Whether you are building a mood board or designing your next project, photoArchive helps surface the right ideas instantly.</p>
+        <a class="feature-light-button" href="{{ url_for('root.search') }}">Try our search</a>
+    </div>
+
+    <div class="feature-search-visual" aria-label="Search by color interface">
+        <div class="feature-color-bar"></div>
+        <div class="feature-search-panel">
+            <span>By image</span>
+            <strong>Drop an image here or upload</strong>
+            <small>Search similar colors, moods, and archive references</small>
+        </div>
+        {% if products|length > 10 %}
+        <img src="{{ products[10].image_url }}" alt="{{ products[10].title }} color preview" loading="lazy" decoding="async">
+        {% endif %}
+    </div>
+</section>
+
+<section class="feature-discover-story">
+    <div class="feature-side-stack" aria-label="Related inspiration previews">
+        {% for product in products[11:16] %}
+        <a href="{{ url_for('root.product', slug=product.slug) }}">
+            <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="lazy" decoding="async">
+        </a>
+        {% endfor %}
+    </div>
+
+    <div class="feature-copy-block">
+        <span>Related content</span>
+        <h2>Discover more like it</h2>
+        <p>When you save something you love, photoArchive shows visually related inspiration to expand your exploration. It is like having a curator by your side, helping you go deeper into the worlds that spark your ideas.</p>
+        <a class="feature-light-button" href="{{ url_for('root.gallery') }}">Start exploring</a>
+    </div>
+</section>
+
+<section class="feature-grid-story">
+    <div class="feature-copy-block">
+        <span>Customize your grid</span>
+        <h2>Your inspiration, your way</h2>
+        <p>Adjust columns, spacing, and layout until your grid feels just right. photoArchive adapts to your workflow, not the other way around.</p>
+        <a class="feature-light-button" href="{{ url_for('upload.upload') }}">Give it a try</a>
+    </div>
+</section>
+
+<section class="feature-beyond" id="reviews">
+    <div class="feature-section-heading">
+        <h2>Beyond inspiration</h2>
+        <p>We are more than a place to save and discover. photoArchive offers resources to help you and your team expand your work and grow as visual thinkers.</p>
+    </div>
+
+    <div class="feature-resource-grid">
         <article>
-            <span>01</span>
-            <h2>Upload</h2>
-            <p>여러 장의 사진을 선택해 사용자별 아카이브에 저장합니다.</p>
+            <span>Marketplace</span>
+            <h3>Browse visual templates</h3>
+            <p>Explore photo bundles and archive boards made for mood, memory, and visual research.</p>
+            <a class="feature-light-button" href="{{ url_for('root.gallery') }}">Give it a try</a>
         </article>
         <article>
-            <span>02</span>
-            <h2>Gallery</h2>
-            <p>저장된 사진을 카드와 보드 형태로 다시 열람합니다.</p>
+            {% if products|length > 16 %}
+            <img src="{{ products[16].image_url }}" alt="{{ products[16].title }} course preview" loading="lazy" decoding="async">
+            {% endif %}
+            <span>Visual Design Course</span>
+            <h3>Learn how inspiration shapes design</h3>
+            <p>Practical lessons on input, typography, color, and archive habits.</p>
+            <a class="feature-light-button" href="{{ url_for('root.page', slug='about-us') }}">Explore the course</a>
         </article>
         <article>
-            <span>03</span>
-            <h2>Search</h2>
-            <p>사진 제목, 날짜, 장소 정보를 기준으로 빠르게 찾습니다.</p>
-        </article>
-        <article>
-            <span>Next</span>
-            <h2>TOP10</h2>
-            <p>좋아요 기반 인기 사진 랭킹으로 확장할 수 있습니다.</p>
+            <div class="feature-mini-grid">
+                {% for product in products[17:23] %}
+                <img src="{{ product.image_url }}" alt="{{ product.title }} builder preview" loading="lazy" decoding="async">
+                {% endfor %}
+            </div>
+            <span>Site Builder</span>
+            <h3>Turn your archive into a portfolio</h3>
+            <p>Publish boards, stories, and collections from your saved references.</p>
+            <a class="feature-light-button" href="{{ url_for('root.whats_new') }}">Check out</a>
         </article>
     </div>
+</section>
+
+<section class="feature-final-card" data-floating-stop>
+    <h2>Inspiration is one click away</h2>
+    <p>High-quality visual references curated to help you create your next project.</p>
+    <a class="pa-blue-button" href="{{ url_for('upload.upload') }}">Curate your taste</a>
+    <span>Join over 1M users</span>
 </section>
 {% endblock %}

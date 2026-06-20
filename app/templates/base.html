@@ -8,24 +8,42 @@
 </head>
 <body class="{{ body_class|default('') }}">
     {% set endpoint = request.endpoint or '' %}
+    {% set is_home = body_class|default('') == 'page-home' %}
+    {% set is_marketing = body_class|default('') in ['page-home', 'page-feature'] %}
     <header class="site-header">
         <div class="header-inner">
-            <a class="brand" href="{{ url_for('root.root') }}" aria-label="photoArchive 홈">PA</a>
+            <a class="brand" href="{{ url_for('root.root') }}" aria-label="photoArchive home">photoArchive</a>
 
-            <nav class="site-nav" aria-label="주요 메뉴">
-                <a class="{% if endpoint == 'root.root' %}is-active{% endif %}" href="{{ url_for('root.root') }}">home</a>
-                <a class="{% if endpoint == 'root.feature' %}is-active{% endif %}" href="{{ url_for('root.feature') }}">feature</a>
-                <a class="{% if endpoint == 'root.gallery' %}is-active{% endif %}" href="{{ url_for('root.gallery') }}">gallery</a>
-                <a href="{{ url_for('root.gallery') }}#top10">TOP10</a>
+            <button class="menu-toggle" type="button" aria-label="Open menu" aria-controls="site-menu" aria-expanded="false" data-menu-toggle>
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="site-nav" id="site-menu" aria-label="주요 메뉴">
+                {% if is_marketing %}
+                <a href="#features">Features</a>
+                <a href="{{ url_for('root.gallery') }}">Marketplace</a>
+                <a href="{{ url_for('root.whats_new') }}">What's new</a>
+                <a href="#reviews">Reviews</a>
+                {% else %}
+                <a class="{% if endpoint == 'root.root' %}is-active{% endif %}" href="{{ url_for('root.root') }}">Home</a>
+                <a class="{% if endpoint in ['root.whats_new', 'root.whats_new_detail'] %}is-active{% endif %}" href="{{ url_for('root.whats_new') }}">What's new</a>
+                <a href="{{ url_for('root.collection', slug='all') }}">All Photos</a>
+                <a href="{{ url_for('root.collection', slug='after-effects') }}">Seaside</a>
+                <a href="{{ url_for('root.collection', slug='figma-templates') }}">City</a>
+                <a href="{{ url_for('root.collection', slug='jitter') }}">Moments</a>
+                <a href="{{ url_for('root.collection', slug='bundles') }}">Stories</a>
+                {% endif %}
             </nav>
 
             <div class="header-actions">
                 {% if session.get('user_id') %}
                     <a class="plain-link" href="{{ url_for('auth.logout') }}">Logout</a>
-                    <a class="outline-button" href="{{ url_for('upload.upload') }}">Upload</a>
+                    <a class="outline-button" href="{{ url_for('root.cart') }}">{% if is_marketing %}Get inside{% else %}Saved{% endif %}</a>
                 {% else %}
                     <a class="plain-link" href="{{ url_for('auth.login') }}">Login</a>
-                    <a class="outline-button" href="{{ url_for('auth.register') }}">Get Start</a>
+                    <a class="outline-button" href="{% if is_marketing %}{{ url_for('auth.register') }}{% else %}{{ url_for('root.cart') }}{% endif %}">{% if is_marketing %}Sign up{% else %}Saved{% endif %}</a>
                 {% endif %}
             </div>
         </div>
@@ -36,16 +54,311 @@
         {% endblock %}
     </main>
 
-    <footer class="site-footer">
-        <div>
-            <strong>PA</strong>
-            <span>Archive your photos, projects, and memories.</span>
+    <div class="pa-floating-shell" aria-label="Quick navigation" data-floating-nav>
+        <nav class="pa-floating-nav">
+            <a class="pa-floating-link" href="{% if is_marketing %}#features{% else %}{{ url_for('root.root') }}#features{% endif %}" data-floating-section="features">Features</a>
+            <a class="pa-floating-link {% if endpoint in ['root.gallery', 'root.search', 'root.collection', 'root.product'] %}is-active{% endif %}" href="{{ url_for('root.gallery') }}">Marketplace</a>
+            <a class="pa-floating-link {% if endpoint in ['root.whats_new', 'root.whats_new_detail'] %}is-active{% endif %}" href="{{ url_for('root.whats_new') }}">What's new</a>
+            <a class="pa-floating-link" href="{% if is_marketing %}#reviews{% else %}{{ url_for('root.root') }}#reviews{% endif %}" data-floating-section="reviews">Reviews</a>
+            <a class="is-pill" href="{% if session.get('user_id') %}{{ url_for('upload.upload') }}{% else %}{{ url_for('auth.register') }}{% endif %}">{% if session.get('user_id') %}Open archive{% else %}Join over 1M users{% endif %}</a>
+        </nav>
+    </div>
+
+    <footer class="site-footer{% if is_marketing %} pa-home-footer{% endif %}" id="footer">
+        {% if is_marketing %}
+        <div class="pa-home-footer-grid">
+            <div class="pa-footer-brand">
+                <strong>photoArchive</strong>
+                <span>Follow us</span>
+                <div>
+                    <a href="#" aria-label="Instagram">IG</a>
+                    <a href="#" aria-label="X">X</a>
+                    <a href="#" aria-label="YouTube">YT</a>
+                    <a href="#" aria-label="TikTok">TT</a>
+                </div>
+            </div>
+
+            <nav class="pa-footer-column" aria-label="About us">
+                <strong>About us</strong>
+                <a href="{{ url_for('root.page', slug='about-us') }}">How it started</a>
+                <a href="#features">Features</a>
+                <a href="{{ url_for('root.collection', slug='all') }}">Pricing</a>
+                <a href="{{ url_for('root.page', slug='licenses') }}">Keyboard Shortcuts</a>
+                <a href="{{ url_for('root.page', slug='refunds-policy') }}">Students Discount</a>
+                <a href="{{ url_for('root.whats_new') }}">Blog</a>
+                <a href="{{ url_for('root.page', slug='contact-us') }}">FAQ</a>
+                <a href="{{ url_for('root.page', slug='privacy-policy') }}">Privacy Policy</a>
+                <a href="{{ url_for('root.page', slug='contact-us') }}">Contact us</a>
+            </nav>
+
+            <nav class="pa-footer-column" aria-label="Downloads">
+                <strong>Downloads</strong>
+                <a href="{{ url_for('upload.upload') }}">Upload Board</a>
+                <a href="{{ url_for('root.gallery') }}">Gallery App</a>
+                <a href="{{ url_for('root.collection', slug='figma-templates') }}">Tag Plugin</a>
+                <a href="{{ url_for('root.collection', slug='jitter') }}">Chrome Extension</a>
+                <a href="{{ url_for('root.collection', slug='bundles') }}">Mobile Shelf</a>
+            </nav>
+
+            <nav class="pa-footer-column" aria-label="Features">
+                <strong>Features</strong>
+                <a href="{{ url_for('root.whats_new') }}">Create your shelf</a>
+                <a href="{{ url_for('root.collection', slug='bundles') }}">For Teams</a>
+                <a href="{{ url_for('root.gallery') }}">Marketplace</a>
+                <a href="{{ url_for('root.collection', slug='all') }}">Course</a>
+            </nav>
         </div>
-        <div>
-            <a href="{{ url_for('root.gallery') }}">Gallery</a>
-            <a href="{{ url_for('root.feature') }}">Feature</a>
-            <a href="{{ url_for('upload.upload') }}">Upload</a>
+
+        <div class="pa-footer-bottom">
+            <span>© photoArchive, Inc. 2026</span>
+            <span>Don't forget to have fun.</span>
+            <span>Made with care for visual minds</span>
         </div>
+        {% else %}
+        <div class="footer-top">
+            <p class="footer-statement">Memory for<br>everyone by<br>photoArchive.</p>
+
+            <nav class="footer-column" aria-label="Footer links">
+                <span>Links</span>
+                <a href="{{ url_for('root.page', slug='about-us') }}">About us</a>
+                <a href="{{ url_for('root.page', slug='licenses') }}">Archive Rule</a>
+                <a href="{{ url_for('root.collection', slug='all') }}">All photos</a>
+                <a href="{{ url_for('root.collection', slug='bundles') }}">Stories</a>
+                <a href="{{ url_for('root.whats_new') }}">What's new</a>
+                <a href="{{ url_for('root.page', slug='contact-us') }}">Contact us</a>
+                <a href="{{ url_for('root.page', slug='refunds-policy') }}">Data Guide</a>
+                <a href="{{ url_for('root.page', slug='seller-profile') }}">Profile</a>
+            </nav>
+
+            <nav class="footer-column" aria-label="Social links">
+                <span>Social</span>
+                <a href="#">Instagram</a>
+                <a href="#">TikTok</a>
+                <a href="#">X</a>
+                <a href="#">Facebook</a>
+                <a href="#">Threads</a>
+                <a href="#">YouTube</a>
+                <a href="{{ url_for('root.root') }}">photoArchive</a>
+            </nav>
+        </div>
+
+        <small class="footer-copy">© 2026, photoArchive</small>
+        <strong class="footer-brandmark">photoArchive</strong>
+        {% endif %}
     </footer>
+
+    <script>
+        (() => {
+            const disabledPages = ['page-gallery', 'page-whats-new'];
+            if (disabledPages.some((pageClass) => document.body.classList.contains(pageClass))) {
+                return;
+            }
+
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const revealTargets = Array.from(document.querySelectorAll([
+                '.page-home .pa-hero-copy h1',
+                '.page-home .pa-hero-copy p',
+                '.page-home .pa-hero-copy .pa-blue-button',
+                '.page-home .pa-hero-copy > span',
+                '.page-home .pa-wall-card',
+                '.page-home .pa-logo-band > p',
+                '.page-home .pa-logo-marquee',
+                '.page-home .pa-story-copy',
+                '.page-home .pa-quote-card',
+                '.page-home .pa-platforms',
+                '.page-home .pa-section-heading',
+                '.page-home .pa-feature-grid article',
+                '.page-home .pa-preview-grid a',
+                '.page-home .pa-final-cta',
+                '.page-product .product-media',
+                '.page-product .product-info',
+                '.page-product .product-card',
+                '.page-cart .cart-items article',
+                '.page-cart .cart-summary',
+                '.page-auth .auth-panel',
+                '.page-upload .upload-stage',
+                '.page-static .page-shell',
+                '.page-feature .feature-stage',
+                '.page-feature .feature-panel',
+                '.page-feature .feature-hero-copy',
+                '.page-feature .feature-wall-card',
+                '.page-feature .feature-phone-board',
+                '.page-feature .feature-copy-block',
+                '.page-feature .feature-search-visual',
+                '.page-feature .feature-side-stack a',
+                '.page-feature .feature-section-heading',
+                '.page-feature .feature-resource-grid article',
+                '.page-feature .feature-final-card',
+            ].join(','))).filter((element) => {
+                const hasContent = element.textContent.trim() || element.querySelector('img, input, button, textarea, select');
+                return hasContent && !element.closest('[data-no-reveal]');
+            });
+            const heroTitle = document.querySelector('.page-home .pa-hero-copy h1');
+
+            revealTargets.forEach((element, index) => {
+                const revealClass = element === heroTitle ? 'title-gradient-reveal' : 'reveal-item';
+                element.style.setProperty('--reveal-delay', `${Math.min(index % 8, 7) * 60}ms`);
+                element.classList.add(revealClass);
+            });
+
+            if (reduceMotion || !('IntersectionObserver' in window)) {
+                revealTargets.forEach((element) => element.classList.add('is-revealed'));
+                return;
+            }
+
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    }
+
+                    entry.target.classList.add('is-revealed');
+                    observer.unobserve(entry.target);
+                });
+            }, {
+                rootMargin: '0px 0px -12% 0px',
+                threshold: 0.12,
+            });
+
+            revealTargets.forEach((element) => revealObserver.observe(element));
+        })();
+
+        (() => {
+            const floatingNav = document.querySelector('[data-floating-nav]');
+            if (!floatingNav) {
+                return;
+            }
+
+            const sectionLinks = Array.from(floatingNav.querySelectorAll('[data-floating-section]'));
+            const sections = sectionLinks
+                .map((link) => ({ link, section: document.getElementById(link.dataset.floatingSection) }))
+                .filter((item) => item.section);
+            const footer = document.querySelector('.site-footer');
+            const stopTarget = document.querySelector('[data-floating-stop]');
+            let ticking = false;
+            let idleTimer = 0;
+
+            const setActiveSection = () => {
+                if (!sections.length) {
+                    return;
+                }
+
+                let activeItem = null;
+                const activationLine = window.innerHeight * 0.52;
+
+                sections.forEach((item) => {
+                    const rect = item.section.getBoundingClientRect();
+                    if (rect.top <= activationLine && rect.bottom >= activationLine) {
+                        activeItem = item;
+                    }
+                });
+
+                sectionLinks.forEach((link) => link.classList.remove('is-current'));
+                if (activeItem) {
+                    activeItem.link.classList.add('is-current');
+                }
+            };
+
+            const updateFloatingNav = () => {
+                const scrollY = window.scrollY || document.documentElement.scrollTop;
+                const pageHeight = document.documentElement.scrollHeight;
+                const canScroll = pageHeight > window.innerHeight + 260;
+                const footerTop = footer ? footer.getBoundingClientRect().top : pageHeight;
+                const stopTop = stopTarget ? stopTarget.getBoundingClientRect().top : footerTop;
+                const lowerLimitTop = Math.min(footerTop, stopTop);
+                const isNearTop = scrollY < Math.min(220, window.innerHeight * 0.28);
+                const isNearFooter = lowerLimitTop < window.innerHeight - 72;
+                const shouldShow = canScroll && !isNearTop && !isNearFooter;
+
+                floatingNav.classList.toggle('is-visible', shouldShow);
+                floatingNav.classList.toggle('is-near-footer', isNearFooter);
+                setActiveSection();
+                ticking = false;
+            };
+
+            const requestUpdate = () => {
+                floatingNav.classList.add('is-moving');
+                window.clearTimeout(idleTimer);
+                idleTimer = window.setTimeout(() => {
+                    floatingNav.classList.remove('is-moving');
+                }, 180);
+
+                if (!ticking) {
+                    window.requestAnimationFrame(updateFloatingNav);
+                    ticking = true;
+                }
+            };
+
+            window.addEventListener('scroll', requestUpdate, { passive: true });
+            window.addEventListener('resize', requestUpdate);
+            updateFloatingNav();
+        })();
+
+        (() => {
+            const newsDock = document.querySelector('[data-news-dock]');
+            if (!newsDock) {
+                return;
+            }
+
+            const footer = document.querySelector('.site-footer');
+            let ticking = false;
+
+            const updateNewsDock = () => {
+                const dockBottom = window.innerWidth <= 620 ? 12 : 18;
+                const footerTop = footer ? footer.getBoundingClientRect().top : window.innerHeight;
+                const lift = Math.max(0, window.innerHeight - dockBottom - footerTop + 16);
+
+                newsDock.style.setProperty('--news-dock-lift', `${lift}px`);
+                ticking = false;
+            };
+
+            const requestUpdate = () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(updateNewsDock);
+                    ticking = true;
+                }
+            };
+
+            window.addEventListener('scroll', requestUpdate, { passive: true });
+            window.addEventListener('resize', requestUpdate);
+            updateNewsDock();
+        })();
+
+        (() => {
+            const menuToggle = document.querySelector('[data-menu-toggle]');
+            const siteNav = document.getElementById('site-menu');
+            if (!menuToggle || !siteNav) {
+                return;
+            }
+
+            const setMenuState = (isOpen) => {
+                document.body.classList.toggle('is-menu-open', isOpen);
+                menuToggle.setAttribute('aria-expanded', String(isOpen));
+                menuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+            };
+
+            menuToggle.addEventListener('click', () => {
+                setMenuState(!document.body.classList.contains('is-menu-open'));
+            });
+
+            siteNav.addEventListener('click', (event) => {
+                if (event.target.closest('a')) {
+                    setMenuState(false);
+                }
+            });
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 860) {
+                    setMenuState(false);
+                }
+            });
+
+            window.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    setMenuState(false);
+                }
+            });
+        })();
+    </script>
 </body>
 </html>

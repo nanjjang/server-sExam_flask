@@ -2,28 +2,38 @@
 
 {% block content %}
 <section class="auth-page">
-    <a class="auth-logo" href="{{ url_for('root.root') }}">PA</a>
-    <h1>Log in to PA</h1>
+    <div class="auth-loader" aria-hidden="true">
+        <strong>photoArchive</strong>
+        <h1>Let's get you inside</h1>
+        <p>Just checking your archive...</p>
+    </div>
 
-    <form class="auth-form" method="POST" action="{{ url_for('auth.login') }}">
-        {% if error %}
-        <p class="form-error">{{ error }}</p>
-        {% endif %}
+    <a class="auth-back" href="{{ url_for('root.root') }}">‹ Back</a>
 
-        <label>
-            <span>ID</span>
-            <input type="text" name="username" required>
-        </label>
-        <label>
-            <span>Password</span>
-            <input type="password" name="password" required>
-        </label>
+    <div class="auth-panel">
+        <strong class="auth-wordmark">photoArchive</strong>
+        <h1>Let's get you inside</h1>
+        <p>Enter your archive ID and password to continue.</p>
 
-        <button type="submit">Sign in</button>
-        <div class="divider"><span>or</span></div>
-        <a class="google-button" href="{{ url_for('auth.register') }}">Create an account</a>
-    </form>
+        <form class="auth-form" method="POST" action="{{ url_for('auth.login') }}">
+            {% if error %}
+            <p class="form-error">{{ error }}</p>
+            {% endif %}
 
-    <footer>@Copyright PA<br>Photo Archive</footer>
+            <label>
+                <span>ID</span>
+                <input type="text" name="username" placeholder="your_archive_id" required>
+            </label>
+            <label>
+                <span>Password</span>
+                <input type="password" name="password" placeholder="password" required>
+            </label>
+
+            <button type="submit">Sign in</button>
+            <a class="auth-sub-link" href="{{ url_for('auth.register') }}">Create an account</a>
+        </form>
+    </div>
+
+    <p class="auth-policy">By continuing, you agree to your personal photoArchive.</p>
 </section>
 {% endblock %}

@@ -1,0 +1,200 @@
+@media (max-width: 1120px) {
+    .listing-hero,
+    .collection-hero,
+    .product-page,
+    .cart-layout,
+    .auth-page {
+        grid-template-columns: 1fr;
+    }
+
+    .product-media,
+    .cart-summary {
+        position: static;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .footer-top {
+        grid-template-columns: 1fr 1fr;
+        gap: 70px;
+    }
+
+    .footer-statement {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 860px) {
+    .site-header {
+        height: auto;
+    }
+
+    .header-inner,
+    .page-home .header-inner {
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 12px;
+        align-items: center;
+        padding: 14px 0;
+    }
+
+    .brand,
+    .page-home .brand,
+    .header-actions {
+        justify-self: start;
+    }
+
+    .menu-toggle {
+        display: grid;
+        justify-self: end;
+    }
+
+    .site-nav,
+    .page-home .site-nav,
+    .header-actions,
+    .page-home .header-actions {
+        display: none;
+    }
+
+    .is-menu-open .site-nav,
+    .is-menu-open.page-home .site-nav {
+        display: grid;
+        grid-column: 1 / -1;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        width: 100%;
+    }
+
+    .is-menu-open .header-actions,
+    .is-menu-open.page-home .header-actions {
+        display: grid;
+        grid-column: 1 / -1;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        width: 100%;
+    }
+
+    .site-nav a,
+    .page-home .site-nav a,
+    .header-actions a,
+    .page-home .header-actions a {
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.05);
+        padding: 0 14px;
+    }
+
+    .page-home .site-nav a,
+    .page-home .header-actions a {
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .product-grid,
+    .feature-cards,
+    .news-card,
+    .news-card-featured {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .section-title {
+        grid-template-columns: 1fr;
+    }
+
+    .pa-floating-nav {
+        min-height: 68px;
+        justify-content: flex-start;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .pa-floating-nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    .pa-floating-nav a {
+        min-height: 48px;
+        flex: 0 0 auto;
+        padding: 0 22px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 640px) {
+    .listing-hero,
+    .collection-hero,
+    .product-section,
+    .product-page,
+    .cart-page,
+    .page-shell,
+    .whats-new-page,
+    .news-detail-page,
+    .feature-stage,
+    .feature-panel,
+    .upload-stage {
+        padding-right: 22px;
+        padding-left: 22px;
+    }
+
+    .listing-hero,
+    .collection-hero {
+        min-height: auto;
+        padding-top: 74px;
+        grid-template-columns: 1fr;
+    }
+
+    .search-line {
+        min-height: 0;
+        align-items: stretch;
+        border-radius: 28px;
+        flex-direction: column;
+    }
+
+    .search-line button {
+        width: 100%;
+        min-height: 46px;
+    }
+
+    .product-grid,
+    .feature-cards,
+    .news-card,
+    .news-card-featured,
+    .cart-layout,
+    .footer-top,
+    .pa-home-footer-grid,
+    .pa-footer-bottom {
+        grid-template-columns: 1fr;
+    }
+
+    .product-row,
+    .price-line {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .cart-items article {
+        grid-template-columns: 88px 1fr;
+    }
+
+    .cart-items img {
+        width: 88px;
+        height: 78px;
+    }
+
+    .cart-items b {
+        grid-column: 2;
+    }
+
+    .footer-brandmark {
+        max-width: calc(100% - 44px);
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        white-space: normal;
+        font-size: clamp(42px, 17vw, 78px);
+        letter-spacing: -0.08em;
+    }
+}

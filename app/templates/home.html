@@ -1,68 +1,154 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<section class="home-stage">
-    <div class="noise-dot dot-purple"></div>
-    <div class="noise-dot dot-olive"></div>
-    <div class="noise-dot dot-red"></div>
+<section class="pa-landing-hero">
+    <div class="pa-hero-copy">
+        <h1>Made for visual minds</h1>
+        <p>Browse photographs curated by your archive.<br>Find the best visual references for your next memory.</p>
+        <a class="pa-blue-button" href="{{ url_for('upload.upload') }}">Curate your taste</a>
+        <span>Join over 1M saved moments</span>
+    </div>
 
-    <div class="stage-copy">
-        <p class="micro">Archive of Photography</p>
-        <h1>Welcome to PA</h1>
-        <p>
-            PA는 사진을 저장하고, 다시 꺼내보고, 나만의 갤러리로 정리하는
-            디지털 아카이브입니다.
-        </p>
-        <div class="stage-actions">
-            <a href="{{ url_for('upload.upload') }}">CLICK</a>
-            <span>upload your photos</span>
+    <div class="pa-visual-wall" aria-label="photoArchive visual board">
+        {% for product in products[:12] %}
+        <a class="pa-wall-card pa-wall-card-{{ loop.index }}" href="{{ url_for('root.product', slug=product.slug) }}">
+            <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="lazy" decoding="async">
+            <span>{{ product.collection_label }}</span>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="pa-logo-band" aria-label="Trusted by creators">
+    <p>Used by visual creators and archive teams</p>
+    <div class="pa-logo-marquee">
+        <div>
+            <span>PORTO LENS</span>
+            <span>Archive Lab</span>
+            <span>Studio PA</span>
+            <span>Open Frame</span>
+            <span>Daily Mood</span>
+            <span>Cloud Shelf</span>
+            <span>PORTO LENS</span>
+            <span>Archive Lab</span>
+            <span>Studio PA</span>
+            <span>Open Frame</span>
         </div>
     </div>
+</section>
 
-    <div class="floating-archive" aria-label="사진 아카이브 미리보기">
-        {% for photo in photos %}
-        <figure class="float-card float-card-{{ loop.index }}">
-            <img src="{{ photo.url }}" alt="{{ photo.title }} 사진">
-            <figcaption>{{ photo.title }}</figcaption>
-        </figure>
+<section class="pa-story-section" id="reviews">
+    <div class="pa-story-copy">
+        <h2>We built photoArchive because we needed it.</h2>
+        <p>A place to save everything that moves you. A photograph, a color, a street, a small moment that should not disappear.</p>
+        <p>We are a small independent archive for people who think with images and return to memories before making something new.</p>
+    </div>
+
+
+     <div class="pa-quote-card-grid">
+        <article>
+            <h3>Smart boards</h3>
+            <p>Organize your saves with client-selected tags, clear categories, and a calm browsing rhythm.</p>
+        </article>
+        <article>
+            <h3>Powerful discovery</h3>
+            <p>Find exactly what you are looking for with collections, search, previews, and recent uploads.</p>
+        </article>
+        <article>
+            <h3>Community driven</h3>
+            <p>Explore trending memories and build stories from seaside, city, moments, and personal archives.</p>
+        </article>
+    </div>
+
+
+    <div class="pa-quote-card">
+        <span class="pa-avatar">pA</span>
+        <div>
+            <strong>photoArchive Studio</strong>
+            <small>Co-founder, visual memory shelf</small>
+        </div>
+    </div>
+</section>
+
+<section class="pa-platforms">
+    <p>Available on all your favorite workflows.</p>
+    <div>
+        <span>Upload Board</span>
+        <span>Browser Gallery</span>
+        <span>Tag Archive</span>
+        <span>Mobile Shelf</span>
+    </div>
+</section>
+
+<section class="pa-feature-section" id="features">
+    <div class="pa-section-heading">
+        <h2>Designed to inspire</h2>
+        <p>Explore, save, organize and share. photoArchive gives you all the essentials to refine your visual taste.</p>
+    </div>
+
+    <div class="pa-feature-grid">
+        <article>
+            <h3>Smart boards</h3>
+            <p>Organize your saves with client-selected tags, clear categories, and a calm browsing rhythm.</p>
+        </article>
+        <article>
+            <h3>Powerful discovery</h3>
+            <p>Find exactly what you are looking for with collections, search, previews, and recent uploads.</p>
+        </article>
+        <article>
+            <h3>Community driven</h3>
+            <p>Explore trending memories and build stories from seaside, city, moments, and personal archives.</p>
+        </article>
+    </div>
+</section>
+
+<section class="pa-market-preview" id="new">
+    <div class="pa-section-heading">
+        <h2>Fresh archive drops</h2>
+        <p>Recent uploads flow into a cinematic shelf, ready to be opened, saved, and sorted.</p>
+    </div>
+
+    <div class="pa-preview-grid">
+        {% for product in products[:6] %}
+        <a href="{{ url_for('root.product', slug=product.slug) }}">
+            <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="lazy" decoding="async">
+            <span>{{ product.collection_label }}</span>
+            <strong>{{ product.title }}</strong>
+        </a>
         {% endfor %}
     </div>
 </section>
 
-<section class="archive-intro">
-    <div class="section-title">
-        <p>→ Archive</p>
-        <h2>자신의 사진을 모아보세요.</h2>
+<section class="archive-shelf-section">
+    <div class="archive-shelf-heading">
+        <h2>Archive shelf</h2>
+        <p>Browse quick previews before opening a full photo record.</p>
     </div>
 
-    <div class="archive-marquee" aria-label="최근 사진 목록">
-        {% if photos %}
+    <div class="archive-marquee" aria-label="Photo archive shelf previews">
         {% for row in range(3) %}
-            <div class="marquee-row">
-                {% for photo in photos %}
-                <a class="marquee-card" href="{{ photo.url }}">
-                    <img src="{{ photo.url }}" alt="{{ photo.title }} 사진" loading="lazy" decoding="async">
-                    <span>{{ photo.title }}</span>
-                </a>
-                {% endfor %}
-                {% for photo in photos %}
-                <a class="marquee-card" href="{{ photo.url }}">
-                    <img src="{{ photo.url }}" alt="{{ photo.title }} 사진" loading="lazy" decoding="async">
-                    <span>{{ photo.title }}</span>
-                </a>
-                {% endfor %}
-            </div>
+        <div class="marquee-row">
+            {% for product in products %}
+            <a class="marquee-card" href="{{ url_for('root.product', slug=product.slug) }}">
+                <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="lazy" decoding="async">
+                <span>{{ product.title }} · {{ product.price }}</span>
+            </a>
+            {% endfor %}
+            {% for product in products %}
+            <a class="marquee-card" href="{{ url_for('root.product', slug=product.slug) }}">
+                <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="lazy" decoding="async">
+                <span>{{ product.title }} · {{ product.price }}</span>
+            </a>
+            {% endfor %}
+        </div>
         {% endfor %}
-        {% else %}
-        <div class="empty-light">아직 업로드된 사진이 없습니다.</div>
-        {% endif %}
     </div>
 </section>
 
-<section class="learn-section">
-    <p class="micro dark">PhotoArchive</p>
-    <h2>사진을 올리고, 분류하고, 다시 발견하기</h2>
-    <p>단순한 업로드 페이지가 아니라, 사진을 아카이브처럼 정리하는 경험을 목표로 합니다.</p>
-    <a class="large-pill" href="{{ url_for('root.gallery') }}">시작하기</a>
+<section class="pa-final-cta">
+    <h2>Inspiration is one click away</h2>
+    <p>High-quality photo references curated to help you remember, design, and create your next project.</p>
+    <a class="pa-blue-button" href="{{ url_for('root.gallery') }}">Find inspiration</a>
+    <span>Join over 1M saved moments</span>
 </section>
 {% endblock %}

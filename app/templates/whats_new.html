@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="whats-new-page" aria-labelledby="whats-new-title">
+    <div class="whats-new-shell">
+        <p class="news-logotype">photoArchive</p>
+        <h1 id="whats-new-title" class="sr-only">What's new</h1>
+
+        {% if hero_post %}
+        <article class="news-card news-hero-card">
+            <a class="news-card-media" href="{{ hero_post.url }}">
+                {% if hero_post.image_url %}
+                <img src="{{ hero_post.image_url }}" alt="{{ hero_post.image_alt }} preview" loading="eager" decoding="async">
+                {% endif %}
+            </a>
+
+            <div class="news-card-copy">
+                <h2><a href="{{ hero_post.url }}">{{ hero_post.title }}</a></h2>
+                <p>{{ hero_post.excerpt }}</p>
+                <time>{{ hero_post.date }}</time>
+                <a class="news-read-button" href="{{ hero_post.url }}">Read more</a>
+            </div>
+        </article>
+        {% endif %}
+
+        <nav class="news-topic-dock" aria-label="News topics" data-news-dock>
+            <a class="is-active" href="{{ url_for('root.whats_new') }}">Blog</a>
+            <a href="{{ url_for('root.collection', slug='all') }}">Inspiration</a>
+            <a href="{{ url_for('root.gallery') }}">Marketplace</a>
+            <a href="{{ url_for('root.page', slug='about-us') }}">Course</a>
+            <a class="news-topic-search" href="{{ url_for('root.search') }}" aria-label="Search">Search</a>
+        </nav>
+
+        <div class="news-card-grid">
+            {% for post in posts %}
+            <article class="news-card">
+                <a class="news-card-media" href="{{ post.url }}">
+                    {% if post.image_url %}
+                    <img src="{{ post.image_url }}" alt="{{ post.image_alt }} preview" loading="lazy" decoding="async">
+                    {% endif %}
+                </a>
+
+                <div class="news-card-copy">
+                    <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+                    <p>{{ post.excerpt }}</p>
+                    <time>{{ post.date }}</time>
+                    <a class="news-read-button" href="{{ post.url }}">Read more</a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
