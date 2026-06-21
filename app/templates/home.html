@@ -1,71 +1,53 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<section class="pa-landing-hero">
-    <div class="pa-hero-copy">
+<section class="hero">
+    <div class="hero-copy">
         <h1>Made for visual minds</h1>
         <p>Browse photographs curated by your archive.<br>Find the best visual references for your next memory.</p>
-        <a class="pa-blue-button" href="{{ url_for('upload.upload') }}">Curate your taste</a>
+        <a class="blue-btn" href="{{ url_for('upload.upload') }}">Curate your taste</a>
         <span>Join over 1M saved moments</span>
     </div>
 
-    <div class="pa-visual-wall" aria-label="photoArchive visual board">
-        <div class="wall-col">
-            {% for product in products[0:2] %}
-            <a class="pa-wall-card" href="{{ url_for('root.product', slug=product.slug) }}">
-                <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="lazy" decoding="async">
-                <span>{{ product.collection_label }}</span>
-            </a>
+    <div class="globe" aria-label="photoArchive visual globe" data-globe data-no-anim>
+        {% if products %}
+            {% for batch in range(4) %}
+                {% set batch_index = batch %}
+                {% for product in products[:10] %}
+                    {% set globe_index = batch_index * 10 + loop.index0 %}
+                    <a class="globe-card" href="{{ url_for('root.product', slug=product.slug) }}" aria-label="{{ product.title }} preview">
+                        <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="{% if globe_index < 12 %}eager{% else %}lazy{% endif %}" decoding="async">
+                        {% if globe_index % 10 == 0 %}
+                        <span>{{ product.collection_label }}</span>
+                        {% endif %}
+                    </a>
+                {% endfor %}
             {% endfor %}
-        </div>
-        <div class="wall-col">
-            {% for product in products[2:4] %}
-            <a class="pa-wall-card" href="{{ url_for('root.product', slug=product.slug) }}">
-                <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="lazy" decoding="async">
-                <span>{{ product.collection_label }}</span>
-            </a>
-            {% endfor %}
-        </div>
-        <div class="wall-col">
-            {% for product in products[4:6] %}
-            <a class="pa-wall-card" href="{{ url_for('root.product', slug=product.slug) }}">
-                <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="lazy" decoding="async">
-                <span>{{ product.collection_label }}</span>
-            </a>
-            {% endfor %}
-        </div>
-        <div class="wall-col">
-            {% for product in products[6:8] %}
-            <a class="pa-wall-card" href="{{ url_for('root.product', slug=product.slug) }}">
-                <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="lazy" decoding="async">
-                <span>{{ product.collection_label }}</span>
-            </a>
-            {% endfor %}
-        </div>
+        {% endif %}
     </div>
 </section>
 
-<section class="pa-logo-band" aria-label="Trusted by creators">
+<section class="logos" aria-label="Trusted by creators">
     <p>Used by visual creators and archive teams</p>
-    <div class="pa-camera-logos">
-        <span class="cam-logo cam-canon">Canon</span>
-        <span class="cam-logo cam-fujifilm">FUJIFILM</span>
-        <span class="cam-logo cam-sony">SONY</span>
-        <span class="cam-logo cam-leica">Leica</span>
-        <span class="cam-logo cam-nikon">NIKON</span>
-        <span class="cam-logo cam-hasselblad">Hasselblad</span>
+    <div class="logo-list">
+        <span class="logo-mark mark-canon">Canon</span>
+        <span class="logo-mark mark-fuji">FUJIFILM</span>
+        <span class="logo-mark mark-sony">SONY</span>
+        <span class="logo-mark mark-leica">Leica</span>
+        <span class="logo-mark mark-nikon">NIKON</span>
+        <span class="logo-mark mark-hasselblad">Hasselblad</span>
     </div>
 </section>
 
-<section class="pa-story-section" id="reviews">
-    <div class="pa-story-copy">
+<section class="story" id="reviews">
+    <div class="story-copy">
         <h2>We built photoArchive because we needed it.</h2>
         <p>A place to save everything that moves you. A photograph, a color, a street, a small moment that should not disappear.</p>
         <p>We are a small independent archive for people who think with images and return to memories before making something new.</p>
     </div>
 
 
-     <div class="pa-quote-card-grid">
+     <div class="quote-grid">
         <article>
             <h3>Smart boards</h3>
             <p>Organize your saves with client-selected tags, clear categories, and a calm browsing rhythm.</p>
@@ -81,8 +63,8 @@
     </div>
 
 
-    <div class="pa-quote-card">
-        <span class="pa-avatar">pA</span>
+    <div class="quote">
+        <span class="avatar">pA</span>
         <div>
             <strong>photoArchive Studio</strong>
             <small>Co-founder, visual memory shelf</small>
@@ -90,7 +72,7 @@
     </div>
 </section>
 
-<section class="pa-platforms">
+<section class="tools">
     <p>Available on all your favorite workflows.</p>
     <div>
         <span>Upload Board</span>
@@ -100,13 +82,13 @@
     </div>
 </section>
 
-<section class="pa-feature-section" id="features">
-    <div class="pa-section-heading">
+<section class="feat-sec" id="features">
+    <div class="sec-head">
         <h2>Designed to inspire</h2>
         <p>Explore, save, organize and share. photoArchive gives you all the essentials to refine your visual taste.</p>
     </div>
 
-    <div class="pa-feature-grid">
+    <div class="feat-grid">
         <article>
             <h3>Smart boards</h3>
             <p>Organize your saves with client-selected tags, clear categories, and a calm browsing rhythm.</p>
@@ -122,13 +104,13 @@
     </div>
 </section>
 
-<section class="pa-market-preview" id="new">
-    <div class="pa-section-heading">
+<section class="market" id="new">
+    <div class="sec-head">
         <h2>Fresh archive drops</h2>
         <p>Recent uploads flow into a cinematic shelf, ready to be opened, saved, and sorted.</p>
     </div>
 
-    <div class="pa-preview-grid">
+    <div class="preview-grid">
         {% for product in products[:6] %}
         <a href="{{ url_for('root.product', slug=product.slug) }}">
             <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="lazy" decoding="async">
@@ -139,23 +121,23 @@
     </div>
 </section>
 
-<section class="archive-shelf-section">
-    <div class="archive-shelf-heading">
+<section class="shelf">
+    <div class="shelf-head">
         <h2>Archive shelf</h2>
         <p>Browse quick previews before opening a full photo record.</p>
     </div>
 
-    <div class="archive-marquee" aria-label="Photo archive shelf previews">
+    <div class="shelf-scroll" aria-label="Photo archive shelf previews">
         {% for row in range(3) %}
-        <div class="marquee-row">
+        <div class="slide-row">
             {% for product in products %}
-            <a class="marquee-card" href="{{ url_for('root.product', slug=product.slug) }}">
+            <a class="slide-card" href="{{ url_for('root.product', slug=product.slug) }}">
                 <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="lazy" decoding="async">
                 <span>{{ product.title }} · {{ product.price }}</span>
             </a>
             {% endfor %}
             {% for product in products %}
-            <a class="marquee-card" href="{{ url_for('root.product', slug=product.slug) }}">
+            <a class="slide-card" href="{{ url_for('root.product', slug=product.slug) }}">
                 <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="lazy" decoding="async">
                 <span>{{ product.title }} · {{ product.price }}</span>
             </a>
@@ -165,10 +147,10 @@
     </div>
 </section>
 
-<section class="pa-final-cta">
+<section class="cta">
     <h2>Inspiration is one click away</h2>
     <p>High-quality photo references curated to help you remember, design, and create your next project.</p>
-    <a class="pa-blue-button" href="{{ url_for('root.gallery') }}">Find inspiration</a>
+    <a class="blue-btn" href="{{ url_for('root.gallery') }}">Find inspiration</a>
     <span>Join over 1M saved moments</span>
 </section>
 {% endblock %}

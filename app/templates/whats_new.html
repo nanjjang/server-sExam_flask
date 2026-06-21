@@ -29,8 +29,8 @@
         </article>
         {% endif %}
 
-        <nav class="news-topic-dock" aria-label="News topics" data-news-dock>
-            <a class="is-active" href="{{ url_for('root.whats_new') }}">Blog</a>
+        <nav class="topic-bar" aria-label="News topics" data-dock>
+            <a class="active" href="{{ url_for('root.whats_new') }}">Blog</a>
             <a href="{{ url_for('root.collection', slug='all') }}">Inspiration</a>
             <a href="{{ url_for('root.gallery') }}">Marketplace</a>
             <a href="{{ url_for('root.page', slug='about-us') }}">Course</a>

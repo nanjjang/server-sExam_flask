@@ -9,7 +9,7 @@
 
 <section class="category-strip slim" aria-label="Collections">
     {% for slug, item in collections.items() %}
-    <a class="{% if slug == collection_slug %}is-selected{% endif %}" href="{{ url_for('root.collection', slug=slug) }}">{{ item.label }}</a>
+    <a class="{% if slug == collection_slug %}selected{% endif %}" href="{{ url_for('root.collection', slug=slug) }}">{{ item.label }}</a>
     {% endfor %}
 </section>
 

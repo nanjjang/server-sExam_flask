@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="review-hero" id="reviews" aria-labelledby="review-title">
+    <div class="review-copy">
+        <span>Reviews</span>
+        <h1 id="review-title">Inspiration that people return to</h1>
+        <p>Every day, visual thinkers use photoArchive as a quiet space for references, memories, taste, and craft.</p>
+    </div>
+
+    <div class="review-grid" aria-label="Customer reviews">
+        {% for review in reviews %}
+        <article class="review-card review-card-{{ loop.index }} review-accent-{{ review.accent }}">
+            <p>{{ review.quote }}</p>
+            <footer>
+                <span class="review-avatar" aria-hidden="true">{{ review.initials }}</span>
+                <div>
+                    <strong>{{ review.name }}</strong>
+                    <small>{{ review.role }}</small>
+                </div>
+            </footer>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="review-logos" aria-label="Trusted teams">
+    <p>Used by leading design studios and archive teams</p>
+    <div>
+        <span>Apple</span>
+        <span>Google</span>
+        <span>PORTO ROCHA</span>
+        <span>NIKE</span>
+        <span>Adobe</span>
+        <span>Pentagram</span>
+        <span>Airbnb</span>
+        <span>OpenAI</span>
+    </div>
+</section>
+
+<section class="proof" id="features">
+    <div class="proof-copy">
+        <span>Proof in the archive</span>
+        <h2>Every save keeps a project moving.</h2>
+        <p>Collected references become useful when they are easy to revisit. photoArchive keeps the visual trail close, organized, and ready for the next idea.</p>
+        <div class="stat-row">
+            <span><b>1M+</b> saved moments</span>
+            <span><b>24K</b> boards opened</span>
+            <span><b>8</b> focused collections</span>
+        </div>
+    </div>
+
+    <div class="proof-grid" aria-label="Archive image previews">
+        {% if products %}
+            {% for product in products[:8] %}
+            <a class="proof-shot proof-shot-{{ loop.index }}" href="{{ url_for('root.product', slug=product.slug) }}">
+                <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="lazy" decoding="async">
+            </a>
+            {% endfor %}
+        {% else %}
+            {% for item in range(8) %}
+            <span class="empty-shot"></span>
+            {% endfor %}
+        {% endif %}
+    </div>
+</section>
+
+<section class="review-cta" data-stop>
+    <h2>Inspiration is one click away</h2>
+    <p>High-quality photo references curated to help you shape your next project.</p>
+    <a class="blue-btn" href="{{ url_for('root.gallery') }}">Start browsing</a>
+    <span>Join over 1M saved moments</span>
+</section>
+{% endblock %}

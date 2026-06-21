@@ -85,7 +85,7 @@
 }
 
 .category-strip a:hover,
-.category-strip a.is-selected {
+.category-strip a.selected {
     border-color: #111;
     background: #111;
     color: #fff;
@@ -234,7 +234,7 @@
 
 .product-info h1,
 .cart-page h1,
-.page-shell h1 {
+.info-box h1 {
     margin: 14px 0 20px;
     font-size: clamp(48px, 6vw, 96px);
     line-height: 0.94;
@@ -242,7 +242,7 @@
 }
 
 .product-info p,
-.page-shell p {
+.info-box p {
     max-width: 640px;
     color: #666;
     font-size: 18px;
@@ -271,7 +271,7 @@
 }
 
 .cart-page,
-.page-shell {
+.info-box {
     padding: 98px min(7vw, 104px) 130px;
     background: #fff;
 }

@@ -8,27 +8,27 @@
 </head>
 <body class="{{ body_class|default('') }}">
     {% set endpoint = request.endpoint or '' %}
-    {% set is_home = body_class|default('') == 'page-home' %}
-    {% set is_marketing = body_class|default('') in ['page-home', 'page-feature'] %}
-    <header class="site-header">
-        <div class="header-inner">
-            <a class="brand" href="{{ url_for('root.root') }}" aria-label="photoArchive home">photoArchive</a>
+    {% set is_home = body_class|default('') == 'home' %}
+    {% set is_marketing = body_class|default('') in ['home', 'feature', 'reviews'] %}
+    <header class="top">
+        <div class="top-bar">
+            <a class="logo" href="{{ url_for('root.root') }}" aria-label="photoArchive home">photoArchive</a>
 
-            <button class="menu-toggle" type="button" aria-label="Open menu" aria-controls="site-menu" aria-expanded="false" data-menu-toggle>
+            <button class="menu-btn" type="button" aria-label="Open menu" aria-controls="menu" aria-expanded="false" data-menu>
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
 
-            <nav class="site-nav" id="site-menu" aria-label="주요 메뉴">
+            <nav class="nav" id="menu" aria-label="주요 메뉴">
                 {% if is_marketing %}
-                <a href="#features">Features</a>
-                <a href="{{ url_for('root.gallery') }}">Marketplace</a>
-                <a href="{{ url_for('root.whats_new') }}">What's new</a>
-                <a href="#reviews">Reviews</a>
+                <a class="{% if endpoint == 'root.feature' %}active{% endif %}" href="{{ url_for('root.feature') }}">Features</a>
+                <a class="{% if endpoint in ['root.gallery', 'root.search', 'root.collection', 'root.product'] %}active{% endif %}" href="{{ url_for('root.gallery') }}">Marketplace</a>
+                <a class="{% if endpoint in ['root.whats_new', 'root.whats_new_detail'] %}active{% endif %}" href="{{ url_for('root.whats_new') }}">What's new</a>
+                <a class="{% if endpoint == 'root.reviews' %}active{% endif %}" href="{{ url_for('root.reviews') }}">Reviews</a>
                 {% else %}
-                <a class="{% if endpoint == 'root.root' %}is-active{% endif %}" href="{{ url_for('root.root') }}">Home</a>
-                <a class="{% if endpoint in ['root.whats_new', 'root.whats_new_detail'] %}is-active{% endif %}" href="{{ url_for('root.whats_new') }}">What's new</a>
+                <a class="{% if endpoint == 'root.root' %}active{% endif %}" href="{{ url_for('root.root') }}">Home</a>
+                <a class="{% if endpoint in ['root.whats_new', 'root.whats_new_detail'] %}active{% endif %}" href="{{ url_for('root.whats_new') }}">What's new</a>
                 <a href="{{ url_for('root.collection', slug='all') }}">All Photos</a>
                 <a href="{{ url_for('root.collection', slug='after-effects') }}">Seaside</a>
                 <a href="{{ url_for('root.collection', slug='figma-templates') }}">City</a>
@@ -37,13 +37,13 @@
                 {% endif %}
             </nav>
 
-            <div class="header-actions">
+            <div class="top-actions">
                 {% if session.get('user_id') %}
-                    <a class="plain-link" href="{{ url_for('auth.logout') }}">Logout</a>
-                    <a class="outline-button" href="{{ url_for('root.cart') }}">{% if is_marketing %}Get inside{% else %}Saved{% endif %}</a>
+                    <a class="text-btn" href="{{ url_for('auth.logout') }}">Logout</a>
+                    <a class="line-btn" href="{{ url_for('root.cart') }}">{% if is_marketing %}Get inside{% else %}Saved{% endif %}</a>
                 {% else %}
-                    <a class="plain-link" href="{{ url_for('auth.login') }}">Login</a>
-                    <a class="outline-button" href="{% if is_marketing %}{{ url_for('auth.register') }}{% else %}{{ url_for('root.cart') }}{% endif %}">{% if is_marketing %}Sign up{% else %}Saved{% endif %}</a>
+                    <a class="text-btn" href="{{ url_for('auth.login') }}">Login</a>
+                    <a class="line-btn" href="{% if is_marketing %}{{ url_for('auth.register') }}{% else %}{{ url_for('root.cart') }}{% endif %}">{% if is_marketing %}Sign up{% else %}Saved{% endif %}</a>
                 {% endif %}
             </div>
         </div>
@@ -54,20 +54,20 @@
         {% endblock %}
     </main>
 
-    <div class="pa-floating-shell" aria-label="Quick navigation" data-floating-nav>
-        <nav class="pa-floating-nav">
-            <a class="pa-floating-link" href="{% if is_marketing %}#features{% else %}{{ url_for('root.root') }}#features{% endif %}" data-floating-section="features">Features</a>
-            <a class="pa-floating-link {% if endpoint in ['root.gallery', 'root.search', 'root.collection', 'root.product'] %}is-active{% endif %}" href="{{ url_for('root.gallery') }}">Marketplace</a>
-            <a class="pa-floating-link {% if endpoint in ['root.whats_new', 'root.whats_new_detail'] %}is-active{% endif %}" href="{{ url_for('root.whats_new') }}">What's new</a>
-            <a class="pa-floating-link" href="{% if is_marketing %}#reviews{% else %}{{ url_for('root.root') }}#reviews{% endif %}" data-floating-section="reviews">Reviews</a>
-            <a class="is-pill" href="{% if session.get('user_id') %}{{ url_for('upload.upload') }}{% else %}{{ url_for('auth.register') }}{% endif %}">{% if session.get('user_id') %}Open archive{% else %}Join over 1M users{% endif %}</a>
+    <div class="float" aria-label="Quick navigation" data-float>
+        <nav class="float-nav">
+            <a class="float-link {% if endpoint == 'root.feature' %}active{% endif %}" href="{% if is_marketing and endpoint != 'root.reviews' %}#features{% else %}{{ url_for('root.feature') }}#features{% endif %}" data-section="features">Features</a>
+            <a class="float-link {% if endpoint in ['root.gallery', 'root.search', 'root.collection', 'root.product'] %}active{% endif %}" href="{{ url_for('root.gallery') }}">Marketplace</a>
+            <a class="float-link {% if endpoint in ['root.whats_new', 'root.whats_new_detail'] %}active{% endif %}" href="{{ url_for('root.whats_new') }}">What's new</a>
+            <a class="float-link {% if endpoint == 'root.reviews' %}active{% endif %}" href="{% if endpoint == 'root.reviews' %}#reviews{% else %}{{ url_for('root.reviews') }}{% endif %}" data-section="reviews">Reviews</a>
+            <a class="pill" href="{% if session.get('user_id') %}{{ url_for('upload.upload') }}{% else %}{{ url_for('auth.register') }}{% endif %}">{% if session.get('user_id') %}Open archive{% else %}Join over 1M users{% endif %}</a>
         </nav>
     </div>
 
-    <footer class="site-footer{% if is_marketing %} pa-home-footer{% endif %}" id="footer">
+    <footer class="foot{% if is_marketing %} dark-foot{% endif %}" id="footer">
         {% if is_marketing %}
-        <div class="pa-home-footer-grid">
-            <div class="pa-footer-brand">
+        <div class="foot-grid">
+            <div class="foot-logo">
                 <strong>photoArchive</strong>
                 <span>Follow us</span>
                 <div>
@@ -78,10 +78,10 @@
                 </div>
             </div>
 
-            <nav class="pa-footer-column" aria-label="About us">
+            <nav class="foot-col" aria-label="About us">
                 <strong>About us</strong>
                 <a href="{{ url_for('root.page', slug='about-us') }}">How it started</a>
-                <a href="#features">Features</a>
+                <a href="{{ url_for('root.feature') }}">Features</a>
                 <a href="{{ url_for('root.collection', slug='all') }}">Pricing</a>
                 <a href="{{ url_for('root.page', slug='licenses') }}">Keyboard Shortcuts</a>
                 <a href="{{ url_for('root.page', slug='refunds-policy') }}">Students Discount</a>
@@ -91,7 +91,7 @@
                 <a href="{{ url_for('root.page', slug='contact-us') }}">Contact us</a>
             </nav>
 
-            <nav class="pa-footer-column" aria-label="Downloads">
+            <nav class="foot-col" aria-label="Downloads">
                 <strong>Downloads</strong>
                 <a href="{{ url_for('upload.upload') }}">Upload Board</a>
                 <a href="{{ url_for('root.gallery') }}">Gallery App</a>
@@ -100,7 +100,7 @@
                 <a href="{{ url_for('root.collection', slug='bundles') }}">Mobile Shelf</a>
             </nav>
 
-            <nav class="pa-footer-column" aria-label="Features">
+            <nav class="foot-col" aria-label="Features">
                 <strong>Features</strong>
                 <a href="{{ url_for('root.whats_new') }}">Create your shelf</a>
                 <a href="{{ url_for('root.collection', slug='bundles') }}">For Teams</a>
@@ -109,7 +109,7 @@
             </nav>
         </div>
 
-        <div class="pa-footer-bottom">
+        <div class="foot-bottom">
             <span>© photoArchive, Inc. 2026</span>
             <span>Don't forget to have fun.</span>
             <span>Made with care for visual minds</span>
@@ -143,66 +143,72 @@
         </div>
 
         <small class="footer-copy">© 2026, photoArchive</small>
-        <strong class="footer-brandmark">photoArchive</strong>
+        <strong class="footer-mark">photoArchive</strong>
         {% endif %}
     </footer>
 
     <script>
         (() => {
-            const disabledPages = ['page-gallery', 'page-whats-new'];
+            const disabledPages = ['gallery', 'news'];
             if (disabledPages.some((pageClass) => document.body.classList.contains(pageClass))) {
                 return;
             }
 
             const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             const revealTargets = Array.from(document.querySelectorAll([
-                '.page-home .pa-hero-copy h1',
-                '.page-home .pa-hero-copy p',
-                '.page-home .pa-hero-copy .pa-blue-button',
-                '.page-home .pa-hero-copy > span',
-                '.page-home .pa-wall-card',
-                '.page-home .pa-logo-band > p',
-                '.page-home .pa-logo-marquee',
-                '.page-home .pa-story-copy',
-                '.page-home .pa-quote-card',
-                '.page-home .pa-platforms',
-                '.page-home .pa-section-heading',
-                '.page-home .pa-feature-grid article',
-                '.page-home .pa-preview-grid a',
-                '.page-home .pa-final-cta',
-                '.page-product .product-media',
-                '.page-product .product-info',
-                '.page-product .product-card',
-                '.page-cart .cart-items article',
-                '.page-cart .cart-summary',
-                '.page-auth .auth-panel',
-                '.page-upload .upload-stage',
-                '.page-static .page-shell',
-                '.page-feature .feature-stage',
-                '.page-feature .feature-panel',
-                '.page-feature .feature-hero-copy',
-                '.page-feature .feature-wall-card',
-                '.page-feature .feature-phone-board',
-                '.page-feature .feature-copy-block',
-                '.page-feature .feature-search-visual',
-                '.page-feature .feature-side-stack a',
-                '.page-feature .feature-section-heading',
-                '.page-feature .feature-resource-grid article',
-                '.page-feature .feature-final-card',
+                '.home .hero-copy h1',
+                '.home .hero-copy p',
+                '.home .hero-copy .blue-btn',
+                '.home .hero-copy > span',
+                '.home .globe-card',
+                '.home .logos > p',
+                '.home .logo-list',
+                '.home .story-copy',
+                '.home .quote',
+                '.home .tools',
+                '.home .sec-head',
+                '.home .feat-grid article',
+                '.home .preview-grid a',
+                '.home .cta',
+                '.product .product-media',
+                '.product .product-info',
+                '.product .product-card',
+                '.cart .cart-items article',
+                '.cart .cart-summary',
+                '.auth .auth-panel',
+                '.upload .upload-stage',
+                '.info .info-box',
+                '.feature .stage',
+                '.feature .panel',
+                '.feature .feat-copy',
+                '.feature .feat-card',
+                '.feature .phone',
+                '.feature .copy',
+                '.feature .search-box',
+                '.feature .side-grid a',
+                '.feature .feat-head',
+                '.feature .resource-grid article',
+                '.feature .feat-cta',
+                '.reviews .review-copy',
+                '.reviews .review-card',
+                '.reviews .review-logos',
+                '.reviews .proof-copy',
+                '.reviews .proof-grid',
+                '.reviews .review-cta',
             ].join(','))).filter((element) => {
                 const hasContent = element.textContent.trim() || element.querySelector('img, input, button, textarea, select');
-                return hasContent && !element.closest('[data-no-reveal]');
+                return hasContent && !element.closest('[data-no-anim]');
             });
-            const heroTitle = document.querySelector('.page-home .pa-hero-copy h1');
+            const heroTitle = document.querySelector('.home .hero-copy h1');
 
             revealTargets.forEach((element, index) => {
-                const revealClass = element === heroTitle ? 'title-gradient-reveal' : 'reveal-item';
+                const revealClass = element === heroTitle ? 'title-fade' : 'fade';
                 element.style.setProperty('--reveal-delay', `${Math.min(index % 8, 7) * 60}ms`);
                 element.classList.add(revealClass);
             });
 
             if (reduceMotion || !('IntersectionObserver' in window)) {
-                revealTargets.forEach((element) => element.classList.add('is-revealed'));
+                revealTargets.forEach((element) => element.classList.add('revealed'));
                 return;
             }
 
@@ -212,7 +218,7 @@
                         return;
                     }
 
-                    entry.target.classList.add('is-revealed');
+                    entry.target.classList.add('revealed');
                     observer.unobserve(entry.target);
                 });
             }, {
@@ -224,17 +230,200 @@
         })();
 
         (() => {
-            const floatingNav = document.querySelector('[data-floating-nav]');
+            const wall = document.querySelector('[data-globe]');
+            if (!wall || !document.body.classList.contains('home')) {
+                return;
+            }
+
+            const cards = Array.from(wall.querySelectorAll('.globe-card'));
+            if (!cards.length) {
+                return;
+            }
+
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+            const lerp = (start, end, amount) => start + (end - start) * amount;
+            const easeOutBack = (value) => {
+                const c1 = 1.52;
+                const c3 = c1 + 1;
+                return 1 + c3 * Math.pow(value - 1, 3) + c1 * Math.pow(value - 1, 2);
+            };
+
+            const getSpreadPattern = () => {
+                const width = window.innerWidth;
+                const wallWidth = Math.min(width - 40, 1500);
+                const count = cards.length;
+                const isMobile = width <= 560;
+                const isTablet = width <= 960;
+                const columns = isMobile ? 3 : isTablet ? 5 : 8;
+                const gap = isMobile ? 14 : isTablet ? 22 : 34;
+                const baseW = isMobile ? 72 : isTablet ? 112 : 116;
+                const baseH = isMobile ? 84 : isTablet ? 98 : 96;
+                const rowStep = isMobile ? 106 : isTablet ? 134 : 150;
+                const rows = Math.ceil(count / columns);
+                const spreadWidth = (columns - 1) * (baseW + gap);
+                const spreadHeight = Math.max(isMobile ? 1320 : 760, (rows - 1) * rowStep + baseH + (isMobile ? 210 : 230));
+                const globeSize = isMobile ? Math.min(360, width - 40) : isTablet ? 620 : 820;
+                const centerY = isMobile ? 128 : isTablet ? 150 : 125;
+                const radiusX = globeSize * 0.49;
+                const radiusY = globeSize * 0.46;
+                const radiusZ = globeSize * 0.5;
+                const items = cards.map((_, index) => {
+                    const column = index % columns;
+                    const row = Math.floor(index / columns);
+                    const wave = Math.sin(index * 1.47) * (isMobile ? 8 : 20);
+                    const rowNudge = Math.cos((row + 1) * 1.2 + column * 0.7) * (isMobile ? 8 : 18);
+                    const sizeWave = 1 + Math.sin(index * 0.88) * 0.07;
+                    const tall = index % 11 === 0 ? 1.2 : index % 7 === 0 ? 0.86 : 1;
+                    const wide = index % 13 === 0 ? 1.14 : index % 5 === 0 ? 0.92 : 1;
+
+                    return {
+                        x: (column - (columns - 1) / 2) * (baseW + gap) + wave,
+                        y: (row - (rows - 1) / 2) * rowStep + rowNudge,
+                        z: (row % 2 ? -18 : 18) + Math.sin(index * 0.61) * 14,
+                        w: Math.round(baseW * wide * sizeWave),
+                        h: Math.round(baseH * tall * (1 + Math.cos(index * 0.73) * 0.06)),
+                        r: Math.sin(index * 1.19) * (isMobile ? 4 : 7),
+                    };
+                });
+
+                return {
+                    columns,
+                    count,
+                    centerY,
+                    height: spreadHeight,
+                    radiusX,
+                    radiusY,
+                    radiusZ,
+                    scrollDistance: isMobile ? 660 : 860,
+                    spreadWidth,
+                    wallWidth,
+                    items,
+                };
+            };
+
+            let pattern = getSpreadPattern();
+            let ticking = false;
+            let latestProgress = 0;
+            const startTime = performance.now();
+
+            const getSphereState = (index, item, axisTurn) => {
+                const count = Math.max(pattern.count, 2);
+                const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+                const yUnit = 1 - ((index + 0.5) / count) * 2;
+                const radiusAtY = Math.sqrt(Math.max(0, 1 - yUnit * yUnit));
+                const theta = index * goldenAngle + axisTurn;
+                const normalX = Math.cos(theta) * radiusAtY;
+                const normalZ = Math.sin(theta) * radiusAtY;
+                const depth = normalZ * pattern.radiusZ;
+                const depthRatio = (depth + pattern.radiusZ) / (pattern.radiusZ * 2);
+                const azimuth = Math.atan2(normalX, normalZ) * 180 / Math.PI;
+                const latitude = Math.asin(yUnit) * 180 / Math.PI;
+
+                return {
+                    x: normalX * pattern.radiusX,
+                    y: yUnit * pattern.radiusY,
+                    z: depth,
+                    rx: -latitude * 0.64,
+                    ry: azimuth,
+                    rz: Math.sin(theta * 1.7) * 4,
+                    scale: 0.42 + depthRatio * 0.3,
+                    opacity: 0.2 + depthRatio * 0.78,
+                    brightness: 0.56 + depthRatio * 0.5,
+                    curve: Math.max(-1, Math.min(1, normalX)),
+                    w: item.w,
+                    h: item.h,
+                };
+            };
+
+            const applyWall = (now = performance.now()) => {
+                const scrollY = window.scrollY || document.documentElement.scrollTop;
+                const raw = reduceMotion ? 1 : clamp(scrollY / pattern.scrollDistance);
+                const stableProgress = clamp(raw);
+                latestProgress = stableProgress;
+                const axisTurn = reduceMotion ? 0 : ((now - startTime) * 0.00034) * (1 - stableProgress);
+
+                wall.style.setProperty('--wall-progress', stableProgress.toFixed(3));
+                wall.style.setProperty('--wall-center-y', `${pattern.centerY}px`);
+                wall.style.height = `${pattern.height}px`;
+
+                cards.forEach((card, index) => {
+                    const item = pattern.items[index];
+                    const sphere = getSphereState(index, item, axisTurn);
+                    const delay = (index % 11) * 0.008;
+                    const localRaw = reduceMotion ? 1 : clamp((raw - delay) / 0.86);
+                    const progress = localRaw >= 1 ? 1 : Math.min(1.05, easeOutBack(localRaw));
+                    const localStable = clamp(progress);
+                    const lift = Math.sin(clamp(localRaw) * Math.PI) * (index % 3 === 0 ? 170 : 120);
+                    const x = lerp(sphere.x, item.x, progress);
+                    const y = lerp(sphere.y, item.y, progress) - lift;
+                    const z = lerp(sphere.z, item.z, localStable) + lift * 0.35;
+                    const rx = lerp(sphere.rx, 0, localStable);
+                    const ry = lerp(sphere.ry, 0, localStable);
+                    const rz = lerp(sphere.rz, item.r, progress);
+                    const scale = lerp(sphere.scale, 1, localStable);
+                    const opacity = lerp(sphere.opacity, 1, localStable);
+                    const brightness = lerp(sphere.brightness, 0.91, localStable);
+                    const curve = lerp(Math.abs(sphere.curve), 0, localStable);
+                    const labelOpacity = localStable > 0.72 ? Math.min(1, (localStable - 0.72) / 0.28) : 0;
+
+                    card.style.setProperty('--card-w', `${item.w}px`);
+                    card.style.setProperty('--card-h', `${item.h}px`);
+                    card.style.setProperty('--wall-opacity', opacity.toFixed(3));
+                    card.style.setProperty('--wall-brightness', brightness.toFixed(3));
+                    card.style.setProperty('--label-opacity', labelOpacity.toFixed(3));
+                    card.style.setProperty('--card-radius', `${lerp(28, 14, localStable).toFixed(1)}px`);
+                    card.style.setProperty('--curve-left', `${(-14 * curve).toFixed(1)}px`);
+                    card.style.setProperty('--curve-right', `${(14 * curve).toFixed(1)}px`);
+                    card.style.zIndex = String(Math.round(1000 + z + index));
+                    card.style.transform = `translate(-50%, -50%) translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${z.toFixed(1)}px) rotateY(${ry.toFixed(2)}deg) rotateX(${rx.toFixed(2)}deg) rotateZ(${rz.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
+                });
+
+                ticking = false;
+            };
+
+            const requestWallUpdate = () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(applyWall);
+                    ticking = true;
+                }
+            };
+
+            const refreshPattern = () => {
+                pattern = getSpreadPattern();
+                requestWallUpdate();
+            };
+
+            window.addEventListener('scroll', requestWallUpdate, { passive: true });
+            window.addEventListener('resize', refreshPattern);
+            const rotateGlobe = (now) => {
+                if (!document.hidden && latestProgress < 0.96) {
+                    applyWall(now);
+                }
+
+                if (!reduceMotion) {
+                    window.requestAnimationFrame(rotateGlobe);
+                }
+            };
+
+            applyWall();
+            if (!reduceMotion) {
+                window.requestAnimationFrame(rotateGlobe);
+            }
+        })();
+
+        (() => {
+            const floatingNav = document.querySelector('[data-float]');
             if (!floatingNav) {
                 return;
             }
 
-            const sectionLinks = Array.from(floatingNav.querySelectorAll('[data-floating-section]'));
+            const sectionLinks = Array.from(floatingNav.querySelectorAll('[data-section]'));
             const sections = sectionLinks
-                .map((link) => ({ link, section: document.getElementById(link.dataset.floatingSection) }))
+                .map((link) => ({ link, section: document.getElementById(link.dataset.section) }))
                 .filter((item) => item.section);
-            const footer = document.querySelector('.site-footer');
-            const stopTarget = document.querySelector('[data-floating-stop]');
+            const footer = document.querySelector('.foot');
+            const stopTarget = document.querySelector('[data-stop]');
             let ticking = false;
             let idleTimer = 0;
 
@@ -253,9 +442,9 @@
                     }
                 });
 
-                sectionLinks.forEach((link) => link.classList.remove('is-current'));
+                sectionLinks.forEach((link) => link.classList.remove('current'));
                 if (activeItem) {
-                    activeItem.link.classList.add('is-current');
+                    activeItem.link.classList.add('current');
                 }
             };
 
@@ -270,17 +459,17 @@
                 const isNearFooter = lowerLimitTop < window.innerHeight - 72;
                 const shouldShow = canScroll && !isNearTop && !isNearFooter;
 
-                floatingNav.classList.toggle('is-visible', shouldShow);
-                floatingNav.classList.toggle('is-near-footer', isNearFooter);
+                floatingNav.classList.toggle('shown', shouldShow);
+                floatingNav.classList.toggle('near-foot', isNearFooter);
                 setActiveSection();
                 ticking = false;
             };
 
             const requestUpdate = () => {
-                floatingNav.classList.add('is-moving');
+                floatingNav.classList.add('moving');
                 window.clearTimeout(idleTimer);
                 idleTimer = window.setTimeout(() => {
-                    floatingNav.classList.remove('is-moving');
+                    floatingNav.classList.remove('moving');
                 }, 180);
 
                 if (!ticking) {
@@ -295,12 +484,12 @@
         })();
 
         (() => {
-            const newsDock = document.querySelector('[data-news-dock]');
+            const newsDock = document.querySelector('[data-dock]');
             if (!newsDock) {
                 return;
             }
 
-            const footer = document.querySelector('.site-footer');
+            const footer = document.querySelector('.foot');
             let ticking = false;
 
             const updateNewsDock = () => {
@@ -325,20 +514,20 @@
         })();
 
         (() => {
-            const menuToggle = document.querySelector('[data-menu-toggle]');
-            const siteNav = document.getElementById('site-menu');
+            const menuToggle = document.querySelector('[data-menu]');
+            const siteNav = document.getElementById('menu');
             if (!menuToggle || !siteNav) {
                 return;
             }
 
             const setMenuState = (isOpen) => {
-                document.body.classList.toggle('is-menu-open', isOpen);
+                document.body.classList.toggle('menu-open', isOpen);
                 menuToggle.setAttribute('aria-expanded', String(isOpen));
                 menuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
             };
 
             menuToggle.addEventListener('click', () => {
-                setMenuState(!document.body.classList.contains('is-menu-open'));
+                setMenuState(!document.body.classList.contains('menu-open'));
             });
 
             siteNav.addEventListener('click', (event) => {

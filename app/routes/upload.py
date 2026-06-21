@@ -36,7 +36,7 @@ def save_image_meta(meta):
 def upload():
     try:
         if request.method == 'GET':
-            return render_template('upload.html', photo_tags=PHOTO_TAGS, body_class='page-upload')
+            return render_template('upload.html', photo_tags=PHOTO_TAGS, body_class='upload')
 
         files = request.files.getlist('fileImage')
         client_id = session.get('user_id')

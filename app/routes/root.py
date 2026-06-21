@@ -306,6 +306,72 @@ POPULAR_NEWS_SCORES = {
     'portfolio-tool-we-wanted': 74,
 }
 
+REVIEW_CARDS = [
+    {
+        'quote': 'photoArchive gives me a calm place to return to when a project starts feeling too loud. I save the references, step away, and come back with a clearer eye.',
+        'name': 'Andre Souza',
+        'role': 'Product Designer',
+        'initials': 'AS',
+        'accent': 'blue',
+    },
+    {
+        'quote': 'The best part is how quickly a small save becomes a useful board. It feels less like storage and more like a record of taste.',
+        'name': 'Fabio Sasso',
+        'role': 'Founder and visual curator',
+        'initials': 'FS',
+        'accent': 'green',
+    },
+    {
+        'quote': 'I use it before every design review. The archive keeps my references close without turning the screen into a mess.',
+        'name': 'Mica Lashford',
+        'role': 'Design Principal',
+        'initials': 'ML',
+        'accent': 'rose',
+    },
+    {
+        'quote': 'Say goodbye to scattered folders. photoArchive makes browsing old screenshots, seaside photos, and tiny visual notes feel surprisingly polished.',
+        'name': 'Ashley Gaunt-Seo',
+        'role': 'Visual Designer',
+        'initials': 'AG',
+        'accent': 'gold',
+    },
+    {
+        'quote': 'It is a designer dream: simple enough for daily use, structured enough to become a serious source of visual memory.',
+        'name': 'Mily McClelland',
+        'role': 'Senior Staff Designer',
+        'initials': 'MM',
+        'accent': 'violet',
+    },
+    {
+        'quote': 'I never start a board from zero anymore. There is always a trail of images waiting to help me make the next choice.',
+        'name': 'Ray Sison',
+        'role': 'Partner and Design Lead',
+        'initials': 'RS',
+        'accent': 'steel',
+    },
+    {
+        'quote': 'The interface gets out of the way, which is exactly what I want from an archive. The photos stay in focus.',
+        'name': 'James Casey',
+        'role': 'Senior Designer',
+        'initials': 'JC',
+        'accent': 'cyan',
+    },
+    {
+        'quote': 'My team uses photoArchive to keep a shared sense of direction. It turns loose inspiration into something we can actually discuss.',
+        'name': 'Josh Kill',
+        'role': 'Product and Design Leader',
+        'initials': 'JK',
+        'accent': 'lime',
+    },
+    {
+        'quote': 'A good archive should make rediscovery feel effortless. This does that with just enough structure and a lot of restraint.',
+        'name': 'Manvydas Kugis',
+        'role': 'Designer and Art Director',
+        'initials': 'MK',
+        'accent': 'amber',
+    },
+]
+
 
 def load_image_meta():
     if not os.path.exists(IMAGE_META_PATH):
@@ -431,7 +497,7 @@ def root():
     return render_template(
         'home.html',
         products=get_market_products(),
-        body_class='page-home',
+        body_class='home',
     )
 
 
@@ -440,7 +506,17 @@ def feature():
     return render_template(
         'feature.html',
         products=get_market_products(),
-        body_class='page-feature',
+        body_class='feature',
+    )
+
+
+@root_bp.route('/reviews')
+def reviews():
+    return render_template(
+        'reviews.html',
+        products=get_market_products(),
+        reviews=REVIEW_CARDS,
+        body_class='reviews',
     )
 
 
@@ -452,7 +528,7 @@ def whats_new():
         'whats_new.html',
         hero_post=hero_post,
         posts=grid_posts,
-        body_class='page-whats-new',
+        body_class='news',
     )
 
 
@@ -466,10 +542,10 @@ def whats_new_detail(slug):
             'whats_new.html',
             hero_post=hero_post,
             posts=grid_posts,
-            body_class='page-whats-new',
+            body_class='news',
         ), 404
 
-    return render_template('news_detail.html', post=post, body_class='page-news-detail')
+    return render_template('news_detail.html', post=post, body_class='news-post')
 
 
 @root_bp.route('/gallery')
@@ -500,7 +576,7 @@ def render_market_listing():
         products=products,
         query=query,
         collections=COLLECTIONS,
-        body_class='page-gallery',
+        body_class='gallery',
     )
 
 
@@ -525,7 +601,7 @@ def collection(slug):
         collection=collection_data,
         products=products,
         collections=COLLECTIONS,
-        body_class='page-gallery',
+        body_class='gallery',
     )
 
 
@@ -533,24 +609,24 @@ def collection(slug):
 def product(slug):
     product_data = get_market_product(slug)
     if not product_data:
-        return render_template('gallery.html', products=get_market_products(), query='', collections=COLLECTIONS, body_class='page-gallery'), 404
+        return render_template('gallery.html', products=get_market_products(), query='', collections=COLLECTIONS, body_class='gallery'), 404
 
     related = [product for product in get_market_products(5) if product['slug'] != slug][:4]
-    return render_template('product.html', product=product_data, related=related, body_class='page-product')
+    return render_template('product.html', product=product_data, related=related, body_class='product')
 
 
 @root_bp.route('/cart')
 def cart():
-    return render_template('cart.html', products=get_market_products(3), body_class='page-cart')
+    return render_template('cart.html', products=get_market_products(3), body_class='cart')
 
 
 @root_bp.route('/pages/<slug>')
 def page(slug):
     page_data = PAGES.get(slug)
     if not page_data:
-        return render_template('page.html', page=PAGES['about-us'], body_class='page-static'), 404
+        return render_template('page.html', page=PAGES['about-us'], body_class='info'), 404
 
-    return render_template('page.html', page=page_data, body_class='page-static')
+    return render_template('page.html', page=page_data, body_class='info')
 
 
 @root_bp.route('/media/<path:filename>')
