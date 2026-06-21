@@ -81,53 +81,197 @@
     line-height: 1.58;
 }
 
+/* ── Upload page custom pill nav ── */
+.upload-pill-nav {
+    position: fixed;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    padding: 5px 5px 5px 14px;
+    background: rgba(10, 10, 10, 0.92);
+    border: 1px solid #1c1c1c;
+    border-radius: 999px;
+    backdrop-filter: blur(20px);
+    white-space: nowrap;
+}
+
+.upload-pill-back {
+    color: #4a4a4a;
+    font-size: 12px;
+    font-weight: 640;
+    letter-spacing: -0.01em;
+    transition: color 0.2s ease;
+}
+
+.upload-pill-back:hover { color: #888; }
+
+.upload-pill-sep {
+    display: block;
+    width: 1px;
+    height: 12px;
+    background: #222;
+    margin: 0 10px;
+    flex-shrink: 0;
+}
+
+.upload-pill-brand {
+    color: #282828;
+    font-size: 12px;
+    font-weight: 760;
+    letter-spacing: -0.04em;
+}
+
+.upload-pill-step {
+    margin-left: 10px;
+    padding: 5px 12px;
+    background: #141414;
+    border-radius: 999px;
+    color: #555;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+/* ── Blog side mark (whats_new nav) ── */
+.blog-side-mark {
+    position: fixed;
+    left: 26px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    pointer-events: none;
+}
+
+.blog-side-label {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 9px;
+    font-weight: 760;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: #aaa;
+}
+
+.blog-side-line {
+    display: block;
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, #ccc, transparent);
+}
+
+.blog-side-back {
+    pointer-events: auto;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: #bbb;
+    transition: color 0.2s ease;
+}
+
+.blog-side-back:hover { color: #333; }
+
+/* ── Upload stage layout (compact, vertically centered) ── */
 .upload-stage {
-    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
+    padding-top: 72px;
+}
+
+.upload-stage .micro {
+    color: #333;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+}
+
+.upload-stage h1 {
+    margin: 12px 0 0;
+    font-size: clamp(22px, 2.2vw, 32px);
+    font-weight: 640;
+    letter-spacing: -0.05em;
+    line-height: 1.16;
+    color: #c0c0c0;
 }
 
 .upload-stage > p:not(.micro) {
-    max-width: 640px;
-    color: #cfcfcf;
-    line-height: 1.65;
+    max-width: 300px;
+    margin-top: 10px;
+    color: #333;
+    font-size: 13px;
+    line-height: 1.6;
 }
 
 .upload-form {
     display: grid;
-    gap: 14px;
-    width: min(560px, 100%);
-    margin-top: 38px;
+    gap: 12px;
+    width: min(520px, calc(100% - 40px));
+    margin-top: 40px;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: upload-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+}
+
+@keyframes upload-in {
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .drop-zone {
     display: grid;
     place-items: center;
-    min-height: 240px;
-    padding: 30px;
-    border: 1px dashed rgba(255, 255, 255, 0.34);
-    border-radius: 28px;
-    background: rgba(255, 255, 255, 0.06);
+    gap: 0;
+    min-height: 210px;
+    padding: 36px 28px;
+    border: 1px solid #181818;
+    border-radius: 18px;
+    background: #060606;
+    cursor: pointer;
+    transition: border-color 0.22s ease, background 0.22s ease;
+}
+
+.drop-zone:hover {
+    border-color: #272727;
+    background: #0d0d0d;
 }
 
 .drop-zone span {
     display: grid;
     place-items: center;
-    width: 60px;
-    height: 60px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    background: #fff;
-    color: #111;
-    font-size: 34px;
+    border: 1px solid #242424;
+    background: #111;
+    color: #555;
+    font-size: 22px;
+    font-weight: 300;
 }
 
 .drop-zone strong {
-    margin-top: 18px;
-    font-size: 22px;
+    margin-top: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #666;
 }
 
 .drop-zone small {
-    margin-top: 6px;
-    color: #aaa;
+    margin-top: 5px;
+    color: #2e2e2e;
+    font-size: 11px;
+    letter-spacing: 0.06em;
 }
 
 .drop-zone input {
@@ -137,12 +281,21 @@
 }
 
 .upload-form button {
-    min-height: 56px;
+    min-height: 58px;
     border: 0;
-    border-radius: 999px;
-    background: #1019ed;
-    color: #fff;
-    font-weight: 860;
+    border-radius: 14px;
+    background: #f0efeb;
+    color: #0a0a0a;
+    font-size: 14px;
+    font-weight: 760;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.upload-form button:hover {
+    opacity: 0.86;
+    transform: translateY(-1px);
 }
 
 .page-upload .site-header,
@@ -277,17 +430,23 @@
 .upload-field input {
     width: 100%;
     min-height: 54px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 999px;
-    padding: 0 20px;
+    border: 1px solid #181818;
+    border-radius: 14px;
+    padding: 0 18px;
     outline: 0;
-    background: rgba(255, 255, 255, 0.08);
-    color: #fff;
-    font-weight: 720;
+    background: #060606;
+    color: #bbb;
+    font-size: 15px;
+    font-weight: 500;
+    transition: border-color 0.2s ease;
+}
+
+.upload-field input:focus {
+    border-color: #2c2c2c;
 }
 
 .upload-field input::placeholder {
-    color: #777;
+    color: #2e2e2e;
 }
 
 .tag-picker {
@@ -317,22 +476,23 @@
 
 .tag-picker span {
     display: flex;
-    min-height: 48px;
+    min-height: 46px;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.08);
-    color: #d4d4d4;
+    border: 1px solid #181818;
+    border-radius: 10px;
+    background: #060606;
+    color: #383838;
     font-size: 13px;
-    font-weight: 800;
-    transition: 0.2s ease;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    transition: 0.18s ease;
 }
 
 .tag-picker input:checked + span {
-    border-color: #fff;
-    background: #fff;
-    color: #111;
+    border-color: #2c2c2c;
+    background: #141414;
+    color: #aaa;
 }
 
 .page-auth .site-header,

@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="blog-side-mark" aria-hidden="true">
+    <span class="blog-side-label">Blog</span>
+    <span class="blog-side-line"></span>
+    <a class="blog-side-back" href="{{ url_for('root.gallery') }}">Archive</a>
+</div>
+
 <section class="whats-new-page" aria-labelledby="whats-new-title">
     <div class="whats-new-shell">
         <p class="news-logotype">photoArchive</p>

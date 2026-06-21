@@ -10,30 +10,50 @@
     </div>
 
     <div class="pa-visual-wall" aria-label="photoArchive visual board">
-        {% for product in products[:12] %}
-        <a class="pa-wall-card pa-wall-card-{{ loop.index }}" href="{{ url_for('root.product', slug=product.slug) }}">
-            <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="lazy" decoding="async">
-            <span>{{ product.collection_label }}</span>
-        </a>
-        {% endfor %}
+        <div class="wall-col">
+            {% for product in products[0:2] %}
+            <a class="pa-wall-card" href="{{ url_for('root.product', slug=product.slug) }}">
+                <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="lazy" decoding="async">
+                <span>{{ product.collection_label }}</span>
+            </a>
+            {% endfor %}
+        </div>
+        <div class="wall-col">
+            {% for product in products[2:4] %}
+            <a class="pa-wall-card" href="{{ url_for('root.product', slug=product.slug) }}">
+                <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="lazy" decoding="async">
+                <span>{{ product.collection_label }}</span>
+            </a>
+            {% endfor %}
+        </div>
+        <div class="wall-col">
+            {% for product in products[4:6] %}
+            <a class="pa-wall-card" href="{{ url_for('root.product', slug=product.slug) }}">
+                <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="lazy" decoding="async">
+                <span>{{ product.collection_label }}</span>
+            </a>
+            {% endfor %}
+        </div>
+        <div class="wall-col">
+            {% for product in products[6:8] %}
+            <a class="pa-wall-card" href="{{ url_for('root.product', slug=product.slug) }}">
+                <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="lazy" decoding="async">
+                <span>{{ product.collection_label }}</span>
+            </a>
+            {% endfor %}
+        </div>
     </div>
 </section>
 
 <section class="pa-logo-band" aria-label="Trusted by creators">
     <p>Used by visual creators and archive teams</p>
-    <div class="pa-logo-marquee">
-        <div>
-            <span>PORTO LENS</span>
-            <span>Archive Lab</span>
-            <span>Studio PA</span>
-            <span>Open Frame</span>
-            <span>Daily Mood</span>
-            <span>Cloud Shelf</span>
-            <span>PORTO LENS</span>
-            <span>Archive Lab</span>
-            <span>Studio PA</span>
-            <span>Open Frame</span>
-        </div>
+    <div class="pa-camera-logos">
+        <span class="cam-logo cam-canon">Canon</span>
+        <span class="cam-logo cam-fujifilm">FUJIFILM</span>
+        <span class="cam-logo cam-sony">SONY</span>
+        <span class="cam-logo cam-leica">Leica</span>
+        <span class="cam-logo cam-nikon">NIKON</span>
+        <span class="cam-logo cam-hasselblad">Hasselblad</span>
     </div>
 </section>
 

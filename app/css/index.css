@@ -1,7 +1,7 @@
-@import url("./modules/base.css");
-@import url("./modules/marketplace.css");
-@import url("./modules/news.css");
-@import url("./modules/pages.css");
-@import url("./modules/responsive-core.css");
-@import url("./modules/home.css");
-@import url("./modules/responsive.css");
+@import url("./base.css");
+@import url("./marketplace.css");
+@import url("./news.css");
+@import url("./pages.css");
+@import url("./responsive-core.css");
+@import url("./home.css");
+@import url("./responsive.css");
