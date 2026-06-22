@@ -3,20 +3,17 @@
 {% block content %}
 <section class="listing-hero">
     <div>
-        <p class="micro">Gallery</p>
-        <h1>All photos.</h1>
-        <p class="lead">Browse every photograph in the archive.</p>
+        <p class="micro">My Gallery</p>
+        <h1>{{ session.get('user_id') }}'s photos.</h1>
+        <p class="lead">Photos you've uploaded to the archive.</p>
     </div>
-    <form class="search-line" action="{{ url_for('root.gallery') }}" method="GET">
-        <input type="search" name="q" value="{{ query|default('') }}" placeholder="Search by title or uploader">
-        <button type="submit">Search</button>
-    </form>
+    <a class="main-btn" href="{{ url_for('upload.upload') }}">Upload photo</a>
 </section>
 
 <section class="product-section listing">
     <div class="section-title">
-        <p>{{ 'Results' if query else 'All photos' }}</p>
-        <h2>{{ photos|length }} photo{{ 's' if photos|length != 1 else '' }} in the archive.</h2>
+        <p>My photos</p>
+        <h2>{{ photos|length }} photo{{ 's' if photos|length != 1 else '' }} uploaded.</h2>
     </div>
 
     <div class="product-grid">
@@ -27,7 +24,6 @@
             </div>
             <div class="product-row">
                 <div>
-                    <span>{{ photo.owner }}</span>
                     <h3>{{ photo.title }}</h3>
                 </div>
                 <strong>{{ photo.date }}</strong>
@@ -35,8 +31,8 @@
         </article>
         {% else %}
         <div class="empty-light">
-            <strong>No photos found.</strong>
-            <span>{% if query %}Try a different keyword.{% else %}Be the first to upload.{% endif %}</span>
+            <strong>No photos yet.</strong>
+            <span>Upload your first photo to get started.</span>
         </div>
         {% endfor %}
     </div>

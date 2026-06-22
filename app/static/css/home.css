@@ -8,57 +8,80 @@
     background: #050505;
 }
 
-.home .top {
+.home .top,
+.feature .top,
+.reviews .top {
     height: 100px;
     border-bottom: 0;
     background: rgba(5, 5, 5, 0.84);
     backdrop-filter: blur(22px);
 }
 
-.home .top-bar {
+.home .top-bar,
+.feature .top-bar,
+.reviews .top-bar {
     width: calc(100% - 200px);
     display: grid;
     align-items: center;
     justify-content: center;
 }
 
-.home .logo {
+.home .logo,
+.feature .logo,
+.reviews .logo {
     color: #fafafa;
     font-size: 20px;
     letter-spacing: -0.08em;
 }
 
-.home .logo::before {
+.home .logo::before,
+.feature .logo::before,
+.reviews .logo::before {
     display: none;
 }
 
-.home .menu-btn {
+.home .menu-btn,
+.feature .menu-btn,
+.reviews .menu-btn {
     border-color: rgba(255, 255, 255, 0.16);
     background: rgba(255, 255, 255, 0.08);
     color: #fdfdfd;
 }
 
-.home .nav {
+.home .nav,
+.feature .nav,
+.reviews .nav {
     gap: 49px;
     color: #737373;
     font-size: 14px;
     font-weight: 520;
 }
 
-.home .nav a:hover {
+.home .nav a:hover,
+.feature .nav a:hover,
+.reviews .nav a:hover,
+.home .nav a.active,
+.feature .nav a.active,
+.reviews .nav a.active {
     color: #fdfdfd;
 }
 
-.home .nav a::after {
+.home .nav a::after,
+.feature .nav a::after,
+.reviews .nav a::after {
     display: none;
 }
 
-.home .text-btn {
+.home .text-btn,
+.feature .text-btn,
+.reviews .text-btn {
     color: #fdfdfd;
     font-weight: 520;
 }
 
-.home .line-btn {
+.home .line-btn,
+.feature .line-btn,
+.reviews .line-btn {
     min-width: 74px;
     height: 38px;
     border: 1px solid #525252;
@@ -607,7 +630,6 @@
     animation-duration: 300s;
 }
 
-
 .slide-card {
     position: relative;
     display: block;
@@ -760,33 +782,3 @@
     }
 }
 
-@media (max-width: 760px) {
-    .shelf {
-        padding: 78px 0 92px;
-    }
-
-    .shelf-head {
-        grid-template-columns: 1fr;
-        gap: 18px;
-        width: min(100% - 32px, 1480px);
-        margin-bottom: 34px;
-    }
-
-    .shelf-head p {
-        font-size: 20px;
-    }
-
-    .shelf-scroll {
-        gap: 12px;
-    }
-
-    .slide-row {
-        gap: 12px;
-    }
-
-    .slide-card {
-        width: 270px;
-        height: 138px;
-        border-radius: 15px;
-    }
-}

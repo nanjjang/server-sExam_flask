@@ -31,10 +31,10 @@
 
         <nav class="topic-bar" aria-label="News topics" data-dock>
             <a class="active" href="{{ url_for('root.whats_new') }}">Blog</a>
-            <a href="{{ url_for('root.collection', slug='all') }}">Inspiration</a>
+            <a href="{{ url_for('root.gallery') }}">Inspiration</a>
             <a href="{{ url_for('root.gallery') }}">Marketplace</a>
             <a href="{{ url_for('root.page', slug='about-us') }}">Course</a>
-            <a class="news-topic-search" href="{{ url_for('root.search') }}" aria-label="Search">Search</a>
+            <a class="news-topic-search" href="{{ url_for('root.gallery') }}" aria-label="Search">Search</a>
         </nav>
 
         <div class="news-card-grid">

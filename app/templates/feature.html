@@ -24,7 +24,7 @@
             <small>270K saves · 15 boards · 1M views</small>
         </div>
         <div class="phone-grid">
-            {% for product in products[:10] %}
+            {% for product in products[:6] %}
             <img src="{{ product.image_url }}" alt="{{ product.title }} mobile preview" loading="lazy" decoding="async">
             {% endfor %}
         </div>
@@ -46,19 +46,11 @@
         <span>Powerful discovery</span>
         <h2>Search by Image & Color</h2>
         <p>Upload an image or filter by color to discover visually similar content. Whether you are building a mood board or designing your next project, photoArchive helps surface the right ideas instantly.</p>
-        <a class="light-btn" href="{{ url_for('root.search') }}">Try our search</a>
+        <a class="light-btn" href="{{ url_for('root.gallery') }}">Try our search</a>
     </div>
 
-    <div class="search-box" aria-label="Search by color interface">
-        <div class="color-bar"></div>
-        <div class="search-panel">
-            <span>By image</span>
-            <strong>Drop an image here or upload</strong>
-            <small>Search similar colors, moods, and archive references</small>
-        </div>
-        {% if products|length > 10 %}
-        <img src="{{ products[10].image_url }}" alt="{{ products[10].title }} color preview" loading="lazy" decoding="async">
-        {% endif %}
+    <div class="search-box upload-preview-box" aria-label="Upload interface preview">
+        <img src="{{ url_for('static', filename='images/upload-preview.png') }}" alt="photoArchive upload interface" loading="lazy" decoding="async">
     </div>
 </section>
 
@@ -79,14 +71,6 @@
     </div>
 </section>
 
-<section class="grid-sec">
-    <div class="copy">
-        <span>Customize your grid</span>
-        <h2>Your inspiration, your way</h2>
-        <p>Adjust columns, spacing, and layout until your grid feels just right. photoArchive adapts to your workflow, not the other way around.</p>
-        <a class="light-btn" href="{{ url_for('upload.upload') }}">Give it a try</a>
-    </div>
-</section>
 
 <section class="more" id="reviews">
     <div class="feat-head">
@@ -96,30 +80,25 @@
 
     <div class="resource-grid">
         <article>
-            <span>Marketplace</span>
-            <h3>Browse visual templates</h3>
-            <p>Explore photo bundles and archive boards made for mood, memory, and visual research.</p>
-            <a class="light-btn" href="{{ url_for('root.gallery') }}">Give it a try</a>
+            <img src="{{ url_for('static', filename='images/feature1-preview.png') }}" alt="Feature preview" loading="lazy" decoding="async">
+            <span>Upload</span>
+            <h3>Add photos to your archive</h3>
+            <p>Select and upload multiple images at once. Tag them by collection and keep your archive organized.</p>
+            <a class="light-btn" href="{{ url_for('upload.upload') }}">Try uploading</a>
         </article>
         <article>
-            {% if products|length > 16 %}
-            <img src="{{ products[16].image_url }}" alt="{{ products[16].title }} course preview" loading="lazy" decoding="async">
-            {% endif %}
-            <span>Visual Design Course</span>
-            <h3>Learn how inspiration shapes design</h3>
-            <p>Practical lessons on input, typography, color, and archive habits.</p>
-            <a class="light-btn" href="{{ url_for('root.page', slug='about-us') }}">Explore the course</a>
+            <img src="{{ url_for('static', filename='images/gallery-preview.png') }}" alt="Gallery page UI" loading="lazy" decoding="async">
+            <span>Gallery</span>
+            <h3>Explore the community archive</h3>
+            <p>Browse photos saved by everyone on photoArchive. Filter by collection and discover new visual inspiration.</p>
+            <a class="light-btn" href="{{ url_for('root.gallery') }}">Open gallery</a>
         </article>
         <article>
-            <div class="mini-grid">
-                {% for product in products[17:23] %}
-                <img src="{{ product.image_url }}" alt="{{ product.title }} builder preview" loading="lazy" decoding="async">
-                {% endfor %}
-            </div>
-            <span>Site Builder</span>
-            <h3>Turn your archive into a portfolio</h3>
-            <p>Publish boards, stories, and collections from your saved references.</p>
-            <a class="light-btn" href="{{ url_for('root.whats_new') }}">Check out</a>
+            <img src="{{ url_for('static', filename='images/whatsnew-preview.png') }}" alt="What's New page UI" loading="lazy" decoding="async">
+            <span>What's New</span>
+            <h3>Stay in the loop</h3>
+            <p>Read the latest updates, feature announcements, and stories from the photoArchive team.</p>
+            <a class="light-btn" href="{{ url_for('root.whats_new') }}">Read now</a>
         </article>
     </div>
 </section>

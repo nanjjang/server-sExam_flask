@@ -1,8 +1,6 @@
 @import url("./base.css");
+@import url("./home.css");
 @import url("./marketplace.css");
 @import url("./news.css");
-@import url("./pages.css");
-@import url("./responsive-core.css");
-@import url("./home.css");
 @import url("./reviews.css");
-@import url("./responsive.css");
+@import url("./pages.css");

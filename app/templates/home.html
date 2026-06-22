@@ -9,22 +9,6 @@
         <span>Join over 1M saved moments</span>
     </div>
 
-    <div class="globe" aria-label="photoArchive visual globe" data-globe data-no-anim>
-        {% if products %}
-            {% for batch in range(4) %}
-                {% set batch_index = batch %}
-                {% for product in products[:10] %}
-                    {% set globe_index = batch_index * 10 + loop.index0 %}
-                    <a class="globe-card" href="{{ url_for('root.product', slug=product.slug) }}" aria-label="{{ product.title }} preview">
-                        <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="{% if globe_index < 12 %}eager{% else %}lazy{% endif %}" decoding="async">
-                        {% if globe_index % 10 == 0 %}
-                        <span>{{ product.collection_label }}</span>
-                        {% endif %}
-                    </a>
-                {% endfor %}
-            {% endfor %}
-        {% endif %}
-    </div>
 </section>
 
 <section class="logos" aria-label="Trusted by creators">

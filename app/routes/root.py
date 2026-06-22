@@ -1,55 +1,12 @@
 import json
 import os
 
-from flask import Blueprint, render_template, request, send_from_directory, url_for
+from flask import Blueprint, redirect, render_template, request, send_from_directory, session, url_for
 
 from config import IMAGE_META_PATH, IMAGE_PATH, THUMB_PATH
 
 root_bp = Blueprint('root', __name__)
 
-
-COLLECTIONS = {
-    'all': {
-        'label': 'All Photos',
-        'title': 'All archives',
-        'description': 'Every saved photograph in photoArchive, gathered in one quiet shelf.',
-    },
-    'after-effects': {
-        'label': 'Seaside',
-        'title': 'Blue photos from the edge of the city',
-        'description': 'Beach walks, horizon lines, waves, and soft daylight saved as a calm archive.',
-    },
-    'figma-templates': {
-        'label': 'City',
-        'title': 'Urban frames for everyday memory',
-        'description': 'Buildings, streets, signs, and passing views organized into visual records.',
-    },
-    'jitter': {
-        'label': 'Moments',
-        'title': 'Small scenes worth keeping',
-        'description': 'Personal snapshots and quiet moments that become searchable memories.',
-    },
-    'bundles': {
-        'label': 'Stories',
-        'title': 'Photo stories grouped by mood',
-        'description': 'Curated sets of photos collected by place, date, color, and atmosphere.',
-    },
-    'new-releases': {
-        'label': 'New Uploads',
-        'title': 'Recently added photographs',
-        'description': 'The newest images uploaded to photoArchive, ready to browse and save.',
-    },
-}
-
-DEFAULT_COLLECTION_ORDER = ['after-effects', 'figma-templates', 'jitter', 'bundles']
-
-LEGACY_PRODUCT_SLUGS = [
-    'archive-grid',
-    'visual-shelf',
-    'mood-board',
-    'city-light-pack',
-    'seaside-memory',
-]
 
 PAGES = {
     'licenses': {
@@ -376,7 +333,6 @@ REVIEW_CARDS = [
 def load_image_meta():
     if not os.path.exists(IMAGE_META_PATH):
         return {}
-
     try:
         with open(IMAGE_META_PATH, 'r', encoding='utf-8') as file:
             return json.load(file)
@@ -384,95 +340,55 @@ def load_image_meta():
         return {}
 
 
-def get_gallery_photos(limit=None):
+def get_gallery_photos(owner=None, limit=None):
     allowed_extensions = {'.jpg', '.jpeg', '.png', '.gif', '.webp'}
-    display_titles = ['바닷가 산책', '부산의 오후', '느린 파도', '도시의 해변']
-    display_likes = ['6,923', '9,923', '7,032', '8,249']
-    display_dates = ['2026.01.01', '2026.09.13', '2026.11.05', '2026.08.24']
-    display_locations = ['Haeundae', 'Busan', 'Blue hour', 'Seaside']
     meta = load_image_meta()
     photos = []
 
     filenames = []
     if os.path.exists(IMAGE_PATH):
         for filename in os.listdir(IMAGE_PATH):
-            stem, ext = os.path.splitext(filename)
+            _, ext = os.path.splitext(filename)
             if ext.lower() in allowed_extensions:
                 filenames.append(filename)
 
-    filenames.sort(key=lambda filename: os.path.getmtime(os.path.join(IMAGE_PATH, filename)), reverse=True)
+    filenames.sort(key=lambda f: os.path.getmtime(os.path.join(IMAGE_PATH, f)), reverse=True)
 
     for filename in filenames:
         stem, _ = os.path.splitext(filename)
-        owner = stem.split('_', 1)[0]
+        file_owner = stem.split('_', 1)[0]
+
+        if owner and file_owner != owner:
+            continue
+
         image_url = url_for('root.media', filename=filename)
         thumb_path = os.path.join(THUMB_PATH, filename)
         if os.path.exists(thumb_path):
             image_url = url_for('root.thumbnail', filename=filename)
 
-        index = len(photos)
-        fallback_collection = DEFAULT_COLLECTION_ORDER[index % len(DEFAULT_COLLECTION_ORDER)]
         photo_meta = meta.get(filename, {})
-        collection = photo_meta.get('collection', fallback_collection)
-        if collection not in COLLECTIONS or collection in {'all', 'new-releases'}:
-            collection = fallback_collection
-
         photos.append({
             'filename': filename,
             'slug': stem,
-            'owner': owner,
-            'title': photo_meta.get('title') or (display_titles[index] if index < len(display_titles) else f'Archive Photo {index + 1:02d}'),
-            'likes': display_likes[index] if index < len(display_likes) else f'{692312 + index * 299535:,}',
-            'date': photo_meta.get('uploaded_at') or (display_dates[index] if index < len(display_dates) else f'2026.{(index % 12) + 1:02d}.{(index * 8 % 28) + 1:02d}'),
-            'location': display_locations[index] if index < len(display_locations) else 'Archive',
-            'collection': collection,
-            'collection_label': COLLECTIONS[collection]['label'],
+            'owner': file_owner,
+            'title': photo_meta.get('title') or f'Photo {len(photos) + 1:02d}',
+            'date': photo_meta.get('uploaded_at') or '',
             'url': image_url,
         })
 
     return photos[:limit] if limit else photos
 
 
-def get_market_products(limit=None):
-    products = []
-    for photo in get_gallery_photos():
-        products.append({
-            'slug': photo['slug'],
-            'title': photo['title'],
-            'collection': photo['collection'],
-            'collection_label': photo['collection_label'],
-            'price': f"{photo['likes']} likes",
-            'compare_price': photo['date'],
-            'image_url': photo['url'],
-            'description': 'A saved photo record organized for browsing, collecting, and rediscovering later.',
-        })
-
-    return products[:limit] if limit else products
-
-
-def get_market_product(slug):
-    products = get_market_products()
-    product = next((product for product in products if product['slug'] == slug), None)
-    if product:
-        return product
-
-    if slug in LEGACY_PRODUCT_SLUGS and products:
-        return products[LEGACY_PRODUCT_SLUGS.index(slug) % len(products)]
-
-    return None
-
-
 def get_news_posts(limit=None):
-    products = get_market_products()
+    photos = get_gallery_photos()
     posts = []
 
     for index, post in enumerate(NEWS_POSTS):
-        product = products[index % len(products)] if products else None
+        photo = photos[index % len(photos)] if photos else None
         posts.append({
             **post,
-            'image_url': product['image_url'] if product else '',
-            'image_alt': product['title'] if product else post['title'],
-            'collection_label': product['collection_label'] if product else 'Update',
+            'image_url': photo['url'] if photo else '',
+            'image_alt': photo['title'] if photo else post['title'],
             'url': url_for('root.whats_new_detail', slug=post['slug']),
         })
 
@@ -494,42 +410,53 @@ def split_news_index_posts(posts):
 
 @root_bp.route('/')
 def root():
-    return render_template(
-        'home.html',
-        products=get_market_products(),
-        body_class='home',
-    )
+    photos = get_gallery_photos()
+    products = [
+        {'slug': p['slug'], 'title': p['title'], 'image_url': p['url'], 'collection_label': p['owner'], 'compare_price': p['date'], 'price': p['date']}
+        for p in photos
+    ]
+    return render_template('home.html', products=products, body_class='home')
+
+
+@root_bp.route('/gallery')
+def gallery():
+    query = request.args.get('q', '').strip()
+    photos = get_gallery_photos()
+    if query:
+        lowered = query.lower()
+        photos = [p for p in photos if lowered in p['title'].lower() or lowered in p['owner'].lower()]
+    return render_template('gallery.html', photos=photos, query=query, body_class='gallery')
+
+
+@root_bp.route('/my-gallery')
+def my_gallery():
+    user_id = session.get('user_id')
+    if not user_id:
+        return redirect(url_for('auth.login'))
+    photos = get_gallery_photos(owner=user_id)
+    return render_template('my_gallery.html', photos=photos, body_class='gallery')
 
 
 @root_bp.route('/feature')
 def feature():
-    return render_template(
-        'feature.html',
-        products=get_market_products(),
-        body_class='feature',
-    )
+    photos = get_gallery_photos()
+    products = [
+        {'slug': p['slug'], 'title': p['title'], 'image_url': p['url'], 'collection_label': p['owner'], 'price': p['date']}
+        for p in photos
+    ]
+    return render_template('feature.html', products=products, body_class='feature')
 
 
 @root_bp.route('/reviews')
 def reviews():
-    return render_template(
-        'reviews.html',
-        products=get_market_products(),
-        reviews=REVIEW_CARDS,
-        body_class='reviews',
-    )
+    return render_template('reviews.html', reviews=REVIEW_CARDS, body_class='reviews')
 
 
 @root_bp.route('/whats-new')
 def whats_new():
     posts = get_news_posts()
     hero_post, grid_posts = split_news_index_posts(posts)
-    return render_template(
-        'whats_new.html',
-        hero_post=hero_post,
-        posts=grid_posts,
-        body_class='news',
-    )
+    return render_template('whats_new.html', hero_post=hero_post, posts=grid_posts, body_class='news')
 
 
 @root_bp.route('/whats-new/<slug>')
@@ -538,86 +465,9 @@ def whats_new_detail(slug):
     post = next((item for item in posts if item['slug'] == slug), None)
     if not post:
         hero_post, grid_posts = split_news_index_posts(posts)
-        return render_template(
-            'whats_new.html',
-            hero_post=hero_post,
-            posts=grid_posts,
-            body_class='news',
-        ), 404
+        return render_template('whats_new.html', hero_post=hero_post, posts=grid_posts, body_class='news'), 404
 
     return render_template('news_detail.html', post=post, body_class='news-post')
-
-
-@root_bp.route('/gallery')
-def gallery():
-    return render_market_listing()
-
-
-@root_bp.route('/search')
-def search():
-    return render_market_listing()
-
-
-def render_market_listing():
-    query = request.args.get('q', '').strip()
-    products = get_market_products()
-    if query:
-        lowered_query = query.lower()
-        products = [
-            product for product in products
-            if lowered_query in product['title'].lower()
-            or lowered_query in product['collection_label'].lower()
-            or lowered_query in product['description'].lower()
-            or lowered_query in product['compare_price'].lower()
-        ]
-
-    return render_template(
-        'gallery.html',
-        products=products,
-        query=query,
-        collections=COLLECTIONS,
-        body_class='gallery',
-    )
-
-
-@root_bp.route('/collections/<slug>')
-def collection(slug):
-    if slug == 'figma':
-        slug = 'figma-templates'
-
-    collection_data = COLLECTIONS.get(slug)
-    if not collection_data:
-        return render_market_listing(), 404
-
-    products = get_market_products()
-    if slug not in {'all', 'new-releases'}:
-        products = [product for product in products if product['collection'] == slug]
-    elif slug == 'new-releases':
-        products = products[:6]
-
-    return render_template(
-        'collection.html',
-        collection_slug=slug,
-        collection=collection_data,
-        products=products,
-        collections=COLLECTIONS,
-        body_class='gallery',
-    )
-
-
-@root_bp.route('/products/<slug>')
-def product(slug):
-    product_data = get_market_product(slug)
-    if not product_data:
-        return render_template('gallery.html', products=get_market_products(), query='', collections=COLLECTIONS, body_class='gallery'), 404
-
-    related = [product for product in get_market_products(5) if product['slug'] != slug][:4]
-    return render_template('product.html', product=product_data, related=related, body_class='product')
-
-
-@root_bp.route('/cart')
-def cart():
-    return render_template('cart.html', products=get_market_products(3), body_class='cart')
 
 
 @root_bp.route('/pages/<slug>')
@@ -627,6 +477,11 @@ def page(slug):
         return render_template('page.html', page=PAGES['about-us'], body_class='info'), 404
 
     return render_template('page.html', page=page_data, body_class='info')
+
+
+@root_bp.route('/products/<slug>')
+def product(slug):
+    return redirect(url_for('root.gallery'))
 
 
 @root_bp.route('/media/<path:filename>')
