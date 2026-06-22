@@ -3,46 +3,46 @@
 {% block content %}
 <section class="hero">
     <div class="hero-copy">
-        <h1>Made for visual minds</h1>
-        <p>Browse photographs curated by your archive.<br>Find the best visual references for your next memory.</p>
-        <a class="blue-btn" href="{{ url_for('upload.upload') }}">Curate your taste</a>
-        <span>Join over 1M saved moments</span>
+        <h1>사진을 업로드하고 정리하는 웹 아카이브</h1>
+        <p>이미지를 업로드하고, 검색하고, 내 갤러리에서 다시 확인할 수 있는 개인 사진 아카이브입니다.</p>
+        <a class="blue-btn" href="{{ url_for('upload.upload') }}">사진 업로드하기</a>
+        <span>Flask · HTML · CSS · JSON 저장</span>
     </div>
 
 </section>
 
-<section class="logos" aria-label="Trusted by creators">
-    <p>Used by visual creators and archive teams</p>
+<section class="logos" aria-label="Project stack">
+    <p>이 프로젝트에서 구현한 핵심 요소</p>
     <div class="logo-list">
-        <span class="logo-mark mark-canon">Canon</span>
-        <span class="logo-mark mark-fuji">FUJIFILM</span>
-        <span class="logo-mark mark-sony">SONY</span>
-        <span class="logo-mark mark-leica">Leica</span>
-        <span class="logo-mark mark-nikon">NIKON</span>
-        <span class="logo-mark mark-hasselblad">Hasselblad</span>
+        <span class="project-chip">Flask Routing</span>
+        <span class="project-chip">Image Upload</span>
+        <span class="project-chip">Search</span>
+        <span class="project-chip">Login</span>
+        <span class="project-chip">My Gallery</span>
+        <span class="project-chip">JSON Storage</span>
     </div>
 </section>
 
 <section class="story" id="reviews">
     <div class="story-copy">
-        <h2>We built photoArchive because we needed it.</h2>
-        <p>A place to save everything that moves you. A photograph, a color, a street, a small moment that should not disappear.</p>
-        <p>We are a small independent archive for people who think with images and return to memories before making something new.</p>
+        <h2>당신의 사진을 photoArchive에서 공유하세요.</h2>
+        <p>기억하고 싶은 순간을 업로드하면 전체 갤러리에서 함께 둘러볼 수 있습니다.</p>
+        <p>일상의 장면, 여행 사진, 좋아하는 풍경까지 간단히 올리고 내 갤러리에서 다시 확인해보세요.</p>
     </div>
 
 
      <div class="quote-grid">
         <article>
-            <h3>Smart boards</h3>
-            <p>Organize your saves with client-selected tags, clear categories, and a calm browsing rhythm.</p>
+            <h3>사진 올리기</h3>
+            <p>이미지와 제목을 입력해 나만의 사진을 갤러리에 추가합니다.</p>
         </article>
         <article>
-            <h3>Powerful discovery</h3>
-            <p>Find exactly what you are looking for with collections, search, previews, and recent uploads.</p>
+            <h3>함께 보기</h3>
+            <p>전체 갤러리에서 여러 사람이 올린 사진을 한눈에 둘러봅니다.</p>
         </article>
         <article>
-            <h3>Community driven</h3>
-            <p>Explore trending memories and build stories from seaside, city, moments, and personal archives.</p>
+            <h3>내 사진 모아보기</h3>
+            <p>내가 업로드한 사진은 내 갤러리에서 따로 모아 확인합니다.</p>
         </article>
     </div>
 
@@ -50,48 +50,48 @@
     <div class="quote">
         <span class="avatar">pA</span>
         <div>
-            <strong>photoArchive Studio</strong>
-            <small>Co-founder, visual memory shelf</small>
+            <strong>photoArchive</strong>
+            <small>사진을 올리고 함께 보는 공간</small>
         </div>
     </div>
 </section>
 
 <section class="tools">
-    <p>Available on all your favorite workflows.</p>
+    <p>사진을 올리고 함께 둘러보는 데 필요한 기능입니다.</p>
     <div>
-        <span>Upload Board</span>
-        <span>Browser Gallery</span>
-        <span>Tag Archive</span>
-        <span>Mobile Shelf</span>
+        <span>사진 업로드</span>
+        <span>전체 갤러리</span>
+        <span>내 갤러리</span>
+        <span>제목 검색</span>
     </div>
 </section>
 
 <section class="feat-sec" id="features">
     <div class="sec-head">
-        <h2>Designed to inspire</h2>
-        <p>Explore, save, organize and share. photoArchive gives you all the essentials to refine your visual taste.</p>
+        <h2>구현한 핵심 기능</h2>
+        <p>복잡한 부가 기능보다 업로드, 저장, 검색, 사용자별 조회 흐름에 집중했습니다.</p>
     </div>
 
     <div class="feat-grid">
         <article>
-            <h3>Smart boards</h3>
-            <p>Organize your saves with client-selected tags, clear categories, and a calm browsing rhythm.</p>
+            <h3>이미지 업로드</h3>
+            <p>여러 이미지 파일을 받아 서버 폴더에 저장하고, 메타데이터를 함께 관리합니다.</p>
         </article>
         <article>
-            <h3>Powerful discovery</h3>
-            <p>Find exactly what you are looking for with collections, search, previews, and recent uploads.</p>
+            <h3>갤러리 검색</h3>
+            <p>저장된 사진 목록을 카드 형태로 보여주고 제목, 업로더 기준으로 필터링합니다.</p>
         </article>
         <article>
-            <h3>Community driven</h3>
-            <p>Explore trending memories and build stories from seaside, city, moments, and personal archives.</p>
+            <h3>사용자 화면</h3>
+            <p>로그인 여부에 따라 업로드와 내 갤러리 접근 흐름을 나누었습니다.</p>
         </article>
     </div>
 </section>
 
 <section class="market" id="new">
     <div class="sec-head">
-        <h2>Fresh archive drops</h2>
-        <p>Recent uploads flow into a cinematic shelf, ready to be opened, saved, and sorted.</p>
+        <h2>최근 업로드</h2>
+        <p>프로젝트에 저장된 사진을 같은 카드 규격으로 보여주어 화면이 흔들리지 않게 정리했습니다.</p>
     </div>
 
     <div class="preview-grid">
@@ -108,7 +108,7 @@
 <section class="shelf">
     <div class="shelf-head">
         <h2>Archive shelf</h2>
-        <p>Browse quick previews before opening a full photo record.</p>
+        <p>업로드된 사진을 한눈에 살펴볼 수 있는 미리보기 영역입니다.</p>
     </div>
 
     <div class="shelf-scroll" aria-label="Photo archive shelf previews">
@@ -132,9 +132,9 @@
 </section>
 
 <section class="cta">
-    <h2>Inspiration is one click away</h2>
-    <p>High-quality photo references curated to help you remember, design, and create your next project.</p>
-    <a class="blue-btn" href="{{ url_for('root.gallery') }}">Find inspiration</a>
-    <span>Join over 1M saved moments</span>
+    <h2>사진을 다시 찾기 쉬운 아카이브</h2>
+    <p>사진 업로드, 전체 갤러리, 내 갤러리, 검색까지 한 흐름으로 확인할 수 있습니다.</p>
+    <a class="blue-btn" href="{{ url_for('root.gallery') }}">갤러리 확인하기</a>
+    <span>photoArchive · Flask project</span>
 </section>
 {% endblock %}

@@ -4,16 +4,16 @@
 <section class="listing-hero">
     <div>
         <p class="micro">My Gallery</p>
-        <h1>{{ session.get('user_id') }}'s photos.</h1>
-        <p class="lead">Photos you've uploaded to the archive.</p>
+        <h1>{{ session.get('user_id') }}님의 갤러리</h1>
+        <p class="lead">내 계정으로 업로드한 사진만 모아봅니다.</p>
     </div>
-    <a class="main-btn" href="{{ url_for('upload.upload') }}">Upload photo</a>
+    <a class="main-btn" href="{{ url_for('upload.upload') }}">사진 업로드</a>
 </section>
 
 <section class="product-section listing">
     <div class="section-title">
-        <p>My photos</p>
-        <h2>{{ photos|length }} photo{{ 's' if photos|length != 1 else '' }} uploaded.</h2>
+        <p>내 사진</p>
+        <h2>현재 {{ photos|length }}장의 사진을 업로드했습니다.</h2>
     </div>
 
     <div class="product-grid">
@@ -31,8 +31,8 @@
         </article>
         {% else %}
         <div class="empty-light">
-            <strong>No photos yet.</strong>
-            <span>Upload your first photo to get started.</span>
+            <strong>아직 업로드한 사진이 없습니다.</strong>
+            <span>첫 사진을 업로드하면 이곳에 표시됩니다.</span>
         </div>
         {% endfor %}
     </div>

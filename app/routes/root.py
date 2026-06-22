@@ -10,322 +10,148 @@ root_bp = Blueprint('root', __name__)
 
 PAGES = {
     'licenses': {
-        'label': 'Archive Rule',
-        'title': 'Photos stay inside your archive',
-        'body': 'photoArchive is a personal project space for uploading, browsing, and organizing photographs.',
+        'label': 'Scope',
+        'title': '구현한 기능',
+        'body': 'photoArchive는 사진 업로드, 전체 갤러리, 내 갤러리, 검색 화면을 구현한 개인 사진 아카이브입니다.',
     },
     'contact-us': {
         'label': 'Contact',
-        'title': 'Talk to photoArchive',
-        'body': 'Questions about upload flow, gallery layout, or future archive features can be sent through the project contact channel.',
+        'title': '개선할 점',
+        'body': '현재 버전에서 더 발전시킬 수 있는 기능은 업로드 검증, 이미지 삭제, 태그 필터, 썸네일 최적화입니다.',
     },
     'about-us': {
         'label': 'About',
-        'title': 'A calm place for saved photographs',
-        'body': 'photoArchive turns uploaded images into a curated visual shelf, connecting dates, places, moods, and stories inside one clean browsing experience.',
+        'title': '프로젝트 목적',
+        'body': '흩어진 사진을 웹에서 업로드하고 다시 찾아볼 수 있도록 만들었습니다. Flask 라우팅, 템플릿 렌더링, 파일 저장 구조를 직접 확인할 수 있습니다.',
     },
     'refunds-policy': {
-        'label': 'Data Guide',
-        'title': 'Prototype data guide',
-        'body': 'This project uses local uploaded images for display. Future versions can add account storage, privacy controls, tags, favorites, and recovery tools.',
+        'label': 'Data',
+        'title': '데이터 저장 방식',
+        'body': '업로드된 이미지는 app/database/images 폴더에 저장하고, 제목과 분류 같은 정보는 image_meta.json 파일에 기록합니다.',
     },
     'seller-profile': {
         'label': 'Profile',
-        'title': 'Created for photoArchive',
-        'body': 'A visual identity focused on clean grids, large photography, searchable memories, and a portfolio-grade archive interface.',
+        'title': '프로젝트 구성',
+        'body': '라우트, 템플릿, 정적 CSS, 이미지 저장 폴더를 나누어 관리했습니다. 화면은 사진이 잘 보이도록 큰 카드와 명확한 버튼 중심으로 정리했습니다.',
     },
     'privacy-policy': {
         'label': 'Privacy',
-        'title': 'Privacy for personal archives',
-        'body': 'This prototype keeps uploaded images in the local project directory. Production storage should add explicit permissions and recovery controls.',
+        'title': '개인 사진 보관 안내',
+        'body': '현재 버전은 로컬 프로젝트 폴더에 사진을 저장합니다. 실제 서비스로 확장한다면 사용자 권한, 삭제 기능, 저장 용량 제한이 추가로 필요합니다.',
     },
 }
 
 NEWS_POSTS = [
     {
-        'slug': 'curation-becomes-portfolio',
-        'title': 'When curation becomes your portfolio',
-        'excerpt': 'We built a way to turn your photoArchive profile into a visual story.',
-        'date': 'May 21, 2026',
+        'slug': 'project-overview',
+        'title': '프로젝트 개요',
+        'excerpt': '사진을 업로드하고 다시 찾아볼 수 있는 Flask 기반 아카이브를 만들었습니다.',
+        'date': 'Jun 22, 2026',
         'body': [
-            'Your archive can be more than a place to keep files. It can become a living portfolio of taste, mood, location, and memory.',
-            'This update brings clearer visual collections, stronger image rhythm, and a simpler way to present the photographs that shape your work.',
+            'photoArchive는 개인 사진을 업로드하고 다시 찾아보기 위해 만든 웹 아카이브입니다.',
+            '업로드, 전체 갤러리, 내 갤러리, 검색 화면을 하나의 흐름으로 연결했습니다.',
         ],
     },
     {
-        'slug': 'introducing-upload-board',
-        'title': 'Introducing the photoArchive upload board',
-        'excerpt': 'A calmer workflow for saving images, arranging them, and returning to the moments that matter.',
-        'date': 'May 8, 2026',
+        'slug': 'upload-flow',
+        'title': '업로드 기능 구현',
+        'excerpt': '사용자가 선택한 이미지를 서버 폴더에 저장하고 메타데이터를 JSON으로 관리합니다.',
+        'date': 'Jun 21, 2026',
         'body': [
-            'The upload board is designed for the first few seconds after inspiration arrives.',
-            'We focused on a faster path from upload to gallery so your newest references can move into collections without getting buried.',
+            '업로드 라우트에서 파일 확장자를 확인한 뒤 app/database/images 폴더에 저장합니다.',
+            '사진 제목, 분류, 업로드 날짜 같은 정보는 image_meta.json에 기록해 갤러리에서 다시 사용합니다.',
         ],
     },
     {
-        'slug': 'readymade-archive-conversation',
-        'title': 'A conversation about quiet visual archives',
-        'excerpt': 'What makes a personal photo shelf worth revisiting again and again.',
-        'date': 'Apr 13, 2026',
+        'slug': 'gallery-search',
+        'title': '갤러리와 검색',
+        'excerpt': '저장된 사진을 같은 카드 규격으로 보여주고 제목과 업로더 기준으로 검색합니다.',
+        'date': 'Jun 20, 2026',
         'body': [
-            'The best archives do not shout. They make it easy to notice patterns across time, place, color, and feeling.',
-            'This note looks at how photoArchive can help small collections grow into a useful visual memory system.',
+            '전체 갤러리는 이미지 폴더를 읽어 최신 업로드 순서로 사진을 보여줍니다.',
+            '검색어가 있으면 제목과 업로더 이름을 비교해 필요한 사진만 남깁니다.',
         ],
     },
     {
-        'slug': 'portfolio-tool-we-wanted',
-        'title': 'We built the portfolio tool we always wanted',
-        'excerpt': 'A simple way to turn saved photographs into a browsable body of work.',
-        'date': 'Feb 11, 2026',
+        'slug': 'my-gallery',
+        'title': '내 갤러리 화면',
+        'excerpt': '로그인한 사용자가 업로드한 사진만 따로 확인할 수 있게 구성했습니다.',
+        'date': 'Jun 19, 2026',
         'body': [
-            'A portfolio should feel easy to update. Recent work and old favorites can live inside the same clean flow.',
-            'Collections, detail views, and search now work together as one connected archive surface.',
+            '파일명 앞에 저장된 사용자 이름을 기준으로 사진 소유자를 구분합니다.',
+            '로그인하지 않은 상태에서 내 갤러리에 접근하면 로그인 화면으로 이동합니다.',
         ],
     },
     {
-        'slug': 'comments-are-here',
-        'title': 'Comments are here',
-        'excerpt': 'A lightweight layer for leaving context beside the images you save.',
-        'date': 'Feb 10, 2026',
+        'slug': 'layout-cleanup',
+        'title': '레이아웃 정리',
+        'excerpt': '카드 이미지 비율, 버튼 크기, 텍스트 줄바꿈을 맞춰 화면 완성도를 높였습니다.',
+        'date': 'Jun 18, 2026',
         'body': [
-            'Every saved image has a reason behind it. Comments give those reasons a place to live beside the photograph.',
-            'Use them for location notes, project context, small memories, or reminders for what to revisit next.',
+            '카드마다 다른 이미지 높이를 통일하고 텍스트 영역이 밀리지 않도록 CSS를 정리했습니다.',
+            '필요 없는 마케팅 문구와 복잡한 장식 코드를 줄여 프로젝트 목적이 더 잘 보이게 만들었습니다.',
         ],
     },
     {
-        'slug': 'your-data-is-yours',
-        'title': 'Your data is yours',
-        'excerpt': 'A straightforward note on ownership, local project data, and future privacy controls.',
-        'date': 'Feb 9, 2026',
+        'slug': 'next-steps',
+        'title': '추가로 개선할 점',
+        'excerpt': '삭제 기능, 태그 필터, 썸네일 최적화가 다음 개선 후보입니다.',
+        'date': 'Jun 17, 2026',
         'body': [
-            'photoArchive is built around the idea that personal images should remain personal unless you decide otherwise.',
-            'The current prototype keeps images in the local project structure.',
-        ],
-    },
-    {
-        'slug': 'eight-years-community',
-        'title': '8 years. A love letter to visual memory.',
-        'excerpt': 'A small celebration of the habit of saving what keeps inspiring you.',
-        'date': 'Nov 13, 2025',
-        'body': [
-            'The habit is simple: notice something, save it, return later with new eyes.',
-            'photoArchive is our way of giving that habit a quieter and more beautiful home.',
-        ],
-    },
-    {
-        'slug': 'new-space-for-teams',
-        'title': 'A new space for your team archive',
-        'excerpt': 'Shared collections for groups that think through images together.',
-        'date': 'Aug 26, 2025',
-        'body': [
-            'Team archives need shared context without making the interface feel heavy.',
-            'This direction explores grouped collections, clearer story shelves, and quick access to the images everyone comes back to.',
-        ],
-    },
-    {
-        'slug': 'photoarchive-and-whats-next',
-        'title': 'photoArchive.com and what is next',
-        'excerpt': 'A cleaner archive surface, richer discovery, and a better way to come back to saved moments.',
-        'date': 'Aug 15, 2025',
-        'body': [
-            'Back in 2015, the archive was a simple place to keep visual notes. We kept returning to the same idea: make rediscovery quieter and easier.',
-            'The next version of photoArchive focuses on fewer clicks between upload, sorting, and returning to the images that still matter.',
-        ],
-    },
-    {
-        'slug': 'reimagined-search',
-        'title': 'How we reimagined search on photoArchive',
-        'excerpt': 'Search should feel like returning to a place, not filling out a database form.',
-        'date': 'Jul 3, 2025',
-        'body': [
-            'A personal archive grows through small details: dates, places, colors, seasons, and the words you remember later.',
-            'This note outlines how search can become more visual while staying simple enough for daily use.',
-        ],
-    },
-    {
-        'slug': 'valuable-skill-taste',
-        'title': 'The most valuable skill you can have as a designer: Taste',
-        'excerpt': 'An archive is not only storage. It is a record of what keeps catching your eye.',
-        'date': 'May 20, 2025',
-        'body': [
-            'Taste improves when you keep noticing what you return to.',
-            'photoArchive gives those repetitions a shape so your own references can teach you something over time.',
-        ],
-    },
-    {
-        'slug': 'motion-reference-guide',
-        'title': 'Quick guide on how to update your motion references',
-        'excerpt': 'A practical way to keep inspiration boards fresh without losing old context.',
-        'date': 'May 12, 2025',
-        'body': [
-            'Motion references tend to scatter across screenshots, folders, and temporary links.',
-            'A clear archive lets new ideas sit beside older ones without turning the workspace into noise.',
-        ],
-    },
-    {
-        'slug': 'new-way-to-save',
-        'title': 'A new way to save what inspires you',
-        'excerpt': 'Notes on collecting visual material while you browse and returning to it later.',
-        'date': 'Apr 23, 2025',
-        'body': [
-            'Saving an image is only the first step. The important part is finding it again at the right moment.',
-            'We are thinking about lightweight capture flows that preserve the context around a saved photograph.',
-        ],
-    },
-    {
-        'slug': 'discover-more-like-this',
-        'title': 'Discover more like this: a seamless way to find new inspiration',
-        'excerpt': 'Related saves can make an archive feel alive instead of static.',
-        'date': 'Dec 29, 2024',
-        'body': [
-            'The best recommendation is often one that starts from your own archive.',
-            'By connecting nearby colors, places, and moods, photoArchive can make rediscovery feel intentional.',
-        ],
-    },
-    {
-        'slug': 'archive-turns-seven',
-        'title': 'photoArchive turns 7',
-        'excerpt': 'A small note on keeping a side project simple enough to keep improving.',
-        'date': 'Aug 9, 2024',
-        'body': [
-            'The projects that last usually have one clear habit at the center.',
-            'For photoArchive, that habit is saving what matters visually and giving yourself a reason to come back.',
-        ],
-    },
-    {
-        'slug': 'five-new-features',
-        'title': 'Five new features: saved videos, mobile app, simple tagging and more',
-        'excerpt': 'A roadmap for turning a small photo shelf into a stronger creative tool.',
-        'date': 'Jun 23, 2024',
-        'body': [
-            'A good archive should meet you where you work.',
-            'This roadmap brings together upload improvements, mobile browsing, richer tags, and more useful saved records.',
-        ],
-    },
-    {
-        'slug': 'marketplace-craft',
-        'title': 'Introducing our marketplace craft with photoArchive',
-        'excerpt': 'A behind-the-scenes look at building a visual system around saved photographs.',
-        'date': 'Feb 29, 2024',
-        'body': [
-            'The interface should disappear just enough for the images to feel important.',
-            'We designed the archive around large previews, compact metadata, and a rhythm that rewards scrolling.',
-        ],
-    },
-    {
-        'slug': 'beauty-matters',
-        'title': 'Because beauty matters',
-        'excerpt': 'Why small visual decisions make an archive easier to love and easier to use.',
-        'date': 'Dec 29, 2023',
-        'body': [
-            'A beautiful archive is not about decoration. It is about making the act of returning feel worthwhile.',
-            'Spacing, rhythm, and image size all shape whether someone wants to keep browsing.',
-        ],
-    },
-    {
-        'slug': 'one-million-saves',
-        'title': 'photoArchive reaches one million saves',
-        'excerpt': 'A milestone for the small habit of saving visual memory.',
-        'date': 'Dec 19, 2023',
-        'body': [
-            'A million saves is not only a number. It is a million small moments someone thought were worth keeping.',
-            'This is a celebration of those quiet decisions and the shelves they create.',
-        ],
-    },
-    {
-        'slug': 'adding-images-to-board',
-        'title': 'Adding images to a board',
-        'excerpt': 'How to move from upload to a useful board without interrupting your flow.',
-        'date': 'Dec 3, 2023',
-        'body': [
-            'A board should be fast enough to catch a thought before it disappears.',
-            'This update keeps the path from saved image to sorted archive short and predictable.',
-        ],
-    },
-    {
-        'slug': 'conversation-about-memory',
-        'title': 'A conversation about visual memory',
-        'excerpt': 'What personal archives can learn from designers, photographers, and everyday collectors.',
-        'date': 'Nov 27, 2023',
-        'body': [
-            'Visual memory is built from the things you decide to keep and the way you return to them.',
-            'We talked through the habits that make an archive useful after the first upload.',
+            '현재 버전은 업로드와 조회 흐름에 집중했습니다.',
+            '추후에는 사진 삭제, 태그별 필터, 이미지 압축, 사용자별 저장 공간 제한을 추가할 수 있습니다.',
         ],
     },
 ]
 
 POPULAR_NEWS_SCORES = {
-    'introducing-upload-board': 98,
-    'curation-becomes-portfolio': 94,
-    'readymade-archive-conversation': 88,
-    'comments-are-here': 82,
-    'your-data-is-yours': 78,
-    'portfolio-tool-we-wanted': 74,
+    'project-overview': 100,
+    'upload-flow': 90,
+    'gallery-search': 80,
 }
 
 REVIEW_CARDS = [
     {
-        'quote': 'photoArchive gives me a calm place to return to when a project starts feeling too loud. I save the references, step away, and come back with a clearer eye.',
-        'name': 'Andre Souza',
-        'role': 'Product Designer',
-        'initials': 'AS',
+        'quote': 'Flask Blueprint로 화면별 라우트를 나누고, 템플릿에서 필요한 데이터만 전달하도록 구성했습니다.',
+        'name': '라우팅',
+        'role': 'routes/root.py, routes/upload.py',
+        'initials': 'RT',
         'accent': 'blue',
     },
     {
-        'quote': 'The best part is how quickly a small save becomes a useful board. It feels less like storage and more like a record of taste.',
-        'name': 'Fabio Sasso',
-        'role': 'Founder and visual curator',
-        'initials': 'FS',
+        'quote': '업로드한 이미지 파일은 images 폴더에 저장하고, 제목과 분류 정보는 JSON 파일에 함께 기록합니다.',
+        'name': '데이터 저장',
+        'role': 'database/images, image_meta.json',
+        'initials': 'DB',
         'accent': 'green',
     },
     {
-        'quote': 'I use it before every design review. The archive keeps my references close without turning the screen into a mess.',
-        'name': 'Mica Lashford',
-        'role': 'Design Principal',
-        'initials': 'ML',
+        'quote': '전체 갤러리와 내 갤러리를 분리해 로그인한 사용자 기준으로 사진을 확인할 수 있게 했습니다.',
+        'name': '갤러리',
+        'role': 'gallery.html, my_gallery.html',
+        'initials': 'GA',
         'accent': 'rose',
     },
     {
-        'quote': 'Say goodbye to scattered folders. photoArchive makes browsing old screenshots, seaside photos, and tiny visual notes feel surprisingly polished.',
-        'name': 'Ashley Gaunt-Seo',
-        'role': 'Visual Designer',
-        'initials': 'AG',
+        'quote': '사진 제목과 업로더 이름으로 검색할 수 있어 저장된 이미지가 많아져도 원하는 항목을 찾을 수 있습니다.',
+        'name': '검색',
+        'role': 'query parameter filtering',
+        'initials': 'SE',
         'accent': 'gold',
     },
     {
-        'quote': 'It is a designer dream: simple enough for daily use, structured enough to become a serious source of visual memory.',
-        'name': 'Mily McClelland',
-        'role': 'Senior Staff Designer',
-        'initials': 'MM',
+        'quote': '카드 이미지 비율과 버튼 크기를 통일해 화면 캡처 시 큰 규격 차이가 보이지 않도록 정리했습니다.',
+        'name': 'UI 정리',
+        'role': 'CSS layout cleanup',
+        'initials': 'UI',
         'accent': 'violet',
     },
     {
-        'quote': 'I never start a board from zero anymore. There is always a trail of images waiting to help me make the next choice.',
-        'name': 'Ray Sison',
-        'role': 'Partner and Design Lead',
-        'initials': 'RS',
+        'quote': '복잡한 장식 코드와 실제 기능과 맞지 않는 문구를 줄여 사진 아카이브 목적에 맞게 다듬었습니다.',
+        'name': '코드 정리',
+        'role': 'simpler templates and CSS',
+        'initials': 'CL',
         'accent': 'steel',
-    },
-    {
-        'quote': 'The interface gets out of the way, which is exactly what I want from an archive. The photos stay in focus.',
-        'name': 'James Casey',
-        'role': 'Senior Designer',
-        'initials': 'JC',
-        'accent': 'cyan',
-    },
-    {
-        'quote': 'My team uses photoArchive to keep a shared sense of direction. It turns loose inspiration into something we can actually discuss.',
-        'name': 'Josh Kill',
-        'role': 'Product and Design Leader',
-        'initials': 'JK',
-        'accent': 'lime',
-    },
-    {
-        'quote': 'A good archive should make rediscovery feel effortless. This does that with just enough structure and a lot of restraint.',
-        'name': 'Manvydas Kugis',
-        'role': 'Designer and Art Director',
-        'initials': 'MK',
-        'accent': 'amber',
     },
 ]
 
@@ -449,7 +275,12 @@ def feature():
 
 @root_bp.route('/reviews')
 def reviews():
-    return render_template('reviews.html', reviews=REVIEW_CARDS, body_class='reviews')
+    photos = get_gallery_photos(limit=8)
+    products = [
+        {'slug': p['slug'], 'title': p['title'], 'image_url': p['url']}
+        for p in photos
+    ]
+    return render_template('reviews.html', reviews=REVIEW_CARDS, products=products, body_class='reviews')
 
 
 @root_bp.route('/whats-new')

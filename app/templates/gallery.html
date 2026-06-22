@@ -4,19 +4,19 @@
 <section class="listing-hero">
     <div>
         <p class="micro">Gallery</p>
-        <h1>All photos.</h1>
-        <p class="lead">Browse every photograph in the archive.</p>
+        <h1>전체 갤러리</h1>
+        <p class="lead">업로드된 모든 사진을 최신순으로 확인합니다.</p>
     </div>
     <form class="search-line" action="{{ url_for('root.gallery') }}" method="GET">
-        <input type="search" name="q" value="{{ query|default('') }}" placeholder="Search by title or uploader">
-        <button type="submit">Search</button>
+        <input type="search" name="q" value="{{ query|default('') }}" placeholder="제목 또는 업로더 검색">
+        <button type="submit">검색</button>
     </form>
 </section>
 
 <section class="product-section listing">
     <div class="section-title">
-        <p>{{ 'Results' if query else 'All photos' }}</p>
-        <h2>{{ photos|length }} photo{{ 's' if photos|length != 1 else '' }} in the archive.</h2>
+        <p>{{ '검색 결과' if query else '전체 사진' }}</p>
+        <h2>현재 {{ photos|length }}장의 사진이 저장되어 있습니다.</h2>
     </div>
 
     <div class="product-grid">
@@ -35,8 +35,8 @@
         </article>
         {% else %}
         <div class="empty-light">
-            <strong>No photos found.</strong>
-            <span>{% if query %}Try a different keyword.{% else %}Be the first to upload.{% endif %}</span>
+            <strong>사진을 찾을 수 없습니다.</strong>
+            <span>{% if query %}다른 검색어를 입력해보세요.{% else %}첫 사진을 업로드해보세요.{% endif %}</span>
         </div>
         {% endfor %}
     </div>

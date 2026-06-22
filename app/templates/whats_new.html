@@ -2,15 +2,15 @@
 
 {% block content %}
 <div class="blog-side-mark" aria-hidden="true">
-    <span class="blog-side-label">Blog</span>
+    <span class="blog-side-label">Log</span>
     <span class="blog-side-line"></span>
-    <a class="blog-side-back" href="{{ url_for('root.gallery') }}">Archive</a>
+    <a class="blog-side-back" href="{{ url_for('root.gallery') }}">Gallery</a>
 </div>
 
 <section class="whats-new-page" aria-labelledby="whats-new-title">
     <div class="whats-new-shell">
         <p class="news-logotype">photoArchive</p>
-        <h1 id="whats-new-title" class="sr-only">What's new</h1>
+        <h1 id="whats-new-title" class="sr-only">프로젝트 안내</h1>
 
         {% if hero_post %}
         <article class="news-card news-hero-card">
@@ -24,17 +24,17 @@
                 <h2><a href="{{ hero_post.url }}">{{ hero_post.title }}</a></h2>
                 <p>{{ hero_post.excerpt }}</p>
                 <time>{{ hero_post.date }}</time>
-                <a class="news-read-button" href="{{ hero_post.url }}">Read more</a>
+                <a class="news-read-button" href="{{ hero_post.url }}">자세히 보기</a>
             </div>
         </article>
         {% endif %}
 
-        <nav class="topic-bar" aria-label="News topics" data-dock>
-            <a class="active" href="{{ url_for('root.whats_new') }}">Blog</a>
-            <a href="{{ url_for('root.gallery') }}">Inspiration</a>
-            <a href="{{ url_for('root.gallery') }}">Marketplace</a>
-            <a href="{{ url_for('root.page', slug='about-us') }}">Course</a>
-            <a class="news-topic-search" href="{{ url_for('root.gallery') }}" aria-label="Search">Search</a>
+        <nav class="topic-bar" aria-label="Development topics" data-dock>
+            <a class="active" href="{{ url_for('root.whats_new') }}">프로젝트 안내</a>
+            <a href="{{ url_for('root.feature') }}">기능 소개</a>
+            <a href="{{ url_for('root.gallery') }}">갤러리</a>
+            <a href="{{ url_for('root.page', slug='about-us') }}">프로젝트 목적</a>
+            <a class="news-topic-search" href="{{ url_for('root.gallery') }}" aria-label="Search">검색</a>
         </nav>
 
         <div class="news-card-grid">
@@ -50,7 +50,7 @@
                     <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
                     <p>{{ post.excerpt }}</p>
                     <time>{{ post.date }}</time>
-                    <a class="news-read-button" href="{{ post.url }}">Read more</a>
+                    <a class="news-read-button" href="{{ post.url }}">자세히 보기</a>
                 </div>
             </article>
             {% endfor %}

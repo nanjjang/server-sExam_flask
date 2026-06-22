@@ -3,12 +3,12 @@
 {% block content %}
 <section class="review-hero" id="reviews" aria-labelledby="review-title">
     <div class="review-copy">
-        <span>Reviews</span>
-        <h1 id="review-title">Inspiration that people return to</h1>
-        <p>Every day, visual thinkers use photoArchive as a quiet space for references, memories, taste, and craft.</p>
+        <span>Project</span>
+        <h1 id="review-title">구현 정보</h1>
+        <p>photoArchive가 어떤 방식으로 사진을 저장하고 보여주는지 핵심 구조를 정리했습니다.</p>
     </div>
 
-    <div class="review-grid" aria-label="Customer reviews">
+    <div class="review-grid" aria-label="Project checkpoints">
         {% for review in reviews %}
         <article class="review-card review-card-{{ loop.index }} review-accent-{{ review.accent }}">
             <p>{{ review.quote }}</p>
@@ -24,29 +24,29 @@
     </div>
 </section>
 
-<section class="review-logos" aria-label="Trusted teams">
-    <p>Used by leading design studios and archive teams</p>
+<section class="review-logos" aria-label="Project stack">
+    <p>사용한 기술과 저장 구조</p>
     <div>
-        <span>Apple</span>
-        <span>Google</span>
-        <span>PORTO ROCHA</span>
-        <span>NIKE</span>
-        <span>Adobe</span>
-        <span>Pentagram</span>
-        <span>Airbnb</span>
-        <span>OpenAI</span>
+        <span>Flask</span>
+        <span>Jinja</span>
+        <span>HTML</span>
+        <span>CSS</span>
+        <span>JSON</span>
+        <span>Local files</span>
+        <span>Login</span>
+        <span>Search</span>
     </div>
 </section>
 
 <section class="proof" id="features">
     <div class="proof-copy">
-        <span>Proof in the archive</span>
-        <h2>Every save keeps a project moving.</h2>
-        <p>Collected references become useful when they are easy to revisit. photoArchive keeps the visual trail close, organized, and ready for the next idea.</p>
+        <span>Result</span>
+        <h2>업로드한 사진이 실제 화면에 반영됩니다.</h2>
+        <p>이미지 파일과 메타데이터를 읽어 갤러리 카드로 보여주고, 로그인한 사용자의 사진만 따로 모아볼 수 있습니다.</p>
         <div class="stat-row">
-            <span><b>1M+</b> saved moments</span>
-            <span><b>24K</b> boards opened</span>
-            <span><b>8</b> focused collections</span>
+            <span><b>4</b> 주요 화면</span>
+            <span><b>2</b> 저장 위치</span>
+            <span><b>1</b> Flask 앱</span>
         </div>
     </div>
 
@@ -66,9 +66,9 @@
 </section>
 
 <section class="review-cta" data-stop>
-    <h2>Inspiration is one click away</h2>
-    <p>High-quality photo references curated to help you shape your next project.</p>
-    <a class="blue-btn" href="{{ url_for('root.gallery') }}">Start browsing</a>
-    <span>Join over 1M saved moments</span>
+    <h2>아카이브 기능 확인</h2>
+    <p>갤러리에서 사진 목록과 검색 기능이 정상 작동하는지 확인할 수 있습니다.</p>
+    <a class="blue-btn" href="{{ url_for('root.gallery') }}">갤러리 확인하기</a>
+    <span>photoArchive 사진 아카이브</span>
 </section>
 {% endblock %}

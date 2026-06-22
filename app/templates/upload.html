@@ -2,26 +2,26 @@
 
 {% block content %}
 <nav class="upload-pill-nav">
-    <a class="upload-pill-back" href="{{ url_for('root.gallery') }}">← Archive</a>
+    <a class="upload-pill-back" href="{{ url_for('root.gallery') }}">← 갤러리</a>
     <span class="upload-pill-sep"></span>
     <span class="upload-logo">photoArchive</span>
     <span class="upload-pill-sep"></span>
-    <span class="upload-pill-step">Upload</span>
+    <span class="upload-pill-step">업로드</span>
 </nav>
 
 <section class="upload-stage">
     <p class="micro">Upload</p>
-    <h1>Add new photos<br>to your archive</h1>
-    <p>Select multiple images to save them to the PA gallery.</p>
+    <h1>새 사진을<br>아카이브에 추가하기</h1>
+    <p>여러 이미지를 선택하면 프로젝트 갤러리에 저장됩니다.</p>
 
     <form class="upload-form" action="" method="post" enctype="multipart/form-data">
         <label class="upload-field">
-            <span>Archive title</span>
-            <input type="text" name="photoTitle" placeholder="e.g. Seoul blue hour">
+            <span>사진 제목</span>
+            <input type="text" name="photoTitle" placeholder="예: 서울 노을">
         </label>
 
         <fieldset class="tag-picker">
-            <legend>Photo tag</legend>
+            <legend>사진 분류</legend>
             {% for slug, label in photo_tags.items() %}
             <label>
                 <input type="radio" name="photoTag" value="{{ slug }}" {% if loop.first %}checked{% endif %}>
@@ -32,11 +32,11 @@
 
         <label class="drop-zone" for="fileImage">
             <span>+</span>
-            <strong>Choose photos</strong>
+            <strong>사진 선택하기</strong>
             <small>JPG, PNG, GIF, WEBP</small>
             <input type="file" name="fileImage" id="fileImage" multiple>
         </label>
-        <button type="submit" id="send" name="send">Upload</button>
+        <button type="submit" id="send" name="send">업로드</button>
     </form>
 </section>
 {% endblock %}

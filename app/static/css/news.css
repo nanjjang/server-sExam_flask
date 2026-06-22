@@ -3,8 +3,7 @@
     background: #fff;
 }
 
-.news .top,
-.news .float {
+.news .top {
     display: none;
 }
 
@@ -266,4 +265,3 @@
     font-size: 19px;
     line-height: 1.78;
 }
-

@@ -3,7 +3,7 @@
 {% block content %}
 <article class="news-detail-page">
     <header class="news-detail-header">
-        <p class="micro">{{ post.collection_label }}</p>
+        <p class="micro">Development Log</p>
         <h1>{{ post.title }}</h1>
         <time>{{ post.date }}</time>
     </header>
@@ -18,7 +18,7 @@
         {% for paragraph in post.body %}
         <p>{{ paragraph }}</p>
         {% endfor %}
-        <a class="news-read-button" href="{{ url_for('root.whats_new') }}">Back to What's new</a>
+        <a class="news-read-button" href="{{ url_for('root.whats_new') }}">프로젝트 안내로 돌아가기</a>
     </div>
 </article>
 {% endblock %}

@@ -3,8 +3,8 @@
 {% block content %}
 <section class="feat-hero" id="features">
     <div class="feat-copy">
-        <h1>Built for your taste</h1>
-        <p>photoArchive gives you the tools to collect and discover visual inspiration every day.</p>
+        <h1>Flask 사진 아카이브</h1>
+        <p>사진을 업로드하고, 검색하고, 사용자별로 다시 확인할 수 있게 만든 웹 아카이브입니다.</p>
     </div>
 
     <div class="feat-wall" aria-label="Archive inspiration wall">
@@ -19,9 +19,9 @@
 <section class="phone-sec">
     <div class="phone" aria-label="Mobile archive preview">
         <div class="profile">
-            <strong>Nova Blaine</strong>
-            <span>Visual Archive</span>
-            <small>270K saves · 15 boards · 1M views</small>
+            <strong>photoArchive</strong>
+            <span>개인 갤러리</span>
+            <small>사진 업로드 · 제목 검색 · 사용자별 보관</small>
         </div>
         <div class="phone-grid">
             {% for product in products[:6] %}
@@ -31,22 +31,19 @@
     </div>
 
     <div class="copy">
-        <span>Mobile App</span>
-        <h2>Inspiration on the go</h2>
-        <p>Save from anywhere with just a tap. Our mobile app makes it effortless to collect ideas, organize them, and keep your inspiration close at hand.</p>
-        <div class="store-row">
-            <a href="{{ url_for('root.gallery') }}">iOS</a>
-            <a href="{{ url_for('root.gallery') }}">Android</a>
-        </div>
+        <span>Gallery View</span>
+        <h2>사진을 보기 쉽게 정리</h2>
+        <p>업로드한 사진을 같은 카드 규격으로 보여주고, 제목과 업로더 정보를 함께 확인할 수 있게 정리했습니다.</p>
+        <a class="light-btn" href="{{ url_for('root.gallery') }}">갤러리 보기</a>
     </div>
 </section>
 
 <section class="search-sec">
     <div class="copy">
-        <span>Powerful discovery</span>
-        <h2>Search by Image & Color</h2>
-        <p>Upload an image or filter by color to discover visually similar content. Whether you are building a mood board or designing your next project, photoArchive helps surface the right ideas instantly.</p>
-        <a class="light-btn" href="{{ url_for('root.gallery') }}">Try our search</a>
+        <span>Search</span>
+        <h2>제목과 업로더로 검색</h2>
+        <p>사진 제목이나 업로드한 사용자 이름으로 원하는 이미지를 빠르게 찾을 수 있습니다. 복잡한 기능보다 실제로 필요한 검색 흐름에 집중했습니다.</p>
+        <a class="light-btn" href="{{ url_for('root.gallery') }}">검색해보기</a>
     </div>
 
     <div class="search-box upload-preview-box" aria-label="Upload interface preview">
@@ -64,49 +61,49 @@
     </div>
 
     <div class="copy">
-        <span>Related content</span>
-        <h2>Discover more like it</h2>
-        <p>When you save something you love, photoArchive shows visually related inspiration to expand your exploration. It is like having a curator by your side, helping you go deeper into the worlds that spark your ideas.</p>
-        <a class="light-btn" href="{{ url_for('root.gallery') }}">Start exploring</a>
+        <span>Organization</span>
+        <h2>사진을 한 곳에 정리</h2>
+        <p>업로드된 파일과 메타데이터를 프로젝트 안에 저장하고, 전체 갤러리와 내 갤러리에서 다시 확인할 수 있게 구성했습니다.</p>
+        <a class="light-btn" href="{{ url_for('root.my_gallery') }}">내 갤러리 보기</a>
     </div>
 </section>
 
 
 <section class="more" id="reviews">
     <div class="feat-head">
-        <h2>Beyond inspiration</h2>
-        <p>We are more than a place to save and discover. photoArchive offers resources to help you and your team expand your work and grow as visual thinkers.</p>
+        <h2>아카이브 화면 구성</h2>
+        <p>사진을 추가하고, 전체 목록에서 찾고, 내 사진만 다시 보는 흐름을 중심으로 화면을 정리했습니다.</p>
     </div>
 
     <div class="resource-grid">
         <article>
             <img src="{{ url_for('static', filename='images/feature1-preview.png') }}" alt="Feature preview" loading="lazy" decoding="async">
             <span>Upload</span>
-            <h3>Add photos to your archive</h3>
-            <p>Select and upload multiple images at once. Tag them by collection and keep your archive organized.</p>
-            <a class="light-btn" href="{{ url_for('upload.upload') }}">Try uploading</a>
+            <h3>사진 업로드</h3>
+            <p>여러 장의 이미지를 선택해 저장하고, 제목과 분류 정보를 함께 기록할 수 있습니다.</p>
+            <a class="light-btn" href="{{ url_for('upload.upload') }}">업로드하기</a>
         </article>
         <article>
             <img src="{{ url_for('static', filename='images/gallery-preview.png') }}" alt="Gallery page UI" loading="lazy" decoding="async">
             <span>Gallery</span>
-            <h3>Explore the community archive</h3>
-            <p>Browse photos saved by everyone on photoArchive. Filter by collection and discover new visual inspiration.</p>
-            <a class="light-btn" href="{{ url_for('root.gallery') }}">Open gallery</a>
+            <h3>전체 갤러리</h3>
+            <p>저장된 모든 사진을 같은 카드 규격으로 보여주고, 제목이나 업로더로 검색할 수 있습니다.</p>
+            <a class="light-btn" href="{{ url_for('root.gallery') }}">갤러리 열기</a>
         </article>
         <article>
-            <img src="{{ url_for('static', filename='images/whatsnew-preview.png') }}" alt="What's New page UI" loading="lazy" decoding="async">
-            <span>What's New</span>
-            <h3>Stay in the loop</h3>
-            <p>Read the latest updates, feature announcements, and stories from the photoArchive team.</p>
-            <a class="light-btn" href="{{ url_for('root.whats_new') }}">Read now</a>
+            <img src="{{ url_for('static', filename='images/my-gallery-preview.png') }}" alt="My Gallery page UI" loading="lazy" decoding="async">
+            <span>My Gallery</span>
+            <h3>내 갤러리</h3>
+            <p>로그인한 사용자가 업로드한 사진만 따로 모아볼 수 있습니다.</p>
+            <a class="light-btn" href="{{ url_for('root.my_gallery') }}">내 갤러리 보기</a>
         </article>
     </div>
 </section>
 
 <section class="feat-cta" data-stop>
-    <h2>Inspiration is one click away</h2>
-    <p>High-quality visual references curated to help you create your next project.</p>
-    <a class="blue-btn" href="{{ url_for('upload.upload') }}">Curate your taste</a>
-    <span>Join over 1M users</span>
+    <h2>필요한 기능을 한 곳에</h2>
+    <p>이미지 업로드, JSON 메타데이터 저장, 전체 갤러리, 내 갤러리, 검색 화면을 한 프로젝트 안에서 구현했습니다.</p>
+    <a class="blue-btn" href="{{ url_for('upload.upload') }}">사진 업로드하기</a>
+    <span>Flask · HTML · CSS · JSON</span>
 </section>
 {% endblock %}

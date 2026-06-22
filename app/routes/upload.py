@@ -8,10 +8,10 @@ from config import IMAGE_META_PATH, IMAGE_PATH
 upload_bp = Blueprint('upload', __name__)
 
 PHOTO_TAGS = {
-    'after-effects': 'Seaside',
-    'figma-templates': 'City',
-    'jitter': 'Moments',
-    'bundles': 'Stories',
+    'after-effects': '풍경',
+    'figma-templates': '도시',
+    'jitter': '일상',
+    'bundles': '기록',
 }
 
 
