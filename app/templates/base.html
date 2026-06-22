@@ -241,70 +241,43 @@
             }
 
             const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
-            const lerp = (start, end, amount) => start + (end - start) * amount;
-            const easeOutBack = (value) => {
-                const c1 = 1.52;
-                const c3 = c1 + 1;
-                return 1 + c3 * Math.pow(value - 1, 3) + c1 * Math.pow(value - 1, 2);
-            };
-
-            const getSpreadPattern = () => {
+            const getGlobePattern = () => {
                 const width = window.innerWidth;
-                const wallWidth = Math.min(width - 40, 1500);
                 const count = cards.length;
                 const isMobile = width <= 560;
                 const isTablet = width <= 960;
-                const columns = isMobile ? 3 : isTablet ? 5 : 8;
-                const gap = isMobile ? 14 : isTablet ? 22 : 34;
                 const baseW = isMobile ? 72 : isTablet ? 112 : 116;
                 const baseH = isMobile ? 84 : isTablet ? 98 : 96;
-                const rowStep = isMobile ? 106 : isTablet ? 134 : 150;
-                const rows = Math.ceil(count / columns);
-                const spreadWidth = (columns - 1) * (baseW + gap);
-                const spreadHeight = Math.max(isMobile ? 1320 : 760, (rows - 1) * rowStep + baseH + (isMobile ? 210 : 230));
                 const globeSize = isMobile ? Math.min(360, width - 40) : isTablet ? 620 : 820;
                 const centerY = isMobile ? 128 : isTablet ? 150 : 125;
                 const radiusX = globeSize * 0.49;
                 const radiusY = globeSize * 0.46;
                 const radiusZ = globeSize * 0.5;
                 const items = cards.map((_, index) => {
-                    const column = index % columns;
-                    const row = Math.floor(index / columns);
-                    const wave = Math.sin(index * 1.47) * (isMobile ? 8 : 20);
-                    const rowNudge = Math.cos((row + 1) * 1.2 + column * 0.7) * (isMobile ? 8 : 18);
                     const sizeWave = 1 + Math.sin(index * 0.88) * 0.07;
                     const tall = index % 11 === 0 ? 1.2 : index % 7 === 0 ? 0.86 : 1;
                     const wide = index % 13 === 0 ? 1.14 : index % 5 === 0 ? 0.92 : 1;
 
                     return {
-                        x: (column - (columns - 1) / 2) * (baseW + gap) + wave,
-                        y: (row - (rows - 1) / 2) * rowStep + rowNudge,
-                        z: (row % 2 ? -18 : 18) + Math.sin(index * 0.61) * 14,
                         w: Math.round(baseW * wide * sizeWave),
                         h: Math.round(baseH * tall * (1 + Math.cos(index * 0.73) * 0.06)),
-                        r: Math.sin(index * 1.19) * (isMobile ? 4 : 7),
                     };
                 });
+                const height = isMobile ? Math.max(610, globeSize + 250) : isTablet ? globeSize + 190 : globeSize + 80;
 
                 return {
-                    columns,
                     count,
                     centerY,
-                    height: spreadHeight,
+                    height,
                     radiusX,
                     radiusY,
                     radiusZ,
-                    scrollDistance: isMobile ? 660 : 860,
-                    spreadWidth,
-                    wallWidth,
                     items,
                 };
             };
 
-            let pattern = getSpreadPattern();
+            let pattern = getGlobePattern();
             let ticking = false;
-            let latestProgress = 0;
             const startTime = performance.now();
 
             const getSphereState = (index, item, axisTurn) => {
@@ -337,46 +310,27 @@
             };
 
             const applyWall = (now = performance.now()) => {
-                const scrollY = window.scrollY || document.documentElement.scrollTop;
-                const raw = reduceMotion ? 1 : clamp(scrollY / pattern.scrollDistance);
-                const stableProgress = clamp(raw);
-                latestProgress = stableProgress;
-                const axisTurn = reduceMotion ? 0 : ((now - startTime) * 0.00034) * (1 - stableProgress);
+                const axisTurn = reduceMotion ? 0 : (now - startTime) * 0.00034;
 
-                wall.style.setProperty('--wall-progress', stableProgress.toFixed(3));
+                wall.style.setProperty('--wall-progress', '0');
                 wall.style.setProperty('--wall-center-y', `${pattern.centerY}px`);
                 wall.style.height = `${pattern.height}px`;
 
                 cards.forEach((card, index) => {
                     const item = pattern.items[index];
                     const sphere = getSphereState(index, item, axisTurn);
-                    const delay = (index % 11) * 0.008;
-                    const localRaw = reduceMotion ? 1 : clamp((raw - delay) / 0.86);
-                    const progress = localRaw >= 1 ? 1 : Math.min(1.05, easeOutBack(localRaw));
-                    const localStable = clamp(progress);
-                    const lift = Math.sin(clamp(localRaw) * Math.PI) * (index % 3 === 0 ? 170 : 120);
-                    const x = lerp(sphere.x, item.x, progress);
-                    const y = lerp(sphere.y, item.y, progress) - lift;
-                    const z = lerp(sphere.z, item.z, localStable) + lift * 0.35;
-                    const rx = lerp(sphere.rx, 0, localStable);
-                    const ry = lerp(sphere.ry, 0, localStable);
-                    const rz = lerp(sphere.rz, item.r, progress);
-                    const scale = lerp(sphere.scale, 1, localStable);
-                    const opacity = lerp(sphere.opacity, 1, localStable);
-                    const brightness = lerp(sphere.brightness, 0.91, localStable);
-                    const curve = lerp(Math.abs(sphere.curve), 0, localStable);
-                    const labelOpacity = localStable > 0.72 ? Math.min(1, (localStable - 0.72) / 0.28) : 0;
+                    const curve = Math.abs(sphere.curve);
 
-                    card.style.setProperty('--card-w', `${item.w}px`);
-                    card.style.setProperty('--card-h', `${item.h}px`);
-                    card.style.setProperty('--wall-opacity', opacity.toFixed(3));
-                    card.style.setProperty('--wall-brightness', brightness.toFixed(3));
-                    card.style.setProperty('--label-opacity', labelOpacity.toFixed(3));
-                    card.style.setProperty('--card-radius', `${lerp(28, 14, localStable).toFixed(1)}px`);
+                    card.style.setProperty('--card-w', `${sphere.w}px`);
+                    card.style.setProperty('--card-h', `${sphere.h}px`);
+                    card.style.setProperty('--wall-opacity', sphere.opacity.toFixed(3));
+                    card.style.setProperty('--wall-brightness', sphere.brightness.toFixed(3));
+                    card.style.setProperty('--label-opacity', '0');
+                    card.style.setProperty('--card-radius', '28px');
                     card.style.setProperty('--curve-left', `${(-14 * curve).toFixed(1)}px`);
                     card.style.setProperty('--curve-right', `${(14 * curve).toFixed(1)}px`);
-                    card.style.zIndex = String(Math.round(1000 + z + index));
-                    card.style.transform = `translate(-50%, -50%) translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${z.toFixed(1)}px) rotateY(${ry.toFixed(2)}deg) rotateX(${rx.toFixed(2)}deg) rotateZ(${rz.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
+                    card.style.zIndex = String(Math.round(1000 + sphere.z + index));
+                    card.style.transform = `translate(-50%, -50%) translate3d(${sphere.x.toFixed(1)}px, ${sphere.y.toFixed(1)}px, ${sphere.z.toFixed(1)}px) rotateY(${sphere.ry.toFixed(2)}deg) rotateX(${sphere.rx.toFixed(2)}deg) rotateZ(${sphere.rz.toFixed(2)}deg) scale(${sphere.scale.toFixed(3)})`;
                 });
 
                 ticking = false;
@@ -390,14 +344,13 @@
             };
 
             const refreshPattern = () => {
-                pattern = getSpreadPattern();
+                pattern = getGlobePattern();
                 requestWallUpdate();
             };
 
-            window.addEventListener('scroll', requestWallUpdate, { passive: true });
             window.addEventListener('resize', refreshPattern);
             const rotateGlobe = (now) => {
-                if (!document.hidden && latestProgress < 0.96) {
+                if (!document.hidden) {
                     applyWall(now);
                 }
 
