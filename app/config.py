@@ -1,8 +1,6 @@
 import os
-from dotenv import load_dotenv
-load_dotenv()
 
-secret_key = os.getenv("SECRET_KEY")
+secret_key = "sunrin-secret-key-2026"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 IMAGE_PATH = os.path.join(BASE_DIR, 'database/images')
