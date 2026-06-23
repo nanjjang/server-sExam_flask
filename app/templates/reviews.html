@@ -9,18 +9,66 @@
     </div>
 
     <div class="review-grid" aria-label="Project checkpoints">
-        {% for review in reviews %}
-        <article class="review-card review-card-{{ loop.index }} review-accent-{{ review.accent }}">
-            <p>{{ review.quote }}</p>
+        <article class="review-card review-card-1 review-accent-blue">
+            <p>Flask Blueprint로 화면별 라우트를 나누고, 템플릿에서 필요한 데이터만 전달하도록 구성했습니다.</p>
             <footer>
-                <span class="review-avatar" aria-hidden="true">{{ review.initials }}</span>
+                <span class="review-avatar" aria-hidden="true">RT</span>
                 <div>
-                    <strong>{{ review.name }}</strong>
-                    <small>{{ review.role }}</small>
+                    <strong>라우팅</strong>
+                    <small>routes/root.py, routes/upload.py</small>
                 </div>
             </footer>
         </article>
-        {% endfor %}
+        <article class="review-card review-card-2 review-accent-green">
+            <p>업로드한 이미지 파일은 images 폴더에 저장하고, 제목과 분류 정보는 JSON 파일에 함께 기록합니다.</p>
+            <footer>
+                <span class="review-avatar" aria-hidden="true">DB</span>
+                <div>
+                    <strong>데이터 저장</strong>
+                    <small>database/images, image_meta.json</small>
+                </div>
+            </footer>
+        </article>
+        <article class="review-card review-card-3 review-accent-rose">
+            <p>전체 갤러리와 내 갤러리를 분리해 로그인한 사용자 기준으로 사진을 확인할 수 있게 했습니다.</p>
+            <footer>
+                <span class="review-avatar" aria-hidden="true">GA</span>
+                <div>
+                    <strong>갤러리</strong>
+                    <small>gallery.html, my_gallery.html</small>
+                </div>
+            </footer>
+        </article>
+        <article class="review-card review-card-4 review-accent-gold">
+            <p>사진 제목과 업로더 이름으로 검색할 수 있어 저장된 이미지가 많아져도 원하는 항목을 찾을 수 있습니다.</p>
+            <footer>
+                <span class="review-avatar" aria-hidden="true">SE</span>
+                <div>
+                    <strong>검색</strong>
+                    <small>query parameter filtering</small>
+                </div>
+            </footer>
+        </article>
+        <article class="review-card review-card-5 review-accent-violet">
+            <p>카드 이미지 비율과 버튼 크기를 통일해 화면 캡처 시 큰 규격 차이가 보이지 않도록 정리했습니다.</p>
+            <footer>
+                <span class="review-avatar" aria-hidden="true">UI</span>
+                <div>
+                    <strong>UI 정리</strong>
+                    <small>CSS layout cleanup</small>
+                </div>
+            </footer>
+        </article>
+        <article class="review-card review-card-6 review-accent-steel">
+            <p>복잡한 장식 코드와 실제 기능과 맞지 않는 문구를 줄여 사진 아카이브 목적에 맞게 다듬었습니다.</p>
+            <footer>
+                <span class="review-avatar" aria-hidden="true">CL</span>
+                <div>
+                    <strong>코드 정리</strong>
+                    <small>simpler templates and CSS</small>
+                </div>
+            </footer>
+        </article>
     </div>
 </section>
 
@@ -51,17 +99,14 @@
     </div>
 
     <div class="proof-grid" aria-label="Archive image previews">
-        {% if products %}
-            {% for product in products[:8] %}
-            <a class="proof-shot proof-shot-{{ loop.index }}" href="{{ url_for('root.product', slug=product.slug) }}">
-                <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="lazy" decoding="async">
-            </a>
-            {% endfor %}
-        {% else %}
-            {% for item in range(8) %}
-            <span class="empty-shot"></span>
-            {% endfor %}
-        {% endif %}
+        <a class="proof-shot proof-shot-1" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/proof1.jpg') }}" alt="proof 1" loading="lazy" decoding="async"></a>
+        <a class="proof-shot proof-shot-2" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/proof2.jpg') }}" alt="proof 2" loading="lazy" decoding="async"></a>
+        <a class="proof-shot proof-shot-3" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/proof3.jpg') }}" alt="proof 3" loading="lazy" decoding="async"></a>
+        <a class="proof-shot proof-shot-4" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/proof4.jpg') }}" alt="proof 4" loading="lazy" decoding="async"></a>
+        <a class="proof-shot proof-shot-5" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/proof5.jpg') }}" alt="proof 5" loading="lazy" decoding="async"></a>
+        <a class="proof-shot proof-shot-6" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/proof6.jpg') }}" alt="proof 6" loading="lazy" decoding="async"></a>
+        <a class="proof-shot proof-shot-7" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/proof7.jpg') }}" alt="proof 7" loading="lazy" decoding="async"></a>
+        <a class="proof-shot proof-shot-8" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/proof8.jpg') }}" alt="proof 8" loading="lazy" decoding="async"></a>
     </div>
 </section>
 

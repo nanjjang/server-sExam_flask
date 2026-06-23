@@ -12,21 +12,16 @@
         <p class="news-logotype">photoArchive</p>
         <h1 id="whats-new-title" class="sr-only">새 소식</h1>
 
-        {% if hero_post %}
         <article class="news-card news-hero-card">
             <div class="news-card-media">
-                {% if hero_post.image_url %}
-                <img src="{{ hero_post.image_url }}" alt="{{ hero_post.image_alt }} preview" loading="eager" decoding="async">
-                {% endif %}
+                <img src="{{ url_for('static', filename='images/blog1.jpg') }}" alt="사진 정리하는 법" loading="eager" decoding="async">
             </div>
-
             <div class="news-card-copy">
-                <h2>{{ hero_post.title }}</h2>
-                <p>{{ hero_post.excerpt }}</p>
-                <time>{{ hero_post.date }}</time>
+                <h2>사진 정리하는 법</h2>
+                <p>쌓여만 가는 사진을 깔끔하게 보관하고 나중에 다시 찾는 방법을 소개합니다.</p>
+                <time>Jun 22, 2026</time>
             </div>
         </article>
-        {% endif %}
 
         <nav class="topic-bar" aria-label="topics" data-dock>
             <a class="active" href="{{ url_for('root.blog') }}">블로그</a>
@@ -38,21 +33,96 @@
         </nav>
 
         <div class="news-card-grid">
-            {% for post in posts %}
             <article class="news-card">
                 <div class="news-card-media">
-                    {% if post.image_url %}
-                    <img src="{{ post.image_url }}" alt="{{ post.image_alt }} preview" loading="lazy" decoding="async">
-                    {% endif %}
+                    <img src="{{ url_for('static', filename='images/blog2.jpg') }}" alt="남길 사진 고르는 기준" loading="lazy" decoding="async">
                 </div>
-
                 <div class="news-card-copy">
-                    <h2>{{ post.title }}</h2>
-                    <p>{{ post.excerpt }}</p>
-                    <time>{{ post.date }}</time>
+                    <h2>남길 사진 고르는 기준</h2>
+                    <p>수백 장 중에서 진짜 남길 한 장을 고르는 나만의 방법을 공유합니다.</p>
+                    <time>Jun 21, 2026</time>
                 </div>
             </article>
-            {% endfor %}
+            <article class="news-card">
+                <div class="news-card-media">
+                    <img src="{{ url_for('static', filename='images/blog3.jpg') }}" alt="일상 사진 잘 찍는 법" loading="lazy" decoding="async">
+                </div>
+                <div class="news-card-copy">
+                    <h2>일상 사진 잘 찍는 법</h2>
+                    <p>특별한 장비 없이 스마트폰으로도 기억에 남는 사진을 찍을 수 있습니다.</p>
+                    <time>Jun 20, 2026</time>
+                </div>
+            </article>
+            <article class="news-card">
+                <div class="news-card-media">
+                    <img src="{{ url_for('static', filename='images/blog4.jpg') }}" alt="사진을 찍는 이유" loading="lazy" decoding="async">
+                </div>
+                <div class="news-card-copy">
+                    <h2>사진을 찍는 이유</h2>
+                    <p>순간을 기록하는 것이 왜 중요한지, 나중에 꺼내 볼 때의 기분을 이야기합니다.</p>
+                    <time>Jun 19, 2026</time>
+                </div>
+            </article>
+            <article class="news-card">
+                <div class="news-card-media">
+                    <img src="{{ url_for('static', filename='images/blog5.jpg') }}" alt="계절마다 달라지는 배경" loading="lazy" decoding="async">
+                </div>
+                <div class="news-card-copy">
+                    <h2>계절마다 달라지는 배경</h2>
+                    <p>봄, 여름, 가을, 겨울 — 계절에 따라 사진 분위기가 이렇게 달라집니다.</p>
+                    <time>Jun 18, 2026</time>
+                </div>
+            </article>
+            <article class="news-card">
+                <div class="news-card-media">
+                    <img src="{{ url_for('static', filename='images/blog6.jpg') }}" alt="사진에 제목을 붙이는 습관" loading="lazy" decoding="async">
+                </div>
+                <div class="news-card-copy">
+                    <h2>사진에 제목을 붙이는 습관</h2>
+                    <p>업로드할 때 제목을 잘 붙여두면 나중에 찾을 때 훨씬 편합니다.</p>
+                    <time>Jun 17, 2026</time>
+                </div>
+            </article>
+            <article class="news-card">
+                <div class="news-card-media">
+                    <img src="{{ url_for('static', filename='images/blog7.jpg') }}" alt="골든아워에 찍은 사진은 왜 다를까" loading="lazy" decoding="async">
+                </div>
+                <div class="news-card-copy">
+                    <h2>골든아워에 찍은 사진은 왜 다를까</h2>
+                    <p>해 뜨고 지는 시간대의 빛이 사진을 완전히 다르게 만드는 이유를 이야기합니다.</p>
+                    <time>Jun 16, 2026</time>
+                </div>
+            </article>
+            <article class="news-card">
+                <div class="news-card-media">
+                    <img src="{{ url_for('static', filename='images/blog8.jpg') }}" alt="같은 장소, 다른 각도" loading="lazy" decoding="async">
+                </div>
+                <div class="news-card-copy">
+                    <h2>같은 장소, 다른 각도</h2>
+                    <p>카메라 위치만 조금 바꿔도 전혀 다른 사진이 나옵니다. 각도가 주는 차이를 소개합니다.</p>
+                    <time>Jun 15, 2026</time>
+                </div>
+            </article>
+            <article class="news-card">
+                <div class="news-card-media">
+                    <img src="{{ url_for('static', filename='images/blog9.jpg') }}" alt="과감하게 지우는 것도 실력" loading="lazy" decoding="async">
+                </div>
+                <div class="news-card-copy">
+                    <h2>과감하게 지우는 것도 실력</h2>
+                    <p>좋은 사진을 남기려면 아쉬운 사진을 지울 줄도 알아야 합니다.</p>
+                    <time>Jun 14, 2026</time>
+                </div>
+            </article>
+            <article class="news-card">
+                <div class="news-card-media">
+                    <img src="{{ url_for('static', filename='images/blog10.jpg') }}" alt="배경이 사진의 반이다" loading="lazy" decoding="async">
+                </div>
+                <div class="news-card-copy">
+                    <h2>배경이 사진의 반이다</h2>
+                    <p>피사체만큼 배경 선택이 중요합니다. 깔끔한 배경을 고르는 방법을 공유합니다.</p>
+                    <time>Jun 13, 2026</time>
+                </div>
+            </article>
         </div>
     </div>
 </section>

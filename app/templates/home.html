@@ -87,49 +87,6 @@
     </div>
 </section>
 
-<section class="market" id="new">
-    <div class="sec-head">
-        <h2>최근 업로드</h2>
-        <p>올라온 사진을 같은 카드 규격으로 정리해 한눈에 둘러볼 수 있습니다.</p>
-    </div>
-
-    <div class="preview-grid">
-        {% for product in products[:6] %}
-        <a href="{{ url_for('root.product', slug=product.slug) }}">
-            <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="lazy" decoding="async">
-            <span>{{ product.collection_label }}</span>
-            <strong>{{ product.title }}</strong>
-        </a>
-        {% endfor %}
-    </div>
-</section>
-
-<section class="shelf">
-    <div class="shelf-head">
-        <h2>Archive shelf</h2>
-        <p>업로드된 사진을 한눈에 살펴볼 수 있는 미리보기 영역입니다.</p>
-    </div>
-
-    <div class="shelf-scroll" aria-label="Photo archive shelf previews">
-        {% for row in range(3) %}
-        <div class="slide-row">
-            {% for product in products %}
-            <a class="slide-card" href="{{ url_for('root.product', slug=product.slug) }}">
-                <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="lazy" decoding="async">
-                <span>{{ product.title }} · {{ product.price }}</span>
-            </a>
-            {% endfor %}
-            {% for product in products %}
-            <a class="slide-card" href="{{ url_for('root.product', slug=product.slug) }}">
-                <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="lazy" decoding="async">
-                <span>{{ product.title }} · {{ product.price }}</span>
-            </a>
-            {% endfor %}
-        </div>
-        {% endfor %}
-    </div>
-</section>
-
 <section class="cta">
     <h2>사진을 다시 찾기 쉬운 아카이브</h2>
     <p>사진 업로드, 전체 갤러리, 내 갤러리, 검색까지 한 흐름으로 확인할 수 있습니다.</p>

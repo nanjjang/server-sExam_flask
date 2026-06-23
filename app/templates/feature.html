@@ -8,11 +8,34 @@
     </div>
 
     <div class="feat-wall" aria-label="Archive inspiration wall">
-        {% for product in products[:28] %}
-        <a class="feat-card" href="{{ url_for('root.product', slug=product.slug) }}">
-            <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="{% if loop.index <= 16 %}eager{% else %}lazy{% endif %}" decoding="async">
-        </a>
-        {% endfor %}
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat1.jpg') }}" alt="" loading="eager" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat2.jpg') }}" alt="" loading="eager" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat3.jpg') }}" alt="" loading="eager" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat4.jpg') }}" alt="" loading="eager" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat5.jpg') }}" alt="" loading="eager" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat6.jpg') }}" alt="" loading="eager" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat7.jpg') }}" alt="" loading="eager" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat8.jpg') }}" alt="" loading="eager" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat9.jpg') }}" alt="" loading="eager" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat10.jpg') }}" alt="" loading="eager" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat11.jpg') }}" alt="" loading="eager" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat12.jpg') }}" alt="" loading="eager" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat13.jpg') }}" alt="" loading="eager" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat14.jpg') }}" alt="" loading="eager" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat15.jpg') }}" alt="" loading="eager" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat16.jpg') }}" alt="" loading="lazy" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat17.jpg') }}" alt="" loading="lazy" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat18.jpg') }}" alt="" loading="lazy" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat19.jpg') }}" alt="" loading="lazy" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat20.jpg') }}" alt="" loading="lazy" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat21.jpg') }}" alt="" loading="lazy" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat22.jpg') }}" alt="" loading="lazy" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat23.jpg') }}" alt="" loading="lazy" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat24.jpg') }}" alt="" loading="lazy" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat25.jpg') }}" alt="" loading="lazy" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat26.jpg') }}" alt="" loading="lazy" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat27.jpg') }}" alt="" loading="lazy" decoding="async"></a>
+        <a class="feat-card" href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat28.jpg') }}" alt="" loading="lazy" decoding="async"></a>
     </div>
 </section>
 
@@ -24,9 +47,12 @@
             <small>사진 업로드 · 제목 검색 · 사용자별 보관</small>
         </div>
         <div class="phone-grid">
-            {% for product in products[:6] %}
-            <img src="{{ product.image_url }}" alt="{{ product.title }} mobile preview" loading="lazy" decoding="async">
-            {% endfor %}
+            <img src="{{ url_for('static', filename='images/feat1.jpg') }}" alt="" loading="lazy" decoding="async">
+            <img src="{{ url_for('static', filename='images/feat2.jpg') }}" alt="" loading="lazy" decoding="async">
+            <img src="{{ url_for('static', filename='images/feat3.jpg') }}" alt="" loading="lazy" decoding="async">
+            <img src="{{ url_for('static', filename='images/feat4.jpg') }}" alt="" loading="lazy" decoding="async">
+            <img src="{{ url_for('static', filename='images/feat5.jpg') }}" alt="" loading="lazy" decoding="async">
+            <img src="{{ url_for('static', filename='images/feat6.jpg') }}" alt="" loading="lazy" decoding="async">
         </div>
     </div>
 
@@ -53,11 +79,11 @@
 
 <section class="discover-sec">
     <div class="side-grid" aria-label="Related inspiration previews">
-        {% for product in products[11:16] %}
-        <a href="{{ url_for('root.product', slug=product.slug) }}">
-            <img src="{{ product.image_url }}" alt="{{ product.title }} preview" loading="lazy" decoding="async">
-        </a>
-        {% endfor %}
+        <a href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat11.jpg') }}" alt="" loading="lazy" decoding="async"></a>
+        <a href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat12.jpg') }}" alt="" loading="lazy" decoding="async"></a>
+        <a href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat13.jpg') }}" alt="" loading="lazy" decoding="async"></a>
+        <a href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat14.jpg') }}" alt="" loading="lazy" decoding="async"></a>
+        <a href="{{ url_for('root.gallery') }}"><img src="{{ url_for('static', filename='images/feat15.jpg') }}" alt="" loading="lazy" decoding="async"></a>
     </div>
 
     <div class="copy">
