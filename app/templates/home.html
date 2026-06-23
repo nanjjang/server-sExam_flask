@@ -6,20 +6,19 @@
         <h1>사진을 업로드하고 정리하는 웹 아카이브</h1>
         <p>이미지를 업로드하고, 검색하고, 내 갤러리에서 다시 확인할 수 있는 개인 사진 아카이브입니다.</p>
         <a class="blue-btn" href="{{ url_for('upload.upload') }}">사진 업로드하기</a>
-        <span>Flask · HTML · CSS · JSON 저장</span>
     </div>
 
 </section>
 
-<section class="logos" aria-label="Project stack">
-    <p>이 프로젝트에서 구현한 핵심 요소</p>
+<section class="logos" aria-label="Features">
+    <p>사진을 올리고, 찾고, 내 것만 모아보는 공간</p>
     <div class="logo-list">
-        <span class="project-chip">Flask Routing</span>
-        <span class="project-chip">Image Upload</span>
-        <span class="project-chip">Search</span>
-        <span class="project-chip">Login</span>
-        <span class="project-chip">My Gallery</span>
-        <span class="project-chip">JSON Storage</span>
+        <span class="project-chip">사진 업로드</span>
+        <span class="project-chip">전체 갤러리</span>
+        <span class="project-chip">제목 검색</span>
+        <span class="project-chip">로그인</span>
+        <span class="project-chip">내 갤러리</span>
+        <span class="project-chip">사진 보관</span>
     </div>
 </section>
 
@@ -68,8 +67,8 @@
 
 <section class="feat-sec" id="features">
     <div class="sec-head">
-        <h2>구현한 핵심 기능</h2>
-        <p>복잡한 부가 기능보다 업로드, 저장, 검색, 사용자별 조회 흐름에 집중했습니다.</p>
+        <h2>주요 기능</h2>
+        <p>업로드, 저장, 검색, 사용자별 갤러리까지 간단하게 사용할 수 있습니다.</p>
     </div>
 
     <div class="feat-grid">
@@ -91,7 +90,7 @@
 <section class="market" id="new">
     <div class="sec-head">
         <h2>최근 업로드</h2>
-        <p>프로젝트에 저장된 사진을 같은 카드 규격으로 보여주어 화면이 흔들리지 않게 정리했습니다.</p>
+        <p>올라온 사진을 같은 카드 규격으로 정리해 한눈에 둘러볼 수 있습니다.</p>
     </div>
 
     <div class="preview-grid">
@@ -135,6 +134,6 @@
     <h2>사진을 다시 찾기 쉬운 아카이브</h2>
     <p>사진 업로드, 전체 갤러리, 내 갤러리, 검색까지 한 흐름으로 확인할 수 있습니다.</p>
     <a class="blue-btn" href="{{ url_for('root.gallery') }}">갤러리 확인하기</a>
-    <span>photoArchive · Flask project</span>
+    <span>photoArchive</span>
 </section>
 {% endblock %}

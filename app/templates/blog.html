@@ -10,47 +10,46 @@
 <section class="whats-new-page" aria-labelledby="whats-new-title">
     <div class="whats-new-shell">
         <p class="news-logotype">photoArchive</p>
-        <h1 id="whats-new-title" class="sr-only">프로젝트 안내</h1>
+        <h1 id="whats-new-title" class="sr-only">새 소식</h1>
 
         {% if hero_post %}
         <article class="news-card news-hero-card">
-            <a class="news-card-media" href="{{ hero_post.url }}">
+            <div class="news-card-media">
                 {% if hero_post.image_url %}
                 <img src="{{ hero_post.image_url }}" alt="{{ hero_post.image_alt }} preview" loading="eager" decoding="async">
                 {% endif %}
-            </a>
+            </div>
 
             <div class="news-card-copy">
-                <h2><a href="{{ hero_post.url }}">{{ hero_post.title }}</a></h2>
+                <h2>{{ hero_post.title }}</h2>
                 <p>{{ hero_post.excerpt }}</p>
                 <time>{{ hero_post.date }}</time>
-                <a class="news-read-button" href="{{ hero_post.url }}">자세히 보기</a>
             </div>
         </article>
         {% endif %}
 
-        <nav class="topic-bar" aria-label="Development topics" data-dock>
-            <a class="active" href="{{ url_for('root.whats_new') }}">프로젝트 안내</a>
+        <nav class="topic-bar" aria-label="topics" data-dock>
+            <a class="active" href="{{ url_for('root.blog') }}">블로그</a>
             <a href="{{ url_for('root.feature') }}">기능 소개</a>
             <a href="{{ url_for('root.gallery') }}">갤러리</a>
-            <a href="{{ url_for('root.page', slug='about-us') }}">프로젝트 목적</a>
-            <a class="news-topic-search" href="{{ url_for('root.gallery') }}" aria-label="Search">검색</a>
+            <a class="news-topic-search" href="{{ url_for('root.gallery') }}" aria-label="Search">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </a>
         </nav>
 
         <div class="news-card-grid">
             {% for post in posts %}
             <article class="news-card">
-                <a class="news-card-media" href="{{ post.url }}">
+                <div class="news-card-media">
                     {% if post.image_url %}
                     <img src="{{ post.image_url }}" alt="{{ post.image_alt }} preview" loading="lazy" decoding="async">
                     {% endif %}
-                </a>
+                </div>
 
                 <div class="news-card-copy">
-                    <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+                    <h2>{{ post.title }}</h2>
                     <p>{{ post.excerpt }}</p>
                     <time>{{ post.date }}</time>
-                    <a class="news-read-button" href="{{ post.url }}">자세히 보기</a>
                 </div>
             </article>
             {% endfor %}

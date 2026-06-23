@@ -8,107 +8,75 @@ from config import IMAGE_META_PATH, IMAGE_PATH, THUMB_PATH
 root_bp = Blueprint('root', __name__)
 
 
-PAGES = {
-    'licenses': {
-        'label': 'Scope',
-        'title': '구현한 기능',
-        'body': 'photoArchive는 사진 업로드, 전체 갤러리, 내 갤러리, 검색 화면을 구현한 개인 사진 아카이브입니다.',
-    },
-    'contact-us': {
-        'label': 'Contact',
-        'title': '개선할 점',
-        'body': '현재 버전에서 더 발전시킬 수 있는 기능은 업로드 검증, 이미지 삭제, 태그 필터, 썸네일 최적화입니다.',
-    },
-    'about-us': {
-        'label': 'About',
-        'title': '프로젝트 목적',
-        'body': '흩어진 사진을 웹에서 업로드하고 다시 찾아볼 수 있도록 만들었습니다. Flask 라우팅, 템플릿 렌더링, 파일 저장 구조를 직접 확인할 수 있습니다.',
-    },
-    'refunds-policy': {
-        'label': 'Data',
-        'title': '데이터 저장 방식',
-        'body': '업로드된 이미지는 app/database/images 폴더에 저장하고, 제목과 분류 같은 정보는 image_meta.json 파일에 기록합니다.',
-    },
-    'seller-profile': {
-        'label': 'Profile',
-        'title': '프로젝트 구성',
-        'body': '라우트, 템플릿, 정적 CSS, 이미지 저장 폴더를 나누어 관리했습니다. 화면은 사진이 잘 보이도록 큰 카드와 명확한 버튼 중심으로 정리했습니다.',
-    },
-    'privacy-policy': {
-        'label': 'Privacy',
-        'title': '개인 사진 보관 안내',
-        'body': '현재 버전은 로컬 프로젝트 폴더에 사진을 저장합니다. 실제 서비스로 확장한다면 사용자 권한, 삭제 기능, 저장 용량 제한이 추가로 필요합니다.',
-    },
-}
-
 NEWS_POSTS = [
     {
-        'slug': 'project-overview',
-        'title': '프로젝트 개요',
-        'excerpt': '사진을 업로드하고 다시 찾아볼 수 있는 Flask 기반 아카이브를 만들었습니다.',
+        'slug': 'how-to-organize-photos',
+        'title': '사진 정리하는 법',
+        'excerpt': '쌓여만 가는 사진을 깔끔하게 보관하고 나중에 다시 찾는 방법을 소개합니다.',
         'date': 'Jun 22, 2026',
-        'body': [
-            'photoArchive는 개인 사진을 업로드하고 다시 찾아보기 위해 만든 웹 아카이브입니다.',
-            '업로드, 전체 갤러리, 내 갤러리, 검색 화면을 하나의 흐름으로 연결했습니다.',
-        ],
     },
     {
-        'slug': 'upload-flow',
-        'title': '업로드 기능 구현',
-        'excerpt': '사용자가 선택한 이미지를 서버 폴더에 저장하고 메타데이터를 JSON으로 관리합니다.',
+        'slug': 'pick-your-best-shots',
+        'title': '남길 사진 고르는 기준',
+        'excerpt': '수백 장 중에서 진짜 남길 한 장을 고르는 나만의 방법을 공유합니다.',
         'date': 'Jun 21, 2026',
-        'body': [
-            '업로드 라우트에서 파일 확장자를 확인한 뒤 app/database/images 폴더에 저장합니다.',
-            '사진 제목, 분류, 업로드 날짜 같은 정보는 image_meta.json에 기록해 갤러리에서 다시 사용합니다.',
-        ],
     },
     {
-        'slug': 'gallery-search',
-        'title': '갤러리와 검색',
-        'excerpt': '저장된 사진을 같은 카드 규격으로 보여주고 제목과 업로더 기준으로 검색합니다.',
+        'slug': 'everyday-photo-tips',
+        'title': '일상 사진 잘 찍는 법',
+        'excerpt': '특별한 장비 없이 스마트폰으로도 기억에 남는 사진을 찍을 수 있습니다.',
         'date': 'Jun 20, 2026',
-        'body': [
-            '전체 갤러리는 이미지 폴더를 읽어 최신 업로드 순서로 사진을 보여줍니다.',
-            '검색어가 있으면 제목과 업로더 이름을 비교해 필요한 사진만 남깁니다.',
-        ],
     },
     {
-        'slug': 'my-gallery',
-        'title': '내 갤러리 화면',
-        'excerpt': '로그인한 사용자가 업로드한 사진만 따로 확인할 수 있게 구성했습니다.',
+        'slug': 'why-we-take-photos',
+        'title': '사진을 찍는 이유',
+        'excerpt': '순간을 기록하는 것이 왜 중요한지, 나중에 꺼내 볼 때의 기분을 이야기합니다.',
         'date': 'Jun 19, 2026',
-        'body': [
-            '파일명 앞에 저장된 사용자 이름을 기준으로 사진 소유자를 구분합니다.',
-            '로그인하지 않은 상태에서 내 갤러리에 접근하면 로그인 화면으로 이동합니다.',
-        ],
     },
     {
-        'slug': 'layout-cleanup',
-        'title': '레이아웃 정리',
-        'excerpt': '카드 이미지 비율, 버튼 크기, 텍스트 줄바꿈을 맞춰 화면 완성도를 높였습니다.',
+        'slug': 'season-photo-backgrounds',
+        'title': '계절마다 달라지는 배경',
+        'excerpt': '봄, 여름, 가을, 겨울 — 계절에 따라 사진 분위기가 이렇게 달라집니다.',
         'date': 'Jun 18, 2026',
-        'body': [
-            '카드마다 다른 이미지 높이를 통일하고 텍스트 영역이 밀리지 않도록 CSS를 정리했습니다.',
-            '필요 없는 마케팅 문구와 복잡한 장식 코드를 줄여 프로젝트 목적이 더 잘 보이게 만들었습니다.',
-        ],
     },
     {
-        'slug': 'next-steps',
-        'title': '추가로 개선할 점',
-        'excerpt': '삭제 기능, 태그 필터, 썸네일 최적화가 다음 개선 후보입니다.',
+        'slug': 'title-your-photos',
+        'title': '사진에 제목을 붙이는 습관',
+        'excerpt': '업로드할 때 제목을 잘 붙여두면 나중에 찾을 때 훨씬 편합니다.',
         'date': 'Jun 17, 2026',
-        'body': [
-            '현재 버전은 업로드와 조회 흐름에 집중했습니다.',
-            '추후에는 사진 삭제, 태그별 필터, 이미지 압축, 사용자별 저장 공간 제한을 추가할 수 있습니다.',
-        ],
+    },
+    {
+        'slug': 'golden-hour',
+        'title': '골든아워에 찍은 사진은 왜 다를까',
+        'excerpt': '해 뜨고 지는 시간대의 빛이 사진을 완전히 다르게 만드는 이유를 이야기합니다.',
+        'date': 'Jun 16, 2026',
+    },
+    {
+        'slug': 'photo-angle',
+        'title': '같은 장소, 다른 각도',
+        'excerpt': '카메라 위치만 조금 바꿔도 전혀 다른 사진이 나옵니다. 각도가 주는 차이를 소개합니다.',
+        'date': 'Jun 15, 2026',
+    },
+    {
+        'slug': 'delete-bravely',
+        'title': '과감하게 지우는 것도 실력',
+        'excerpt': '좋은 사진을 남기려면 아쉬운 사진을 지울 줄도 알아야 합니다.',
+        'date': 'Jun 14, 2026',
+    },
+    {
+        'slug': 'background-matters',
+        'title': '배경이 사진의 반이다',
+        'excerpt': '피사체만큼 배경 선택이 중요합니다. 깔끔한 배경을 고르는 방법을 공유합니다.',
+        'date': 'Jun 13, 2026',
     },
 ]
 
 POPULAR_NEWS_SCORES = {
-    'project-overview': 100,
-    'upload-flow': 90,
-    'gallery-search': 80,
+    'how-to-organize-photos': 100,
+    'pick-your-best-shots': 90,
+    'everyday-photo-tips': 80,
 }
+
 
 REVIEW_CARDS = [
     {
@@ -205,33 +173,36 @@ def get_gallery_photos(owner=None, limit=None):
     return photos[:limit] if limit else photos
 
 
-def get_news_posts(limit=None):
+def get_news_posts():
     photos = get_gallery_photos()
     posts = []
-
     for index, post in enumerate(NEWS_POSTS):
         photo = photos[index % len(photos)] if photos else None
         posts.append({
             **post,
             'image_url': photo['url'] if photo else '',
             'image_alt': photo['title'] if photo else post['title'],
-            'url': url_for('root.whats_new_detail', slug=post['slug']),
         })
-
-    return posts[:limit] if limit else posts
+    return posts
 
 
 def split_news_index_posts(posts):
     recent_posts = list(enumerate(posts[:6]))
     if not recent_posts:
         return None, []
-
     hero_index, hero_post = max(
         recent_posts,
         key=lambda item: (POPULAR_NEWS_SCORES.get(item[1]['slug'], 0), -item[0]),
     )
     remaining_posts = [post for index, post in enumerate(posts) if index != hero_index]
     return hero_post, remaining_posts
+
+
+@root_bp.route('/blog')
+def blog():
+    posts = get_news_posts()
+    hero_post, grid_posts = split_news_index_posts(posts)
+    return render_template('blog.html', hero_post=hero_post, posts=grid_posts, body_class='news')
 
 
 @root_bp.route('/')
@@ -282,32 +253,6 @@ def reviews():
     ]
     return render_template('reviews.html', reviews=REVIEW_CARDS, products=products, body_class='reviews')
 
-
-@root_bp.route('/whats-new')
-def whats_new():
-    posts = get_news_posts()
-    hero_post, grid_posts = split_news_index_posts(posts)
-    return render_template('whats_new.html', hero_post=hero_post, posts=grid_posts, body_class='news')
-
-
-@root_bp.route('/whats-new/<slug>')
-def whats_new_detail(slug):
-    posts = get_news_posts()
-    post = next((item for item in posts if item['slug'] == slug), None)
-    if not post:
-        hero_post, grid_posts = split_news_index_posts(posts)
-        return render_template('whats_new.html', hero_post=hero_post, posts=grid_posts, body_class='news'), 404
-
-    return render_template('news_detail.html', post=post, body_class='news-post')
-
-
-@root_bp.route('/pages/<slug>')
-def page(slug):
-    page_data = PAGES.get(slug)
-    if not page_data:
-        return render_template('page.html', page=PAGES['about-us'], body_class='info'), 404
-
-    return render_template('page.html', page=page_data, body_class='info')
 
 
 @root_bp.route('/products/<slug>')

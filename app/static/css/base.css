@@ -91,13 +91,7 @@ img {
 }
 
 .logo::before {
-    content: "";
-    width: 20px;
-    height: 20px;
-    flex: 0 0 auto;
-    border-radius: 50%;
-    background: #111;
-    box-shadow: inset -5px -5px 0 #d8d2c8;
+    display: none;
 }
 
 .nav {

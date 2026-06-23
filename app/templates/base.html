@@ -17,11 +17,13 @@
                 {% if is_marketing %}
                 <a class="{% if endpoint == 'root.feature' %}active{% endif %}" href="{{ url_for('root.feature') }}">기능 소개</a>
                 <a class="{% if endpoint == 'root.gallery' %}active{% endif %}" href="{{ url_for('root.gallery') }}">전체 갤러리</a>
-                <a class="{% if endpoint == 'root.reviews' %}active{% endif %}" href="{{ url_for('root.reviews') }}">구현 정보</a>
+                <a class="{% if endpoint == 'root.reviews' %}active{% endif %}" href="{{ url_for('root.reviews') }}">서비스 소개</a>
+                <a class="{% if endpoint == 'root.blog' %}active{% endif %}" href="{{ url_for('root.blog') }}">블로그</a>
                 {% else %}
                 <a class="{% if endpoint == 'root.gallery' %}active{% endif %}" href="{{ url_for('root.gallery') }}">전체 갤러리</a>
                 <a class="{% if endpoint == 'root.my_gallery' %}active{% endif %}" href="{{ url_for('root.my_gallery') }}">내 갤러리</a>
                 <a class="{% if endpoint == 'upload.upload' %}active{% endif %}" href="{{ url_for('upload.upload') }}">업로드</a>
+                <a class="{% if endpoint == 'root.blog' %}active{% endif %}" href="{{ url_for('root.blog') }}">블로그</a>
                 {% endif %}
             </nav>
 
@@ -48,14 +50,15 @@
             <div class="foot-logo">
                 <strong>photoArchive</strong>
                 <span>사진을 보관하고 다시 찾는 웹 아카이브</span>
-                <p>사진 업로드, 전체 갤러리, 내 갤러리, 검색 기능을 하나의 흐름으로 정리했습니다.</p>
+                <p>소중한 순간을 업로드하고 언제든 다시 꺼내볼 수 있는 나만의 사진 공간입니다.</p>
             </div>
 
             <nav class="foot-col" aria-label="About us">
-                <strong>프로젝트</strong>
+                <strong>서비스</strong>
                 <a href="{{ url_for('root.feature') }}">기능 소개</a>
                 <a href="{{ url_for('root.gallery') }}">전체 갤러리</a>
                 <a href="{{ url_for('root.my_gallery') }}">내 갤러리</a>
+                <a href="{{ url_for('root.blog') }}">블로그</a>
             </nav>
 
             <nav class="foot-col" aria-label="Project features">
@@ -63,21 +66,12 @@
                 <a href="{{ url_for('upload.upload') }}">사진 업로드</a>
                 <a href="{{ url_for('root.gallery') }}">제목 검색</a>
                 <a href="{{ url_for('root.my_gallery') }}">사용자별 보기</a>
-                <a href="{{ url_for('root.page', slug='privacy-policy') }}">저장 방식</a>
-            </nav>
-
-            <nav class="foot-col" aria-label="Features">
-                <strong>프로젝트 정보</strong>
-                <a href="{{ url_for('root.page', slug='about-us') }}">프로젝트 목적</a>
-                <a href="{{ url_for('root.page', slug='licenses') }}">구현 기능</a>
-                <a href="{{ url_for('root.page', slug='contact-us') }}">문의</a>
             </nav>
         </div>
 
         <div class="foot-bottom">
             <span>© 2026 photoArchive</span>
-            <span>사진 업로드와 검색 중심의 아카이브</span>
-            <span>Flask · HTML · CSS · JSON</span>
+            <span>사진을 올리고 다시 찾는 공간</span>
         </div>
         {% else %}
         <div class="footer-top">
@@ -91,10 +85,9 @@
             </nav>
 
             <nav class="footer-column" aria-label="Social links">
-                <span>프로젝트</span>
+                <span>서비스</span>
                 <a href="{{ url_for('root.feature') }}">기능 소개</a>
-                <a href="{{ url_for('root.page', slug='about-us') }}">프로젝트 목적</a>
-                <a href="{{ url_for('root.page', slug='privacy-policy') }}">저장 방식</a>
+                <a href="{{ url_for('root.blog') }}">블로그</a>
             </nav>
         </div>
 

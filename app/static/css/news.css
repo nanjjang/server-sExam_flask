@@ -189,35 +189,16 @@
 }
 
 .news-topic-search {
-    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     min-width: 34px;
-    color: transparent !important;
+    color: rgba(255, 255, 255, 0.8);
 }
 
-.news-topic-search::before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 11px;
-    height: 11px;
-    transform: translate(-70%, -70%);
-    border: 1.5px solid rgba(255, 255, 255, 0.8);
-    border-radius: 50%;
-}
-
+.news-topic-search::before,
 .news-topic-search::after {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 6px;
-    height: 1.5px;
-    transform: translate(-10%, -50%) rotate(45deg);
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 1px;
+    display: none;
 }
 
 .news-card-grid {
